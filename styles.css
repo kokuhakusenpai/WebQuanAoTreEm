@@ -1,0 +1,403 @@
+body {
+  background-color: #fff5f7; /* Light pink background */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #ffccd5; /* Light pink */
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header input[type="text"] {
+  width: 500px; /* Adjust the width as needed */
+  padding: 9px;
+  border: 1px solid #ff99a1; /* Pink border */
+  border-radius: 5px;
+}
+
+header button {
+  padding: 5px 10px;
+  background-color: #ff99a1; /* Pink */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+header button:hover {
+  background-color: #ff6673; /* Darker pink */
+}
+
+.navbar {
+  background: #ffccd5; /* Light pink */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+}
+
+/* Dropdown Button */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.dropbtn:hover {
+  background-color: #ff6673; /* Darker pink */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+/* Dropdown Button */
+.dropacc{
+  position: relative;
+  display: inline-block;
+}
+
+.dropaccbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.dropaccbtn:hover {
+  background-color: #ff6673; /* Darker pink */
+}
+
+.dropacc-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropacc-content a {
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropacc-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropacc:hover .dropacc-content {
+  display: block;
+}
+
+/*nav-item svg*/
+.nav-item svg {
+  cursor: pointer;
+}
+
+.nav-item svg:hover {
+  fill: #ff6673; /* Darker pink */
+}
+
+/* Bar */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+
+.search-bar:hover{
+  background-color: #ff6673; /* Darker pink */
+}
+
+.header-icons svg {
+  cursor: pointer;
+}
+
+.header-icons svg:hover {
+  fill: #ff6673; /* Darker pink */
+}
+
+/* Logo */
+
+.logo img {
+  display: block;
+}
+
+.logo img {
+  width: 50px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Navigation */
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #ff99a1; /* Pink */
+  margin: 0;
+}
+
+nav ul li {
+  margin: 0 10px;
+  position: relative;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: blackblack;
+  font-weight: bold;
+  padding: 10px;
+  display: block;
+}
+
+nav ul li a:hover {
+  background-color: #ff6673; /* Darker pink */
+  border-radius: 5px;
+}
+
+.top-menu-item {
+  display: none;
+}
+
+.top-menu-item.show {
+  display: block;
+}
+
+/* Chat Box Styles */
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Nút mở chat */
+.chat-icon {
+  width: 50px;
+  height: 50px;
+  background: #ff99a1;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chat-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-box a {
+  background: #ffccd5; /* Light pink */
+  padding: 10px;
+  margin: 5px 0;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.chat-box a img {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.chat-box a:hover {
+  background: #ff6673; /* Darker pink */
+}
+
+.chat-header{
+  background: #ffccd5; /* Light pink */
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-body{
+  background: #ffccd5; /* White */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 300px;
+  overflow-y: auto;
+}
+
+footer {
+  background: #fff5f7; /* Light pink */
+  padding: 10px;
+  text-align: center;
+}
+
+ /*d3*/
+#Slider {
+  padding-bottom: 30px;
+  border-bottom: 2px solid #ff99a1; /* Pink */
+  overflow: hidden;
+  width: 100vw;
+}
+
+.aspect-ratio-169 {
+  display: block;
+  position: relative;
+  padding-top:51%;
+  transition: all 0.3s ease;
+}
+
+.aspect-ratio-169 img {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.dot-container {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  background-color: #ffccd5; /* Light pink */
+  border-radius: 50%;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #ff6673; /* Darker pink */
+}
+
+h2 {
+  text-align: center;
+  margin: 20px 0;
+  color: #333;
+}
+
+.voucher-container {
+  text-align: center;
+}
+
+/*d4*/
+.product-list {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.product-list h3 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.product-list .product {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-list .product:hover {
+  transform: scale(1.05);
+}
+
+.product-list img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-list p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.product-list .price {
+  font-weight: bold;
+  color: #e74c3c;
+  font-size: 18px;
+}
+
+.product-list .price del {
+  font-size: 14px;
+  color: #888;
+  margin-left: 5px;
+}
+
+.product-list > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
