@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex">
+      <div class="w-1/2 p-8">
+        <div class="flex items-center mb-8">
+          <img alt="Diprella logo" class="w-10 h-10 mr-2" height="40" src="https://storage.googleapis.com/a1aa/image/mUxD-obwm-2Ka98PEu2ilm1xJDPwX20ok5DYyaChgTA.jpg" width="40"/>
+          <span class="text-xl font-bold">Diprella</span>
+        </div>
+        <h2 class="text-3xl font-bold text-pink-600 mb-4">Sign in to ...</h2>
+        <div class="flex space-x-4 mb-4">
+          <button class="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-full">
+            <i class="fab fa-facebook-f text-gray-600"></i>
+          </button>
+          <button class="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-full">
+            <i class="fab fa-google text-gray-600"></i>
+          </button>
+        </div>
+        <p class="text-gray-500 mb-4">or use your email account:</p>
+        <form id="signInForm">
+          <div class="mb-4">
+            <input id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-600" placeholder="Email" type="email" required/>
+          </div>
+          <div class="mb-4">
+            <input id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-600" placeholder="Password" type="password" required/>
+          </div>
+          <div class="mb-4 text-right">
+            <a class="text-gray-500" href="#">Forgot your password?</a>
+          </div>
+          <button class="w-full py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700" type="submit">SIGN IN</button>
+        </form>
+      </div>
+      <div class="w-1/2 bg-pink-600 text-white flex flex-col items-center justify-center p-8">
+        <h2 class="text-3xl font-bold mb-4">Hello, Friend!</h2>
+        <p class="mb-4">Enter your personal details and start journey with us</p>
+        <button class="px-8 py-2 border border-white rounded-lg hover:bg-white hover:text-pink-600">SIGN UP</button>
+      </div>
+    </div>
+    
+
+    <script>
+      document.getElementById('signInForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('https://api.example.com/authenticate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Sign in successful!');
+                    // Handle successful sign-in (e.g., redirect to another page)
+                } else {
+                    alert('Sign in failed. Please check your credentials and try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
+  </body>  
+</html>
