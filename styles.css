@@ -14,36 +14,43 @@ body {
   padding: 0;
 }
 
+/* Logo */
+.logo img {
+  display: block;
+}
+
+.logo img {
+  width: 60px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Sticky Header */
 header {
-  background: #ffccd5; /* Light pink */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;/* Gradient Pink */
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-header input[type="text"] {
-  width: 500px; /* Adjust the width as needed */
-  padding: 9px;
-  border: 1px solid #ff99a1; /* Pink border */
-  border-radius: 5px;
+header a {
+  color: black; /* Đổi màu chữ thành đen */
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  transition: color 0.3s;
 }
 
-header button {
-  padding: 5px 10px;
-  background-color: #ff99a1; /* Pink */
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-}
-
-header button:hover {
-  background-color: #ff6673; /* Darker pink */
+header a:hover {
+  color: #4169E1; /* Màu trắng khi hover */
 }
 
 .navbar {
-  background: #ffccd5; /* Light pink */
+  background: #A7C7E7; /* Light pink */
   display: flex;
   align-items: center;
   gap: 20px;
@@ -136,17 +143,65 @@ a {
   background-color: #ff99a1; /* Pink */
   display: block;
 }
-/* Dropdown Button */
-.dropdown {
+/* Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 250px;
+  background: #fff;
+  border-radius: 25px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: width 0.3s ease-in-out;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 20px;
+  transition: width 0.3s ease-in-out;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.search-bar svg {
+  fill: #333;
+  width: 24px;
+  height: 24px;
+}
+
+.search-bar button:hover svg {
+  fill: #007bff;
+}
+
+/* Khi input được focus, mở rộng thanh tìm kiếm */
+.search-bar.active {
+  width: 550px;
+}
+/* Dropdown Styling */
+.dropacc {
   position: relative;
   display: inline-block;
 }
 
-.dropbtn {
-  background: none;
+button.dropaccbtn {
+  background-color:#FFF; /* Light pink */
+  color: black;
+  padding: 10px;
+  font-size: 16px;
   border: none;
   cursor: pointer;
-  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 .dropbtn:hover {
@@ -192,6 +247,10 @@ a {
 .dropaccbtn:hover {
   background-color: #ff6673; /* Darker pink */
 }
+/* Dropdown Content (Hidden by Default) */
+button.dropaccbtn:hover {
+  background-color: #FFF; /* Darker pink */
+}
 
 .dropacc-content {
   display: none;
@@ -203,14 +262,14 @@ a {
 }
 
 .dropacc-content a {
-  color: #333;
+  color: black;
   padding: 10px;
   text-decoration: none;
   display: block;
 }
 
 .dropacc-content a:hover {
-  background-color: #f1f1f1;
+  background-color: #A7C7E7;
 }
 
 .dropacc:hover .dropacc-content {
@@ -223,11 +282,11 @@ a {
 }
 
 .nav-item svg:hover {
-  fill: #ff6673; /* Darker pink */
+  fill: #007bff; /* Darker pink */
 }
 
-/* Bar */
-.bar {
+/* Header Icons */
+.header-icons {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -249,6 +308,7 @@ a {
 
 .search-bar:hover {
   background-color: #ff6673; /* Darker pink */
+  gap: 10px;
 }
 
 .header-icons svg {
@@ -256,7 +316,7 @@ a {
 }
 
 .header-icons svg:hover {
-  fill: #ff6673; /* Darker pink */
+  fill: #fff; /* Darker pink */
 }
 
 /* Logo */
@@ -396,9 +456,10 @@ footer .row-grid {
 }
 
 /*d3*/
+/*Banner quảng cáo */
 #Slider {
   padding-bottom: 30px;
-  border-bottom: 2px solid #ff99a1; /* Pink */
+  border-bottom: 2px solid #87CEEB; /* Pink */
   overflow: hidden;
   width: 100vw;
 }
@@ -431,27 +492,110 @@ footer .row-grid {
 .dot {
   height: 15px;
   width: 15px;
-  background-color: #ffccd5; /* Light pink */
+  background-color: #A7C7E7; /* Light pink */
   border-radius: 50%;
   margin-right: 6px;
   cursor: pointer;
 }
 
 .dot.active {
-  background-color: #ff6673; /* Darker pink */
+  background-color: #87CEEB; /* Darker pink */
 }
 
 h2 {
   text-align: center;
-  margin: 20px 0;
   color: #333;
+  margin-top: 20px;
 }
 
+/* Voucher */
 .voucher-container {
+  display: flex;
+  gap: 15px; /* Khoảng cách giữa các voucher */
+  justify-content: center;
+  flex-wrap: wrap; /* Đảm bảo không bị vỡ layout */
+}
+
+.voucher {
+  background: #A7C7E7;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s;
+  width: 200px;
   text-align: center;
 }
 
-/*d4*/
+.voucher:hover {
+  background: #ff99a1;
+  transform: scale(1.05);
+}
+
+.voucher-title {
+  font-weight: bold;
+  color: #d80032;
+}
+
+.voucher-details {
+  display: none;
+  margin-top: 10px;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Hiển thị khi active */
+.voucher-details.active {
+  display: block;
+}
+/* Định dạng phần chứa bộ lọc */
+#sort-by {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa label và select */
+  background: #A7C7E7; /* Màu nền hồng nhạt */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+/* Nhãn "Sắp xếp" */
+#sort-by label span {
+  font-weight: bold;
+  color: #d80032; /* Màu chữ đỏ đậm */
+}
+
+/* Dropdown danh sách chọn */
+.content_ul {
+  padding: 8px;
+  border: 2px solid #4169E1; /* Viền hồng đậm */
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+/* Hover & focus vào select */
+.content_ul:hover, .content_ul:focus {
+  border-color: #87CEEB; /* Viền hồng nhạt khi hover */
+  outline: none;
+}
+
+/* Style option bên trong */
+.content_ul option {
+  padding: 10px;
+  background: white;
+}
+
+/* Hiệu ứng khi mở select */
+.content_ul:focus option {
+  background: #A7C7E7; /* Hồng rất nhạt */
+}
+
+/* Sản phẩm */
 .product-list {
   padding: 20px;
   background-color: #f9f9f9;
@@ -676,4 +820,159 @@ input::-webkit-inner-spin-button {
   grid-template-columns: 60% 40%;
   column-gap: 30px;
 }
+}
+
+/* Chat Box Styles */
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Nút mở chat */
+.chat-icon {
+  width: 50px;
+  height: 50px;
+  background: #87CEEB; /* Hồng đậm */
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.chat-icon:hover {
+  background: #A7C7E7; /* Hồng nhạt */
+  transform: scale(1.1);
+}
+
+/* Hộp chat */
+.chat-box {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Header của hộp chat */
+.chat-header {
+  background: #87CEEB;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.chat-header .close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.chat-header .close-btn:hover {
+  color: #A7C7E7;
+}
+
+/* Nội dung chat */
+.chat-body {
+  background: #A7C7E7; /* Hồng rất nhạt */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 250px;
+  overflow-y: auto;
+}
+
+/* Ô nhập tin nhắn */
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background: #A7C7E7;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.chat-input button {
+  background:  #87CEEB;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background: #ff758f;
+}
+
+/* Liên kết chat Messenger/Zalo */
+.chat-links {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.chat-links a {
+  display: flex;
+  align-items: center;
+  background: #ffccd5;
+  padding: 10px;
+  margin: 5px 0;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.chat-links a img {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.chat-links a:hover {
+  background: #ff758f; /* Màu hồng nhạt */
+}
+
+/* Hiệu ứng fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Chân trang*/
+footer {
+  background: #fff5f7; /* Light pink */
+  padding: 10px;
+  text-align: center;
 }
