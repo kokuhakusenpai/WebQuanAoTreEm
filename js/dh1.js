@@ -131,7 +131,7 @@ function showOrderHistory() {
                         <p class="text-sm text-gray-500">💰 Tổng tiền: <span class="text-red-500 font-semibold">₫199.000</span></p>
                         <p class="text-sm text-green-500 font-medium mt-1">✅ Trạng thái: Đã giao</p>
                     </div>
-                    <button onclick="showOrderDetails('250301FHHPY85T')" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition">Xem chi tiết</button>
+                    <button onclick="showOrderDetails('250301FHHPY85T')" class="px-4 py-2 bg-blue-500 hover:bg-pink-600 text-white rounded-lg transition">Xem chi tiết</button>
                 </div>
             </div>
 
@@ -144,7 +144,7 @@ function showOrderHistory() {
                         <p class="text-sm text-gray-500">💰 Tổng tiền: <span class="text-red-500 font-semibold">₫259.000</span></p>
                         <p class="text-sm text-yellow-500 font-medium mt-1">⏳ Trạng thái: Đang xử lý</p>
                     </div>
-                    <button onclick="showOrderDetails('250302GHJTY99K')" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white rounded-lg transition">Xem chi tiết</button>
+                    <button onclick="showOrderDetails('250302GHJTY99K')" class="px-4 py-2 bg-blue-500 hover:bg-pink-600 text-white rounded-lg transition">Xem chi tiết</button>
                 </div>
             </div>
         </div>
