@@ -3,395 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f" />
-    <link
-      rel="canonical"
-      href="https://Babyshop.vn/collections/uu-dai-thang-3"
-    />
-    <title>BABY Store</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
+    <title>Shop Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <header>
-      <div class="navbar">
-        <div class="dropdown">
-          <button class="dropbtn">
-            <a href="#">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="20"
-                width="20.75"
-                viewBox="0 0 448 512"
-              >
-                <path
-                  d="M0 88C0 74.75 10.75 64 24 64H424C437.25 64 448 74.75 448 88V120C448 133.25 437.25 144 424 144H24C10.75 144 0 133.25 0 120V88zM0 248C0 234.75 10.75 224 24 224H424C437.25 224 448 234.75 448 248V280C448 293.25 437.25 304 424 304H24C10.75 304 0 293.25 0 280V248zM448 408V440C448 453.25 437.25 464 424 464H24C10.75 464 0 453.25 0 440V408C0 394.75 10.75 384 24 384H424C437.25 384 448 394.75 448 408z"
-                />
-              </svg>
-            </a>
-          </button>
-          <div class="dropdown-content">
-            <a href="#">Thông tin cá nhân</a>
-            <a href="#">Đơn hàng</a>
-            <a href="#">Theo dõi vận chuyển</a>
-            <a href="#">Đổi trả hàng</a>
-            <a href="#">Lịch sử đơn hàng</a>
-            <a href="#">Yêu cầu xóa tài khoản</a>
-            <a href="#">Đăng xuất</a>
-          </div>
-        </div>
-
-        <div class="dropacc">
-          <button class="dropaccbtn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="20"
-              width="20.75"
-              viewBox="0 0 448 512"
-            >
-              <path
-                d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"
-              />
-            </svg>
-          </button>
-          <div class="dropacc-content">
-            <a href="#">Đăng nhập</a>
-            <a href="#">Đăng ký</a>
-          </div>
-        </div>
-
-        <div class="nav-item">
-          <a href="#">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="20"
-              width="20.75"
-              viewBox="0 0 448 512"
-            >
-              <path
-                d="M224 512a64 64 0 0 0 64-64H160a64 64 0 0 0 64 64zm215.03-149.25c-20.38-24.38-55.25-61.75-55.25-175.75 0-91.5-62.75-167.75-144-188.25V0c0-17.67-14.33-32-32-32s-32 14.33-32 32v9.75c-81.25 20.5-144 96.75-144 188.25 0 114-34.88 151.38-55.25 175.75-6.75 8-8.75 18.88-5.38 28.5C29.12 400.5 39.75 408 51.25 408h345.5c11.5 0 22.12-7.5 25.63-17.75 3.38-9.62 1.38-20.5-5.35-28.5z"
-              />
-            </svg>
-          </a>
-        </div>
+  <body class="bg-gray-100">
+    <header class="bg-white shadow-md p-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="images/logo1.jpg" class="w-32" />
+        <nav class="hidden md:flex space-x-6 text-gray-700">
+          <a href="#" class="hover:text-red-500">Bé gái</a>
+          <a href="#" class="hover:text-red-500">Bé trai</a>
+          <a href="#" class="hover:text-red-500">Đồ dùng mẹ và bé</a>
+          <a href="#" class="hover:text-red-500">Trẻ em</a>
+        </nav>
       </div>
-
-      <div class="bar">
-        <div class="search-bar">
-          <input placeholder="Tìm kiếm" type="text" />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="20"
-            width="20.75"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-            />
-          </svg>
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <input type="text" placeholder="Tìm kiếm..." class="border rounded-md px-3 py-1 focus:outline-none" />
         </div>
-
-        <div class="header-icons">
-          <a href="cart.html">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="20"
-              width="20.75"
-              viewBox="0 0 448 512"
-            >
-              <path
-                d="M160 112c0-35.3 28.7-64 64-64s64 28.7 64 64l0 48-128 0 0-48zm-48 48l-64 0c-26.5 0-48 21.5-48 48L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-208c0-26.5-21.5-48-48-48l-64 0 0-48C336 50.1 285.9 0 224 0S112 50.1 112 112l0 48zm24 48a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm152 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"
-              />
-            </svg>
-          </a>
-        </div>
+        <button class="text-gray-700 hover:text-red-500">Đăng nhập</button>
+        <button class="text-gray-700 hover:text-red-500">Giỏ hàng</button>
       </div>
-
-      <a class="logo">
-        <img
-          class="img-fluid"
-          src="images/logo2.jpg"
-          alt="logo ABC Babyshop"
-          width="134"
-          height="45"
-        />
-      </a>
     </header>
 
-    <nav>
-      <ul>
-        <li>
-          <a href="#">Quần áo bé gái</a>
-          <ul class="top-menu-item">
-            <li><a href="">Váy đầm bé gái</a></li>
-            <li><a href="">Áo bé gái</a></li>
-            <li><a href="">Áo khoác bé gái</a></li>
-            <li><a href="">Quần trẻ em gái</a></li>
-            <li><a href="">Đồ bộ bé gái</a></li>
-            <li><a href="">Quần lót bé gái</a></li>
-            <li><a href="">Đồ bơi bé gái</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">Quần áo bé trai</a>
-          <ul class="top-menu-item">
-            <li><a href="">Áo thun bé trai</a></li>
-            <li><a href="">Áo sơ mi bé trai</a></li>
-            <li><a href="">Áo khoác bé trai</a></li>
-            <li><a href="">Quần kiểu bé trai</a></li>
-            <li><a href="">Quần jeans bé trai</a></li>
-            <li><a href="">Đồ bộ bé trai</a></li>
-            <li><a href="">Đồ bơi bé trai</a></li>
-            <li><a href="">Quần lót bé trai</a></li>
-            <li><a href="">Phụ kiện bé trai</a></li>
-          </ul>
-        </li>
-        <li><a href="">Đồ dùng mẹ và bé</a></li>
-        <li><a href="">Thời trang trẻ em</a></li>
-        <!-- <li><a href="">Bộ Sưu Tập</a></li>
-            <li><a href="">Tin Tức</a></li>
-            <li><a href="">Thông tin</a></li> -->
-      </ul>
-    </nav>
-    <!-- cart -->
-    <section class="cart-section p-to-top">
-      <div class="container">
-        <div style="font-style: bold" class="row-flex row-flex-product-detail">
-          <p>Giỏ Hàng</p>
+    <section class="container mx-auto mt-6 p-6 bg-white shadow rounded-lg">
+      <h2 class="text-xl font-semibold mb-4">Giỏ Hàng</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2">
+          <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="p-2 border">Ảnh</th>
+                <th class="p-2 border">Sản phẩm</th>
+                <th class="p-2 border">Thành tiền</th>
+                <th class="p-2 border">Xóa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border">
+                <td class="p-2 border"><img src="images/Ảnh1.webp" class="w-16" /></td>
+                <td class="p-2 border">Áo thun ngắn tay bé trai</td>
+                <td class="p-2 border">125.000đ</td>
+                <td class="p-2 border text-red-500 cursor-pointer">Xóa</td>
+              </tr>
+              <tr class="border">
+                <td class="p-2 border"><img src="images/Ảnh2.webp" class="w-16" /></td>
+                <td class="p-2 border">Áo thun ngắn tay phi hành gia</td>
+                <td class="p-2 border">125.000đ</td>
+                <td class="p-2 border text-red-500 cursor-pointer">Xóa</td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cập nhật giỏ hàng</button>
+          <a href="#" class="text-red-500 italic ml-4">>>Tiếp tục mua hàng</a>
         </div>
-        <div class="row-grid">
-          <div class="cart-section-left">
-            <h2 class="main-h2">Chi tiết đơn hàng</h2>
-            <div class="cart-section-left-detail">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Ảnh</th>
-                    <th>Sản phẩm</th>
-                    <th>Thành tiền</th>
-                    <th>Xóa</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <img style="width: 70px" src="images/Ảnh1.webp" alt="" />
-                    </td>
-                    <td style="text-align: left; padding-left: 12px">
-                      <div class="product-detail-right-infor">
-                        <h1 style="font-size: small">
-                          Áo thun ngắn tay bé trai
-                        </h1>
-                        <div
-                          style="font-size: small"
-                          class="product-item-price"
-                        >
-                          <p>
-                            125,300<sup>đ</sup><span>179,000<sup>đ</sup></span>
-                          </p>
-                        </div>
-                      </div>
-                      <div class="product-detail-right-quantity">
-                        <div class="product-detail-right-quantity-input">
-                          <i class="ri-subtract-line"></i>
-                          <input
-                            onKeyDown="return false"
-                            class="quantity-input"
-                            type="number"
-                            value="1"
-                          />
-                          <i class="ri-add-line"></i>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p>125.000<sup>đ</sup></p>
-                    </td>
-                    <td>Xóa</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img style="width: 70px" src="images/Ảnh2.webp" alt="" />
-                    </td>
-                    <td style="text-align: left; padding-left: 12px">
-                      <div class="product-detail-right-infor">
-                        <h1 style="font-size: small">
-                          Áo thun ngắn tay phi hành gia
-                        </h1>
-                        <div
-                          style="font-size: small"
-                          class="product-item-price"
-                        >
-                          <p>
-                            125,300<sup>đ</sup><span>179,000<sup>đ</sup></span>
-                          </p>
-                        </div>
-                      </div>
-                      <div class="product-detail-right-quantity">
-                        <div class="product-detail-right-quantity-input">
-                          <i class="ri-subtract-line"></i>
-                          <input
-                            onKeyDown="return false"
-                            class="quantity-input"
-                            type="number"
-                            value="1"
-                          />
-                          <i class="ri-add-line"></i>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p>125.000<sup>đ</sup></p>
-                    </td>
-                    <td>Xóa</td>
-                  </tr>
-                </tbody>
-              </table>
-              <button class="main-btn">Cập nhật giỏ hàng</button>
-              <a style="color: #ff99a1; font-style: italic" href="">
-                >>Tiếp tục mua hàng</a
-              >
-            </div>
-          </div>
-          <div style="padding: 10px;" class="cart-section-right">
-            <h2 class="main-h2">Thông Tin Giao Hàng</h2>
-            <div class="cart-section-right-input-name-phone">
-              <input type="text" placeholder="Họ và tên" name="" id=""/>
-              <input type="text" placeholder="Số điện thoại" name="" id=""/>
-            </div>
-            <div class="cart-section-right-input-email">
-              <input type="text" placeholder="Email" name="" id=""/>
-            </div>
-            <div class="cart-section-right-select">
-              <select name="" id="city">
-                <option value="">Tỉnh/Thành phố</option>
-              </select>
-              <select name="" id="district">
-                <option value="">Quận/Huyện</option>
-              </select>
-              <select name="" id="ward">
-                <option value="">Phường/Xã</option>
-              </select>
-            </div>
-            <div class="cart-section-right-input-address">
-              <input type="text" placeholder="Địa chỉ" name="" id=""/>
-            </div>
-            <div class="cart-section-right-input-note">
-              <input type="text" placeholder="Ghi chú" name="" id=""/>
-            </div>
-            <button class="main-btn">Đặt hàng</button>
-          </div>
+        <div class="p-4 border rounded bg-gray-50">
+          <h2 class="text-lg font-semibold mb-4">Thông Tin Giao Hàng</h2>
+          <input type="text" placeholder="Họ và tên" class="w-full border p-2 mb-2 rounded" />
+          <input type="text" placeholder="Số điện thoại" class="w-full border p-2 mb-2 rounded" />
+          <input type="text" placeholder="Email" class="w-full border p-2 mb-2 rounded" />
+          <input type="text" placeholder="Địa chỉ" class="w-full border p-2 mb-2 rounded" />
+          <button class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600">Đặt hàng</button>
         </div>
       </div>
     </section>
 
-    <!-- footer -->
-    <footer>
-      <div class="container">
-        <div class="row-grid">
-          <div class="footer-item">
-            <p>
-              BABY Store - là một trong những kênh mua sắm thời trang trẻ em
-              online đã và đang được rất nhiều ông bố, bà mẹ quan tâm, tin tưởng
-              nhất hiện nay, bởi khi mua sắm tại BABY Store quý khách không chỉ
-              tiết kiệm được rất nhiều thời gian mà có thể dễ dàng tìm thấy cho
-              bé đủ các loại quần áo thời trang, phụ kiện chất lượng cao từ sơ
-              sinh đến 8 tuổi dành cho cả bé trai lẫn bé gái
-            </p>
-          </div>
-          <div class="footer-item">
-            <p>BABY Store</p>
-            <p>Điện thoại:0123456789</p>
-          </div>
-          <div class="footer-item">
-            <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
-          </div>
-        </div>
-      </div>
+    <footer class="bg-gray-800 text-white p-6 mt-6 text-center">
+      <p>BABY Store - Thời trang trẻ em</p>
+      <p>Điện thoại: 0123456789</p>
+      <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
     </footer>
-
-    <div class="chat-container">
-      <div class="chat-icon" onclick="toggleChat()">💬</div>
-      <!-- Nút mở chat -->
-
-      <div class="chat-box" id="chatBox">
-        <div class="chat-header">
-          <span>💬 Hỗ trợ khách hàng</span>
-          <button class="close-btn" onclick="toggleChat()">❌</button>
-        </div>
-        <div class="chat-body" id="chatBody">
-          <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
-        </div>
-        <div class="chat-input">
-          <input type="text" id="userInput" placeholder="Nhập câu hỏi..." />
-          <button onclick="sendMessage()">Gửi</button>
-        </div>
-        <div class="chat-links">
-          <a href="https://m.me/yourpage" target="_blank">
-            <img src="images/mess.jpg" alt="Chat Messenger" /> Messenger
-          </a>
-          <a
-            href="https://id.zalo.me/account?continue=https%3A%2F%2Fchat.zalo.me%2F"
-            target="_blank"
-          >
-            <img src="images/zalo.jpg" alt="Chat Zalo" /> Zalo
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function toggleChat() {
-        const chatBox = document.getElementById("chatBox");
-        chatBox.style.display =
-          chatBox.style.display === "none" || chatBox.style.display === ""
-            ? "block"
-            : "none";
-      }
-
-      function sendMessage() {
-        const userInput = document.getElementById("userInput").value;
-        const chatBody = document.getElementById("chatBody");
-
-        if (userInput.trim() === "") return;
-
-        chatBody.innerHTML += `<p><strong>Bạn:</strong> ${userInput}</p>`;
-        document.getElementById("userInput").value = "";
-
-        setTimeout(() => {
-          chatBody.innerHTML += `<p><strong>Bot:</strong> ${getResponse(
-            userInput
-          )}</p>`;
-          chatBody.scrollTop = chatBody.scrollHeight;
-        }, 500);
-      }
-
-      function getResponse(question) {
-        const faq = {
-          "shop có miễn phí vận chuyển không":
-            "Shop miễn phí vận chuyển cho đơn hàng từ 500.000đ trở lên.",
-          "thời gian giao hàng bao lâu":
-            "Thời gian giao hàng từ 2-5 ngày tùy khu vực.",
-          "shop có đổi trả không":
-            "Shop hỗ trợ đổi trả trong vòng 7 ngày nếu sản phẩm lỗi hoặc không đúng mô tả.",
-          "shop có size cho bé 2 tuổi không":
-            "Shop có đầy đủ size cho bé từ sơ sinh đến 12 tuổi.",
-          "cách đặt hàng thế nào":
-            "Bạn có thể đặt hàng trực tiếp trên website hoặc inbox fanpage của shop.",
-        };
-
-        return (
-          faq[question.toLowerCase()] ||
-          "Xin lỗi, shop chưa có thông tin cho câu hỏi này. Bạn có thể liên hệ trực tiếp để được hỗ trợ!"
-        );
-      }
-    </script>
-    <script src="js/script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script src="js/apiprovince.js"></script>
   </body>
 </html>
