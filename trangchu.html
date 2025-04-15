@@ -1,138 +1,271 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f" />
+    <meta name="description" content="Shop quần áo trẻ em chất lượng cao" />
+    <meta name="keywords" content="quần áo trẻ em, shop trẻ em, thời trang trẻ em" />
     <title>Shop Online</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <section id="Slider">
-      <div class="aspect-ratio-169">
-        <img src="images/slider_1.webp" class="slide active" />
-        <img src="images/Ảnh9.jpg" class="slide" />
-        <img src="images/slider_5.webp" class="slide" />
-      </div>
-      <div class="dot-container">
-        <span class="dot active" onclick="changeSlide(0)"></span>
-        <span class="dot" onclick="changeSlide(1)"></span>
-        <span class="dot" onclick="changeSlide(2)"></span>
-      </div>
+
+<body class="bg-white font-sans m-0 p-0">
+    <header class="sticky top-0 z-[1000] bg-white shadow-md px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="images/logo1.jpg" alt="logo ABC Babyshop" class="w-[134px] h-auto block" />
+        </div>
+
+        <!-- Menu chính -->
+                <nav class="flex flex-wrap items-center gap-4 text-sm">
+            <!-- Dropdown: Bé gái -->
+            <div class="relative group">
+                <a href="category.html?category_id=1" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Bé gái</a>
+                <div href="category.html?category_id=1" class="absolute hidden group-hover:block bg-white shadow-lg rounded-md min-w-[200px] z-50">
+                    <a href="category.html?category_id=5" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Váy đầm bé gái</a>
+                    <a href="category.html?category_id=6" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo bé gái</a>
+                    <a href="category.html?category_id=7" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo khoác bé gái</a>
+                    <a href="category.html?category_id=8" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần trẻ em gái</a>
+                    <a href="category.html?category_id=9" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bộ bé gái</a>
+                    <a href="category.html?category_id=10" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bơi bé gái</a>
+                </div>
+            </div>
+        
+            <!-- Dropdown: Bé trai -->
+            <div class="relative group">
+                <a href="category.html?category_id=2" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Bé trai</a>
+                <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md min-w-[200px] z-50">
+                    <a href="category.html?category_id=11" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo thun bé trai</a>
+                    <a href="category.html?category_id=12" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo sơ mi bé trai</a>
+                    <a href="category.html?category_id=13" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo khoác bé trai</a>
+                    <a href="category.html?category_id=14" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần kiểu bé trai</a>
+                    <a href="category.html?category_id=15" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần jeans bé trai</a>
+                    <a href="category.html?category_id=16" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bộ bé trai</a>
+                    <a href="category.html?category_id=17" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bơi bé trai</a>
+                    <a href="category.html?category_id=18" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần lót bé trai</a>
+                    <a href="category.html?category_id=19" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Phụ kiện bé trai</a>
+                </div>
+            </div>
+    
+            <!-- Các link khác -->
+            <a href="category.html?category_id=3" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Đồ dùng mẹ và bé</a>
+            <a href="category.html?category_id=4" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Trẻ em</a>
+        </nav>
+
+        <!-- Thanh tìm kiếm -->
+        <div class="flex items-center w-[250px] rounded-full bg-white border border-[#81D4FA] px-4 py-2 shadow transition-all duration-300 focus-within:w-[550px]">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." class="flex-1 outline-none border-none text-[16px] bg-transparent placeholder:text-gray-400" />
+            <button onclick="searchProducts()" class="hover:text-[#0288D1]">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-[#333] hover:fill-[#0288D1]" viewBox="0 0 512 512">
+              <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+          </svg>
+      </button>
+        </div>
+        <script src="js/search.js"></script>
+
+        <!-- Tài khoản -->
+        <div class="user-account relative inline-block" id="userAccount">
+            <!-- Nội dung sẽ được cập nhật bằng JavaScript -->
+        </div>
+        <script src="js/acc.js"></script>
+
+        <!-- Thông báo -->
+        <div class="nav-item relative">
+            <a href="#" id="notification-icon" class="relative" onclick="toggleNotifications(event)">
+                <button class="bg-white text-black p-2 text-lg border-none rounded-md cursor-pointer transition-all duration-300 hover:bg-blue-500">
+            <!-- Biểu tượng chuông thông báo -->
+            <span class="text-xl" style="font-size: 1.5rem;">🔔</span>
+        </button>
+                <!-- Số lượng thông báo chưa đọc -->
+                <span id="unreadCount" class="bg-red-500 text-white text-xs rounded-full px-2 py-1 absolute top-0 right-0 hidden"></span>
+            </a>
+
+            <div id="notification-dropdown" class="hidden absolute bg-white shadow-lg p-4 rounded-lg w-64 mt-2 z-50 right-0">
+                <ul id="notification-list" class="text-black">
+                    <!-- Thông báo sẽ được tải động tại đây -->
+                </ul>
+            </div>
+        </div>
+        <script src="js/thongbao.js"></script>
+
+        <!-- Giỏ hàng -->
+        <div class="header-icons flex gap-2">
+            <a href="#">
+                <button onclick="toggleCart()" class="cart-btn bg-white text-black p-2 text-lg border-none rounded-md cursor-pointer transition-all duration-300 hover:bg-blue-500">
+        <span class="text-xl" style="font-size: 1.5rem;">🛒</span> <!-- Giỏ hàng -->
+      </button>
+            </a>
+        </div>
+    </header>
+    <!-- Các link khác -->
+    <div class="sticky top-[56px] z-[999] bg-white shadow-lg min-w-[160px]">
+        <div class="flex justify-center gap-4 px-4 py-2">
+            <a href="news.html" class="text-black hover:bg-[#81D4FA] px-4 py-2 rounded">Tin tức</a>
+            <a href="size-guide.html" class="text-black hover:bg-[#81D4FA] px-4 py-2 rounded">Hướng dẫn chọn size</a>
+            <a href="return-policy.html" class="text-black hover:bg-[#81D4FA] px-4 py-2 rounded">Chính sách đổi trả</a>
+            <a href="privacy-policy.html" class="text-black hover:bg-[#81D4FA] px-4 py-2 rounded">Chính sách bảo mật</a>
+            <a href="terms.html" class="text-black hover:bg-[#81D4FA] px-4 py-2 rounded">Điều khoản dịch vụ</a>
+        </div>
+    </div>
+
+    <section id="Slider" class="pb-8 border-b-2 border-sky-300 overflow-hidden w-screen relative">
+        <div class="relative pt-[51%] transition-all duration-300 ease-in-out" id="sliderContainer">
+            <img src="images/slider_1.webp" class="absolute w-full h-full top-0 left-0 slide active" />
+            <img src="images/Ảnh9.jpg" class="absolute w-full h-full top-0 left-0 slide" />
+            <img src="images/slider_5.webp" class="absolute w-full h-full top-0 left-0 slide" />
+        </div>
+
+        <div class="absolute w-full flex items-center justify-center mt-1.5 bottom-4 left-0 z-10 dot-container">
+            <span class="h-4 w-4 bg-[#A7C7E7] rounded-full mr-2 cursor-pointer dot active"></span>
+            <span class="h-4 w-4 bg-[#A7C7E7] rounded-full mr-2 cursor-pointer dot"></span>
+            <span class="h-4 w-4 bg-[#A7C7E7] rounded-full mr-2 cursor-pointer dot"></span>
+        </div>
     </section>
+    <script src="js/slider.js"></script>
 
-    <main>
-      <h2>Voucher tháng 3</h2>
-      <div class="voucher-container">
-          <div class="voucher" onclick="toggleVoucher(1)">
-              <div class="voucher-title">NHẬP MÃ: BABI15</div>
-              <div class="voucher-details" id="voucher-1">
-                  Giảm 15,000đ khi mua hóa đơn từ 0đ
-              </div>
-          </div>
-          <div class="voucher" onclick="toggleVoucher(2)">
-              <div class="voucher-title">NHẬP MÃ: BABI50</div>
-              <div class="voucher-details" id="voucher-2">
-              Giảm 50,000đ khi mua hóa đơn từ 550,000đ
-              </div>
-          </div>
-      </div>
+    <div class="main-content">
+        <h2 class="text-center text-2xl font-semibold text-gray-800 my-4">Voucher đang áp dụng</h2>
+        <div id="voucher-container" class="flex flex-wrap justify-center gap-4">
+            <!-- Vouchers sẽ được tải động tại đây -->
+        </div>
+    </div>
+    <script src="js/voucher.js"></script>
 
-      <h2>Ưu đãi tháng 3</h2>
+    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Ưu đãi tháng 3</h2>
+    <div class="product-list space-y-8">
+        <!-- Sản phẩm bán chạy -->
+        <div>
+            <h3 class="text-xl font-semibold text-center text-gray-800 mb-4">Sản phẩm bán chạy</h3>
+            <div id="best-sellers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Sản phẩm bán chạy sẽ được tải động tại đây -->
+            </div>
+        </div>
 
-      <div class="product-list">
-        <div class="product-list">
-          <?php foreach($best_sellers as $product): ?>
-              <div class="product">
-                  <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" />
-                  <p><?php echo htmlspecialchars($product['name']); ?></p>
-                  <p class="price"><?php echo number_format($product['price'], 0, ',', '.'); ?>₫ <del><?php echo number_format($product['discount_price'], 0, ',', '.'); ?>₫</del></p>
-              </div>
-          <?php endforeach; ?>
-      </div>
-
-      <h2>Sản phẩm nổi bật</h2>
-      <div class="product-list">
-          <?php foreach($featured_products as $product): ?>
-              <div class="product">
-                  <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" />
-                  <p><?php echo htmlspecialchars($product['name']); ?></p>
-                  <p class="price"><?php echo number_format($product['price'], 0, ',', '.'); ?>₫ <del><?php echo number_format($product['discount_price'], 0, ',', '.'); ?>₫</del></p>
-              </div>
-          <?php endforeach; ?>
-      </div>
-    </main>
-
-    <footer>
-      <p>BABY Store</p>
-      <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
-      <p>Điện thoại:0123456789</p>
-    </footer>
-
-    <div class="chat-container">
-      <div class="chat-icon" onclick="toggleChat()">💬</div>
-      <div class="chat-box" id="chatBox">
-          <div class="chat-header">
-              <span>💬 Hỗ trợ khách hàng</span>
-              <button class="close-btn" onclick="toggleChat()">❌</button>
-          </div>
-          <div class="chat-body" id="chatBody">
-              <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
-          </div>
-          <div class="chat-input">
-              <input type="text" id="userInput" placeholder="Nhập câu hỏi...">
-              <button onclick="sendMessage()">Gửi</button>
-          </div>
-          <div class="chat-links">
-              <a href="https://m.me/yourpage" target="_blank">
-                  <img src="images/messenger.webp" alt="Chat Messenger"> <!-- lưu ý đổi đường link-->
-              </a>
-              <a href="https://chat.zalo.me/" target="_blank">
-                  <img src="images/addthis-zalo.svg" alt="Chat Zalo">
-              </a>
-          </div>
-      </div>
-  </div>
+        <!-- Sản phẩm nổi bật -->
+        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Sản phẩm nổi bật</h2>
+        <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Sản phẩm nổi bật sẽ được tải động tại đây -->
+        </div>
+    </div>
 
     <script>
-      function toggleChat() {
-        const chatBox = document.getElementById("chatBox");
-        chatBox.style.display =
-          chatBox.style.display === "none" || chatBox.style.display === ""
-            ? "block"
-            : "none";
-      }
-
-      function sendMessage() {
-        const userInput = document.getElementById("userInput").value;
-        const chatBody = document.getElementById("chatBody");
-
-        if (userInput.trim() === "") return;
-
-        chatBody.innerHTML += `<p><strong>Bạn:</strong> ${userInput}</p>`;
-        document.getElementById("userInput").value = "";
-
-        setTimeout(() => {
-          chatBody.innerHTML += `<p><strong>Bot:</strong> ${getResponse(
-            userInput
-          )}</p>`;
-          chatBody.scrollTop = chatBody.scrollHeight;
-        }, 500);
-      }
-
-function getResponse(question) {
-    const faq = {
-        "shop có miễn phí vận chuyển không?": "Shop miễn phí vận chuyển cho đơn hàng từ 500.000đ trở lên.",
-        "thời gian giao hàng bao lâu?": "Thời gian giao hàng từ 2-5 ngày tùy khu vực.",
-        "shop có đổi trả không?": "Shop hỗ trợ đổi trả trong vòng 7 ngày nếu sản phẩm lỗi hoặc không đúng mô tả.",
-        "shop có size cho bé 2 tuổi không?": "Shop có đầy đủ size cho bé từ sơ sinh đến 12 tuổi.",
-        "cách đặt hàng thế nào?": "Bạn có thể đặt hàng trực tiếp trên website hoặc inbox fanpage của shop."
-    };
-
-    return faq[question.toLowerCase()] || "Xin lỗi, shop chưa có thông tin cho câu hỏi này. Bạn có thể liên hệ trực tiếp để được hỗ trợ!";
+        // Hàm tải sản phẩm bán chạy
+function loadBestSellers() {
+    fetch('PHP/get_products.php?type=best_sellers')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('best-sellers');
+            container.innerHTML = data.map(product => `
+      <div class="product bg-white rounded-lg shadow-md p-4 text-center transition-transform transform hover:scale-105">
+        <img src="${product.image_url.split(',')[0]}" alt="${product.name}" class="w-full h-auto rounded-lg mb-4" />
+        <p class="text-gray-700">${product.name}</p>
+        <p class="text-lg font-semibold text-blue-600">
+          ${new Intl.NumberFormat('vi-VN').format(product.discount_price)}₫
+          <del class="text-gray-500 text-sm ml-2">${new Intl.NumberFormat('vi-VN').format(product.price)}₫</del>
+        </p>
+        <p class="mt-4">
+            <a href="product_detail.html?product_id=${product.product_id}" class="text-blue-600 hover:underline font-semibold transition-colors duration-300 hover:text-blue-800">
+            Xem chi tiết
+        </a>
+        </p>
+      </div>
+    `).join('');
+        });
 }
-        </script>  
+
+
+        // Hàm tải sản phẩm nổi bật
+        function loadFeaturedProducts() {
+            fetch('PHP/get_products.php?type=featured_products')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('featured-products');
+                    container.innerHTML = data.map(product => `
+                        <div class="product bg-white rounded-lg shadow-md p-4 text-center transition-transform transform hover:scale-105">
+                            <img src="${product.image_url.split(',')[0]}" alt="${product.name}" class="w-full h-auto rounded-lg mb-4" />
+                            <p class="text-gray-700">${product.name}</p>
+                            <p class="text-lg font-semibold text-blue-600">
+                                ${new Intl.NumberFormat('vi-VN').format(product.discount_price)}₫
+                                <del class="text-gray-500 text-sm ml-2">${new Intl.NumberFormat('vi-VN').format(product.price)}₫</del>
+                            </p>
+                            <p class="mt-4">
+                                <a href="product_detail.html?product_id=${product.product_id}" class="text-blue-600 hover:underline font-semibold transition-colors duration-300 hover:text-blue-800">
+                                    Xem chi tiết
+                                </a>
+                            </p>
+                        </div>
+                    `).join('');
+                });
+        }
+        // Gọi các hàm khi trang được tải
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBestSellers();
+            loadFeaturedProducts();
+        });
+    </script>
+
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden w-[300px] h-[400px] relative">
+            <img src="images/slider_1.webp" alt="Khuyến mãi 1" class="w-full h-[200px] object-cover" />
+            <div class="p-4">
+                <h3 class="text-xl font-semibold">Giảm giá 20% cho đơn hàng đầu tiên</h3>
+                <p class="text-gray-600">Áp dụng cho tất cả sản phẩm trong cửa hàng.</p>
+            </div>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden w-[300px] h-[400px] relative">
+            <img src="images/slider_5.webp" alt="Khuyến mãi 2" class="w-full h-[200px] object-cover" />
+            <div class="p-4">
+                <h3 class="text-xl font-semibold">Miễn phí vận chuyển cho đơn hàng trên 500.000đ</h3>
+                <p class="text-gray-600">Chỉ áp dụng cho khu vực nội thành.</p>
+            </div>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden w-[300px] h-[400px] relative">
+            <img src="images/Ảnh9.jpg" alt="Khuyến mãi 3" class="w-full h-[200px] object-cover" />
+            <div class="p-4">
+                <h3 class="text-xl font-semibold">Mua 2 tặng 1 cho tất cả sản phẩm</h3>
+                <p class="text-gray-600">Chỉ áp dụng cho sản phẩm có giá trị thấp nhất.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-gray-800 text-white p-6 mt-6 text-center">
+        <p>BABY Store - Thời trang trẻ em</p>
+        <p>Điện thoại: 0123456789</p>
+        <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
+    </footer>
+
+    <div class="chat-container fixed bottom-5 right-5 z-50">
+        <div class="chat-icon w-12 h-12 bg-blue-500 text-white text-xl flex items-center justify-center rounded-full shadow-lg cursor-pointer transform transition-all duration-300 hover:bg-blue-600 hover:scale-110" onclick="toggleChat()">💬</div>
+
+        <div class="chat-box fixed bottom-20 right-5 w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hidden" id="chatBox">
+            <div class="chat-header bg-blue-200 text-black p-4 flex justify-between items-center font-bold">
+                <span>💬 Hỗ trợ khách hàng</span>
+                <button class="close-btn text-white text-xl" onclick="toggleChat()">❌</button>
+            </div>
+
+            <div class="chat-body bg-blue-100 p-4 flex flex-col gap-4 h-64 overflow-y-auto" id="chatBody">
+                <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
+            </div>
+
+            <div class="chat-input flex p-4 bg-blue-100">
+                <input type="text" id="userInput" placeholder="Nhập câu hỏi..." class="flex-1 p-2 rounded-lg border-none outline-none">
+                <button onclick="sendMessage()" class="bg-blue-300 text-black p-2 rounded-lg ml-2 cursor-pointer hover:bg-blue-400">Gửi</button>
+            </div>
+
+            <div class="chat-links flex justify-between items-center p-4 gap-4">
+                <a href="https://m.me/yourpage" target="_blank" class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300">
+                    <img src="images/messenger.webp" alt="Chat Messenger" class="mr-2 w-8 h-8"> Messenger
+                </a>
+                <a href="https://chat.zalo.me/" target="_blank" class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300">
+                    <img src="images/addthis-zalo.svg" alt="Chat Zalo" class="mr-2 w-8 h-8"> Zalo
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="js/chat.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/slider.js"></script>
-  </body>
+</body>
+
 </html>

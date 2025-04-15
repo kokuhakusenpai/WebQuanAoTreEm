@@ -38,7 +38,7 @@ orders.forEach(order => {
 
 function viewOrder(orderId) {
     localStorage.setItem("selectedOrderId", orderId);
-    window.location.href = "order_detail.html";
+    window.location.href = "pages/dh.html";
 }
 
 document.addEventListener("DOMContentLoaded", function () {

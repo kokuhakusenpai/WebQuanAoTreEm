@@ -3,7 +3,7 @@
 $user_id = 1; // Lấy từ session hoặc database
 
 // Kết nối database (giả sử đã có file kết nối db)
-include 'db.php';
+include 'config.php';
 
 // Kiểm tra xem user có địa chỉ chưa
 $query = "SELECT * FROM addresses WHERE user_id = $user_id";
