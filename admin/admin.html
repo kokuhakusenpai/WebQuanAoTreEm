@@ -1,0 +1,500 @@
+<html lang="vi">
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <title>Admin</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #cddffa;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body class="flex">
+        <!-- Sidebar -->
+        <div id="sidebar" class="w-80 bg-[#819ed2] h-screen p-4 flex flex-col transition-all duration-300">
+            <button id="toggleBtn" class="mb-4 p-2 bg-[#4e7cB1] text-white rounded">☰</button>
+            <nav class="flex flex-col space-y-4">
+                <a class="flex items-center text-black-500 sidebar-item" href="#" onclick="showUserManagement()">
+                    <i class="fas fa-user-cog mr-3"></i><span>Quản lý người dùng</span>
+                </a>
+                <a class="flex items-center text-black-500 sidebar-item" href="#" onclick="showProductManagement()">
+                    <i class="fas fa-tshirt mr-3"></i><span>Quản lý sản phẩm</span>
+                </a>
+                <a class="flex items-center text-black-500 sidebar-item" href="#" onclick="showOrderManagement()">
+                    <i class="fas fa-box mr-3"></i><span>Quản lý đơn hàng</span>
+                </a>
+                <a class="flex items-center text-black-500 sidebar-item" href="#" onclick="showPostManagement()">
+                    <i class="fas fa-newspaper mr-3"></i><span>Quản lý bài viết</span>
+                </a>
+                <a class="flex items-center text-black-500 sidebar-item" href="#">
+                    <i class="fas fa-paint-brush mr-3"></i><span>Quản lý giao diện</span>
+                </a>
+                <a class="flex items-center text-black-500 sidebar-item" href="#">
+                    <i class="fas fa-user-shield mr-3"></i><span>Quản lý thao tác người dùng</span>
+                </a>
+                <a class="flex items-center text-black-500 sidebar-item" href="#">
+                    <i class="fas fa-sign-out-alt mr-3"></i><span>Logout</span>
+                </a>
+            </nav>
+            <div class="mt-auto flex items-center space-x-2 user-info">
+                <img alt="User" class="w-8 h-8 rounded-full" src="https://storage.googleapis.com/a1aa/image/DowDsMFoPM6QF9GVeyuEJatkfRKMmnh-bsZPAEfflNM.jpg" />
+                <span class="text-black-500">User Name</span>
+            </div>
+        </div>        
+        
+        <!-- Main Content -->
+        <div class="w-4/5 p-4 flex flex-col space-y-4">
+            <div class="flex items-center bg-[#4e7cB1] p-2 rounded-lg">
+                <input class="bg-transparent flex-grow p-2 text-white outline-none" placeholder="Tìm kiếm..." type="text"/>
+                <i class="fas fa-search text-white"></i>
+            </div>
+            
+            <!-- Quản lý người dùng  -->
+            <div id="userManagement" class="bg-[#4e7cB1] p-4 rounded-lg hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-white">Quản lý người dùng</h2>
+                    <button class="bg-[#819ed2] text-white px-4 py-2 rounded" onclick="openAddUserModal()">+ Thêm người dùng</button>
+                </div>
+            
+                <!-- Danh sách người dùng -->
+                <table class="w-full bg-gray-700 text-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-[#819ed2]">
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Họ & Tên</th>
+                            <th class="p-3">Email</th>
+                            <th class="p-3">Vai trò</th>
+                            <th class="p-3">Trạng thái</th>
+                            <th class="p-3">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userList">
+                        <!-- Dữ liệu động từ CSDL -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Modal Thêm Người Dùng -->
+            <div id="addUserModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-white p-6 rounded-xl w-[600px] shadow-lg">
+                    <h2 class="text-2xl font-semibold text-gray-700 text-center mb-4">Thêm Người Dùng</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">ID (Tự động):</label>
+                            <input id="userId" type="text" class="border border-gray-300 p-2 w-full rounded-md bg-gray-200 text-black" disabled />
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Họ và Tên:</label>
+                            <input id="userName" type="text" placeholder="Nhập họ và tên" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Số điện thoại:</label>
+                            <input id="userPhone" type="tel" placeholder="Nhập số điện thoại" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Email:</label>
+                            <input id="userEmail" type="email" placeholder="Nhập email" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Địa chỉ:</label>
+                            <input id="userAddress" type="text" placeholder="Nhập địa chỉ" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Vai trò:</label>
+                            <select id="userRole" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black">
+                                <option value="admin">Admin</option>
+                                <option value="staff">Nhân viên</option>
+                                <option value="customer">Khách hàng</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Trạng thái tài khoản:</label>
+                            <select id="userStatus" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black">
+                                <option value="active">Hoạt động</option>
+                                <option value="locked">Bị khóa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300" onclick="closeAddUserModal()">Hủy</button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300" onclick="saveUser()">Lưu</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quản lý sản phẩm -->
+            <div id="productManagement" class="bg-[#4e7cB1] p-4 rounded-lg hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-white">Quản lý sản phẩm</h2>
+                    <button class="bg-[#819ed2] text-white px-4 py-2 rounded" onclick="openAddProductModal()">+ Thêm sản phẩm</button>
+                </div>
+                
+                <!-- Danh sách sản phẩm -->
+                <table class="w-full bg-gray-700 text-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-[#819ed2]">
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Tên sản phẩm</th>
+                            <th class="p-3">Giá</th>
+                            <th class="p-3">Danh mục</th>
+                            <th class="p-3">Trạng thái</th>
+                            <th class="p-3">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productList">
+                        <!-- Dữ liệu động từ CSDL -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Thêm Sản Phẩm -->
+            <div id="addProductModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-white p-6 rounded-xl w-[600px] shadow-lg">
+                    <h2 class="text-2xl font-semibold text-gray-700 text-center mb-4">Thêm Sản Phẩm</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">ID (Tự động):</label>
+                            <input id="productId" type="text" class="border border-gray-300 p-2 w-full rounded-md bg-gray-200 text-black" disabled />
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Tên sản phẩm:</label>
+                            <input id="productName" type="text" placeholder="Nhập tên sản phẩm" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Giá:</label>
+                            <input id="productPrice" type="number" placeholder="Nhập giá" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Danh mục:</label>
+                            <select id="productCategory" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black">
+                                <option value="clothes">Quần áo</option>
+                                <option value="shoes">Giày dép</option>
+                                <option value="accessories">Phụ kiện</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Số lượng:</label>
+                            <input id="productQuantity" type="number" placeholder="Nhập số lượng" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black"/>
+                        </div>
+                        <div>
+                            <label class="block text-gray-600 font-medium mb-1">Trạng thái:</label>
+                            <select id="productStatus" class="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-400 text-black">
+                                <option value="available">Còn hàng</option>
+                                <option value="out_of_stock">Hết hàng</option>
+                            </select>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">Hình ảnh:</label>
+                            <input id="productImage" type="file" class="border border-gray-300 p-2 w-full rounded-md text-black"/>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300" onclick="closeAddProductModal()">Hủy</button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300" onclick="saveProduct()">Lưu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quản lý đơn hàng -->
+            <div id="orderManagement" class="bg-[#4e7cB1] p-4 rounded-lg hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-white">Quản lý đơn hàng</h2>
+                    <button class="bg-[#819ed2] text-white px-4 py-2 rounded" onclick="openAddOrderModal()">+ Thêm đơn hàng</button>
+                </div>
+                <table class="w-full bg-gray-700 text-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-[#819ed2]">
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Khách hàng</th>
+                            <th class="p-3">Sản phẩm</th>
+                            <th class="p-3">Tổng tiền</th>
+                            <th class="p-3">Trạng thái</th>
+                            <th class="p-3">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody">
+                        <!-- Danh sách đơn hàng sẽ được thêm vào đây -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Thêm Đơn Hàng -->
+            <div id="addOrderModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-white p-6 rounded-xl w-[600px] shadow-lg">
+                    <h2 class="text-2xl font-semibold text-gray-700 text-center mb-4">Thêm Đơn Hàng</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">ID Đơn hàng (Tự động):</label>
+                            <input id="orderId" type="text" class="border border-gray-300 p-2 w-full rounded-md bg-gray-200 text-black" disabled />
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">Khách hàng:</label>
+                            <input id="customerName" type="text" placeholder="Nhập tên khách hàng" class="border border-gray-300 p-2 w-full rounded-md text-black"/>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">Sản phẩm:</label>
+                            <input id="productName" type="text" placeholder="Nhập tên sản phẩm" class="border border-gray-300 p-2 w-full rounded-md text-black"/>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">Tổng tiền:</label>
+                            <input id="totalPrice" type="text" placeholder="Nhập tổng tiền" class="border border-gray-300 p-2 w-full rounded-md text-black"/>
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-gray-600 font-medium mb-1">Trạng thái đơn hàng:</label>
+                            <select id="orderStatus" class="border border-gray-300 p-2 w-full rounded-md text-black">
+                                <option value="pending">Chờ xử lý</option>
+                                <option value="confirmed">Đã xác nhận</option>
+                                <option value="delivered">Đã giao</option>
+                                <option value="canceled">Đã hủy</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button class="bg-gray-500 text-white px-4 py-2 rounded-md" onclick="closeAddOrderModal()">Hủy</button>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md" onclick="saveOrder()">Lưu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quản lý bài viết -->
+            <div id="postManagement" class="bg-[#4e7cB1] p-4 rounded-lg hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-white">Quản lý Bài Viết</h2>
+                    <button class="bg-[#819ed2] text-white px-4 py-2 rounded" onclick="openAddPostModal()">+ Thêm Bài Viết</button>
+                </div>    
+                <table class="w-full bg-gray-700 text-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-[#819ed2]">
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Tiêu đề</th>
+                            <th class="p-3">Danh mục</th>
+                            <th class="p-3">Trạng thái</th>
+                            <th class="p-3">Ngày tạo</th>
+                            <th class="p-3">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postTableBody"></tbody>
+                </table>
+            </div>
+            
+            <!-- Modal Thêm Bài Viết -->
+            <div id="addPostModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                <div class="bg-white p-6 rounded-lg w-96">
+                    <h3 class="text-lg font-bold mb-4">Thêm Bài Viết</h3>
+                    <input type="text" id="postTitle" placeholder="Tiêu đề" class="w-full p-2 mb-2 border rounded">
+                    <input type="text" id="postCategory" placeholder="Danh mục" class="w-full p-2 mb-2 border rounded">
+                    <textarea id="postContent" placeholder="Nội dung" class="w-full p-2 mb-2 border rounded"></textarea>
+                    <select id="postStatus" class="w-full p-2 mb-2 border rounded">
+                        <option value="published">Công khai</option>
+                        <option value="draft">Nháp</option>
+                    </select>
+                    <button onclick="savePost()" class="bg-green-500 text-white px-4 py-2 rounded">Lưu</button>
+                    <button onclick="closeAddPostModal()" class="bg-red-500 text-white px-4 py-2 rounded">Hủy</button>
+                </div>
+            </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                showSection("userManagement"); // Ẩn các bảng khác khi vào trang
+                loadOrders(); 
+                // Xử lý toggle sidebar
+                const sidebar = document.getElementById("sidebar");
+                const toggleBtn = document.getElementById("toggleBtn");
+                if (toggleBtn) {
+                    toggleBtn.addEventListener("click", () => {
+                        sidebar.classList.toggle("w-20");
+                        sidebar.classList.toggle("w-1/5");
+                        
+                        document.querySelectorAll(".sidebar-item span").forEach(item => {
+                            item.classList.toggle("hidden");
+                        });
+                        
+                        const userInfo = document.querySelector(".user-info");
+                        if (userInfo) userInfo.classList.toggle("hidden");
+                    });
+                }
+            });
+            
+            // Hiển thị từng bảng và ẩn các bảng còn lại
+            function showSection(sectionId) {
+                ["userManagement", "productManagement", "orderManagement", "postManagement"].forEach(id => {
+                    document.getElementById(id).classList.add("hidden");
+                });
+                document.getElementById(sectionId).classList.remove("hidden");
+            }
+            
+            function showUserManagement() { // Quản lý người dùng
+                showSection("userManagement");
+            }
+            
+            function showProductManagement() { // Quản lý sản phẩm
+                showSection("productManagement");
+            }
+            
+            function showOrderManagement() { // Quản lý đơn hàng
+                showSection("orderManagement");
+                loadOrders();
+            }
+
+            function showPostManagement() { // Quản lý bài viết
+                showSection("postManagement");
+                loadOrders();
+            }
+            
+            function openAddUserModal() { // Mở/đóng modal thêm người dùng
+                document.getElementById("userId").value = "U" + Math.floor(Math.random() * 1000);
+                document.getElementById("addUserModal").classList.remove("hidden");
+            }
+
+            function closeAddUserModal() {
+                document.getElementById("addUserModal").classList.add("hidden");
+            }
+            
+            function saveUser() { // Lưu người dùng
+                let id = document.getElementById("userId").value;
+                let name = document.getElementById("userName").value;
+                let email = document.getElementById("userEmail").value;
+                let phone = document.getElementById("userPhone").value;
+                let address = document.getElementById("userAddress").value;
+                let role = document.getElementById("userRole").value;
+                let status = document.getElementById("userStatus").value;
+                
+                alert(`Đã thêm người dùng:\nID: ${id}\nTên: ${name}\nEmail: ${email}`);
+                closeAddUserModal();
+            }
+            
+            function openAddProductModal() { // Mở/đóng modal thêm sản phẩm
+                document.getElementById("productId").value = "SP" + Math.floor(Math.random() * 100000);
+                document.getElementById("addProductModal").classList.remove("hidden");
+            }
+            
+            function closeAddProductModal() {
+                document.getElementById("addProductModal").classList.add("hidden");
+            }
+            
+            function saveProduct() { // Lưu sản phẩm
+                const id = document.getElementById("productId").value;
+                const name = document.getElementById("productName").value;
+                const price = document.getElementById("productPrice").value;
+                const quantity = document.getElementById("productQuantity").value;
+                
+                if (!name || !price || !quantity) {
+                    alert("Vui lòng nhập đầy đủ thông tin!");
+                    return;
+                }
+                
+                alert(`Sản phẩm ID ${id} đã được thêm!`);
+                closeAddProductModal();
+            }
+            
+            function loadOrders() { // Quản lý đơn hàng
+                let orders = JSON.parse(localStorage.getItem("orders")) || [];
+                let tbody = document.getElementById("orderTableBody");
+                tbody.innerHTML = "";
+                orders.forEach((order, index) => {
+                    let row = `<tr class="border-b border-gray-600">
+                        <td class="p-3">${order.id}</td>
+                        <td class="p-3">${order.customer}</td>
+                        <td class="p-3">${order.product}</td>
+                        <td class="p-3">${order.total} VNĐ</td>
+                        <td class="p-3 ${order.status === "delivered" ? "text-green-400" : "text-yellow-400"}">${order.status}</td>
+                        <td class="p-3 flex space-x-2">
+                            <button class="bg-yellow-400 text-black px-2 py-1 rounded" onclick="editOrder(${index})">✏️</button>
+                            <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="deleteOrder(${index})">🗑️</button>
+                        </td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            }
+            
+            function saveOrder() {
+                let orders = JSON.parse(localStorage.getItem("orders")) || [];
+                let newOrder = {
+                    id: orders.length + 1,
+                    customer: document.getElementById("customerName").value, 
+                    product: document.getElementById("productName").value, 
+                    total: document.getElementById("totalPrice").value, 
+                    status: document.getElementById("orderStatus").value, 
+                };
+                orders.push(newOrder);
+                localStorage.setItem("orders", JSON.stringify(orders));
+                closeAddOrderModal();
+                loadOrders();
+            }
+            
+            function deleteOrder(index) {
+                let orders = JSON.parse(localStorage.getItem("orders")) || [];
+                orders.splice(index, 1);
+                localStorage.setItem("orders", JSON.stringify(orders));
+                loadOrders();
+            }
+            
+            function openAddOrderModal() { // Mở/đóng modal thêm đơn hàng
+                document.getElementById("addOrderModal").classList.remove("hidden");
+            }
+            
+            function closeAddOrderModal() {
+                document.getElementById("addOrderModal").classList.add("hidden");
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                loadPosts();
+            });
+            
+            function openAddPostModal() {
+                document.getElementById("addPostModal").classList.remove("hidden");
+            }
+            
+            function closeAddPostModal() {
+                document.getElementById("addPostModal").classList.add("hidden");
+            }
+            
+            function loadPosts() {
+                let posts = JSON.parse(localStorage.getItem("posts")) || [];
+                let tbody = document.getElementById("postTableBody");
+                tbody.innerHTML = "";
+                posts.forEach((post, index) => {
+                    let row = `<tr class='border-b border-gray-600'>
+                        <td class='p-3'>${post.id}</td>
+                        <td class='p-3'>${post.title}</td>
+                        <td class='p-3'>${post.category}</td>
+                        <td class='p-3 ${post.status === "published" ? "text-green-400" : "text-yellow-400"}'>${post.status}</td>
+                        <td class='p-3'>${post.date}</td>
+                        <td class='p-3 flex space-x-2'>
+                            <button class='bg-yellow-400 text-black px-2 py-1 rounded' onclick='editPost(${index})'>✏️</button>
+                            <button class='bg-red-500 text-white px-2 py-1 rounded' onclick='deletePost(${index})'>🗑️</button>
+                        </td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            }
+            
+            function savePost() {
+                let posts = JSON.parse(localStorage.getItem("posts")) || [];
+                let newPost = {
+                    id: posts.length + 1,
+                    title: document.getElementById("postTitle").value,
+                    category: document.getElementById("postCategory").value,
+                    content: document.getElementById("postContent").value,
+                    status: document.getElementById("postStatus").value,
+                    date: new Date().toLocaleDateString(),
+                };
+                posts.push(newPost);
+                localStorage.setItem("posts", JSON.stringify(posts));
+                closeAddPostModal();
+                loadPosts();
+            }
+            
+            function deletePost(index) {
+                let posts = JSON.parse(localStorage.getItem("posts")) || [];
+                posts.splice(index, 1);
+                localStorage.setItem("posts", JSON.stringify(posts));
+                loadPosts();
+            }
+        </script>
+    </body>
+    </html>    

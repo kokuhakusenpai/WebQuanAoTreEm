@@ -1,101 +1,116 @@
 body {
-  background-color: #fff5f7; /* Light pink background */
+  background-color: #fff; /* Light cyan background */
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
+/* Sticky Header */
 header {
-  background: #ffccd5; /* Light pink */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff; /* Light cyan background */
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-header input[type="text"] {
-  width: 500px; /* Adjust the width as needed */
-  padding: 9px;
-  border: 1px solid #ff99a1; /* Pink border */
-  border-radius: 5px;
+header a {
+  color: #4169E1; /* Màu chữ xanh */
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  transition: color 0.3s;
 }
 
-header button {
-  padding: 5px 10px;
-  background-color: #ff99a1; /* Pink */
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-}
-
-header button:hover {
-  background-color: #ff6673; /* Darker pink */
+header a:hover {
+  color: #01579B; 
 }
 
 .navbar {
-  background: #ffccd5; /* Light pink */
+  background: #B3E5FC; 
   display: flex;
   align-items: center;
   gap: 20px;
-
 }
 
-/* Dropdown Button */
-.dropdown {
+/* Logo */
+.logo img {
+  display: block;
+}
+
+.logo img {
+  width: 100px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 250px;
+  background: #fff;
+  border-radius: 25px;
+  padding: 8px;
+  border: 1px solid #81D4FA;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: width 0.3s ease-in-out;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 20px;
+  transition: width 0.3s ease-in-out;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.search-bar svg {
+  fill: #333;
+  width: 24px;
+  height: 24px;
+}
+
+.search-bar button:hover svg {
+  fill: #0288D1;
+}
+
+/* Khi input được focus, mở rộng thanh tìm kiếm */
+.search-bar.active {
+  width: 550px;
+}
+
+/* Dropdown Styling */
+.dropacc {
   position: relative;
   display: inline-block;
 }
 
-.dropbtn {
-  background: none;
+button.dropaccbtn {
+  background-color: #fff; /* Light pink */
+  color: black;
+  padding: 10px;
+  font-size: 16px;
   border: none;
   cursor: pointer;
-  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
-.dropbtn:hover {
-  background-color: #ff6673; /* Darker pink */
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  min-width: 160px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: #333;
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-/* Dropdown Button */
-.dropacc{
-  position: relative;
-  display: inline-block;
-}
-
-.dropaccbtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-}
-
-.dropaccbtn:hover {
-  background-color: #ff6673; /* Darker pink */
+.button.dropaccbtn:hover {
+  background-color: #0288D1; /* Darker pink */
 }
 
 .dropacc-content {
@@ -108,14 +123,14 @@ header button:hover {
 }
 
 .dropacc-content a {
-  color: #333;
+  color: black;
   padding: 10px;
   text-decoration: none;
   display: block;
 }
 
 .dropacc-content a:hover {
-  background-color: #f1f1f1;
+  background-color: #81D4FA;
 }
 
 .dropacc:hover .dropacc-content {
@@ -128,32 +143,13 @@ header button:hover {
 }
 
 .nav-item svg:hover {
-  fill: #ff6673; /* Darker pink */
+  fill: #007bff; 
 }
 
-/* Bar */
-.bar {
+/* Header Icons */
+.header-icons {
   display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 5px 10px;
-}
-
-.search-bar input {
-  border: none;
-  outline: none;
-  padding: 5px;
-}
-
-.search-bar:hover{
-  background-color: #ff6673; /* Darker pink */
+  gap: 10px;
 }
 
 .header-icons svg {
@@ -161,136 +157,13 @@ header button:hover {
 }
 
 .header-icons svg:hover {
-  fill: #ff6673; /* Darker pink */
+  fill: #007bff;
 }
 
-/* Logo */
-
-.logo img {
-  display: block;
-}
-
-.logo img {
-  width: 50px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
-}
-
-/* Navigation */
-nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  background-color: #ff99a1; /* Pink */
-  margin: 0;
-}
-
-nav ul li {
-  margin: 0 10px;
-  position: relative;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: blackblack;
-  font-weight: bold;
-  padding: 10px;
-  display: block;
-}
-
-nav ul li a:hover {
-  background-color: #ff6673; /* Darker pink */
-  border-radius: 5px;
-}
-
-.top-menu-item {
-  display: none;
-}
-
-.top-menu-item.show {
-  display: block;
-}
-
-/* Chat Box Styles */
-.chat-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-/* Nút mở chat */
-.chat-icon {
-  width: 50px;
-  height: 50px;
-  background: #ff99a1;
-  color: white;
-  text-align: center;
-  line-height: 50px;
-  border-radius: 50%;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.chat-box {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-box a {
-  background: #ffccd5; /* Light pink */
-  padding: 10px;
-  margin: 5px 0;
-  text-decoration: none;
-  color: black;
-  border-radius: 5px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-}
-
-.chat-box a img {
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
-
-.chat-box a:hover {
-  background: #ff6673; /* Darker pink */
-}
-
-.chat-header{
-  background: #ffccd5; /* Light pink */
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.chat-body{
-  background: #ffccd5; /* White */
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 300px;
-  overflow-y: auto;
-}
-
-footer {
-  background: #fff5f7; /* Light pink */
-  padding: 10px;
-  text-align: center;
-}
-
- /*d3*/
+/*Banner quảng cáo */
 #Slider {
   padding-bottom: 30px;
-  border-bottom: 2px solid #ff99a1; /* Pink */
+  border-bottom: 2px solid #4FC3F7; 
   overflow: hidden;
   width: 100vw;
 }
@@ -323,30 +196,113 @@ footer {
 .dot {
   height: 15px;
   width: 15px;
-  background-color: #ffccd5; /* Light pink */
+  background-color: #A7C7E7; /* Light pink */
   border-radius: 50%;
   margin-right: 6px;
   cursor: pointer;
 }
 
 .dot.active {
-  background-color: #ff6673; /* Darker pink */
+  background-color: #87CEEB; /* Darker pink */
 }
 
 h2 {
   text-align: center;
-  margin: 20px 0;
   color: #333;
+  margin-top: 20px;
 }
 
+/* Voucher */
 .voucher-container {
+  display: flex;
+  gap: 15px; /* Khoảng cách giữa các voucher */
+  justify-content: center;
+  flex-wrap: wrap; /* Đảm bảo không bị vỡ layout */
+}
+
+.voucher {
+  background: #B3E5FC;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s;
+  width: 200px;
   text-align: center;
 }
 
-/*d4*/
+.voucher:hover {
+  background: #81D4FA;
+  transform: scale(1.05);
+}
+
+.voucher-title {
+  font-weight: bold;
+  color: #4169E1;
+}
+
+.voucher-details {
+  display: none;
+  margin-top: 10px;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Hiển thị khi active */
+.voucher-details.active {
+  display: block;
+}
+/* Định dạng phần chứa bộ lọc */
+#sort-by {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa label và select */
+  background: #A7C7E7; 
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+/* Nhãn "Sắp xếp" */
+#sort-by label span {
+  font-weight: bold;
+  color: #4169E1; /* Màu chữ đỏ đậm */
+}
+
+/* Dropdown danh sách chọn */
+.content_ul {
+  padding: 8px;
+  border: 2px solid #4169E1; /* Viền hồng đậm */
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+/* Hover & focus vào select */
+.content_ul:hover, .content_ul:focus {
+  border-color: #87CEEB; /* Viền hồng nhạt khi hover */
+  outline: none;
+}
+
+/* Style option bên trong */
+.content_ul option {
+  padding: 10px;
+  background: white;
+}
+
+/* Hiệu ứng khi mở select */
+.content_ul:focus option {
+  background: #A7C7E7; /* Hồng rất nhạt */
+}
+
+/* Sản phẩm */
 .product-list {
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #E1F5FE;
   border-radius: 10px;
   margin-bottom: 20px;
 }
@@ -386,7 +342,7 @@ h2 {
 
 .product-list .price {
   font-weight: bold;
-  color: #e74c3c;
+  color: #0277BD;
   font-size: 18px;
 }
 
@@ -400,4 +356,162 @@ h2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
+}
+
+/* Chat Box Styles */
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Nút mở chat */
+.chat-icon {
+  width: 50px;
+  height: 50px;
+  background: #039BE5;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.chat-icon:hover {
+  background: #0288D1;
+  transform: scale(1.1);
+}
+
+/* Hộp chat */
+.chat-box {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Header của hộp chat */
+.chat-header {
+  background: #87CEEB;
+  color: black;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.chat-header .close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.chat-header .close-btn:hover {
+  color: #A7C7E7;
+}
+
+/* Nội dung chat */
+.chat-body {
+  background: #A7C7E7;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 250px;
+  overflow-y: auto;
+}
+
+/* Ô nhập tin nhắn */
+.chat-input {
+  display: flex;
+  padding: 10px;
+  background: #A7C7E7;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.chat-input button {
+  background:  #87CEEB;
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background: #039BE5;
+}
+
+.chat-links {
+  display: flex;
+  justify-content: space-between; /* Căn cách đều nhau */
+  align-items: center;
+  padding: 10px;
+  gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.chat-links a {
+  flex: 1; /* Căn đều chiều rộng */
+  display: flex; 
+  background: #87CEEB;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+  justify-content: center; /* Căn giữa nội dung */
+  align-items: center;
+}
+
+.chat-links a img {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.chat-links a:hover {
+  background: #039BE5;
+}
+
+
+/* Hiệu ứng fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Footer */
+footer {
+  background: #fff;
+  padding: 10px;
+  text-align: center;
 }

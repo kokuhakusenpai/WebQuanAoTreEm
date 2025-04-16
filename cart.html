@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <header class="bg-white shadow-md p-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="images/logo1.jpg" class="w-32" />
+        <nav class="hidden md:flex space-x-6 text-gray-700">
+          <a href="#" class="hover:text-red-500">Bé gái</a>
+          <a href="#" class="hover:text-red-500">Bé trai</a>
+          <a href="#" class="hover:text-red-500">Đồ dùng mẹ và bé</a>
+          <a href="#" class="hover:text-red-500">Trẻ em</a>
+        </nav>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <input type="text" placeholder="Tìm kiếm..." class="border rounded-md px-3 py-1 focus:outline-none" />
+        </div>
+        <button class="text-gray-700 hover:text-red-500">Đăng nhập</button>
+        <button class="text-gray-700 hover:text-red-500">Giỏ hàng</button>
+      </div>
+    </header>
+
+    <section class="container mx-auto mt-6 p-6 bg-white shadow rounded-lg">
+      <h2 class="text-xl font-semibold mb-4">Giỏ Hàng</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2">
+          <table class="w-full border-collapse border border-gray-300">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="p-2 border">Ảnh</th>
+                <th class="p-2 border">Sản phẩm</th>
+                <th class="p-2 border">Thành tiền</th>
+                <th class="p-2 border">Xóa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border">
+                <td class="p-2 border"><img src="images/Ảnh1.webp" class="w-16" /></td>
+                <td class="p-2 border">Áo thun ngắn tay bé trai</td>
+                <td class="p-2 border">125.000đ</td>
+                <td class="p-2 border text-red-500 cursor-pointer">Xóa</td>
+              </tr>
+              <tr class="border">
+                <td class="p-2 border"><img src="images/Ảnh2.webp" class="w-16" /></td>
+                <td class="p-2 border">Áo thun ngắn tay phi hành gia</td>
+                <td class="p-2 border">125.000đ</td>
+                <td class="p-2 border text-red-500 cursor-pointer">Xóa</td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cập nhật giỏ hàng</button>
+          <a href="#" class="text-red-500 italic ml-4">>>Tiếp tục mua hàng</a>
+        </div>
+        <div class="p-4 border rounded bg-gray-50">
+          <h2 class="text-lg font-semibold mb-4">Thông Tin Giao Hàng</h2>
+          <input type="text" placeholder="Họ và tên" class="w-full border p-2 mb-2 rounded" />
+          <input type="text" placeholder="Số điện thoại" class="w-full border p-2 mb-2 rounded" />
+          <input type="text" placeholder="Email" class="w-full border p-2 mb-2 rounded" />
+          <input type="text" placeholder="Địa chỉ" class="w-full border p-2 mb-2 rounded" />
+          <button class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600">Đặt hàng</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white p-6 mt-6 text-center">
+      <p>BABY Store - Thời trang trẻ em</p>
+      <p>Điện thoại: 0123456789</p>
+      <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
+    </footer>
+  </body>
+</html>

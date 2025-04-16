@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kết quả tìm kiếm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <a href="trangchu.html" class="text-blue-600 text-xl font-semibold">Trang chủ</a>
+    <div class="flex items-center w-[250px] rounded-full bg-white border border-[#81D4FA] px-4 py-2 shadow transition-all duration-300 focus-within:w-[550px]">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." class="flex-1 outline-none border-none text-[16px] bg-transparent placeholder:text-gray-400" />
+        <button onclick="searchProducts()" class="hover:text-[#0288D1]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-[#333] hover:fill-[#0288D1]" viewBox="0 0 512 512">
+                <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+            </svg>
+        </button>
+    </div>
+    <span id="searchQuery" class="text-gray-700 text-lg font-medium"></span>
+</header>
+
+<div class="container mx-auto p-4">
+    <div class="mb-6">
+        <select class="border rounded p-2 w-full sm:w-1/4" id="sortSelect" onchange="searchProducts()">
+            <option value="default">Mặc định</option>
+            <option value="Tên A → Z">Tên A → Z</option>
+            <option value="Tên Z → A">Tên Z → A</option>
+            <option value="Giá tăng dần">Giá tăng dần</option>
+            <option value="Giá giảm dần">Giá giảm dần</option>
+            <option value="Hàng mới">Hàng mới</option>
+        </select>
+    </div>
+
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Sản phẩm sẽ được tải động tại đây -->
+    </div>
+</div>
+
+<script>
+async function searchProducts() {
+    const query = document.getElementById('searchInput').value;
+    const sortBy = document.getElementById('sortSelect').value;
+
+    if (!query.trim()) {
+        document.getElementById('productGrid').innerHTML = '<p class="text-center text-gray-500">Vui lòng nhập từ khóa tìm kiếm.</p>';
+        return;
+    }
+
+    try {
+        // Gọi API để lấy kết quả tìm kiếm
+        const response = await fetch(`PHP/search_data.php?query=${encodeURIComponent(query)}&sort_by=${encodeURIComponent(sortBy)}`);
+        const data = await response.json();
+
+        const productGrid = document.getElementById('productGrid');
+        productGrid.innerHTML = '';
+
+        if (data.products.length > 0) {
+            // Hiển thị danh sách sản phẩm
+            productGrid.innerHTML = data.products.map(product => `
+                <div class="bg-white shadow-lg rounded-lg p-4">
+                    <a href="product_detail.php?product_id=${product.product_id}">
+                        <img src="${product.image_url.split(',')[0]}" alt="${product.name}" class="w-full h-auto rounded-lg mb-4" />
+                    </a>
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4">
+                        <a href="product_detail.php?product_id=${product.product_id}" class="hover:text-blue-600">
+                            ${product.name}
+                        </a>
+                    </h3>
+                    <p class="text-lg font-semibold text-blue-600"> Giá giảm:
+                        ${new Intl.NumberFormat('vi-VN').format(product.discount_price)}₫
+                        <del class="text-gray-500 text-sm ml-2">${new Intl.NumberFormat('vi-VN').format(product.price)}₫</del>
+                    </p>
+                    <p class="mt-4">
+                    <a href="product_detail.html?product_id=${product.product_id}" class="text-blue-600 hover:underline font-semibold transition-colors duration-300 hover:text-blue-800">
+                        Xem chi tiết
+                    </a>
+                </div>
+            `).join('');
+        } else {
+            // Hiển thị thông báo nếu không có sản phẩm
+            productGrid.innerHTML = '<p class="text-center text-gray-500">Không tìm thấy sản phẩm nào phù hợp.</p>';
+        }
+    } catch (error) {
+        document.getElementById('productGrid').innerHTML = '<p class="text-center text-red-500">Đã xảy ra lỗi khi tìm kiếm sản phẩm.</p>';
+        console.error(error);
+    }
+}
+
+// Gọi khi tải trang nếu có query trên URL
+document.addEventListener('DOMContentLoaded', async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('query');
+    const sortBy = urlParams.get('sort_by') || 'default';
+
+    if (query) {
+        document.getElementById('searchInput').value = query;
+        document.getElementById('sortSelect').value = sortBy;
+        await searchProducts();
+    }
+});
+</script>
+</body>
+</html>

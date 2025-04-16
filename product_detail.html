@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Product Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <a href="trangchu.html">Trang chủ</a>
+    <div class="flex items-center gap-4">
+        <div class="flex items-center w-[250px] rounded-full bg-white border border-[#81D4FA] px-4 py-2 shadow transition-all duration-300 focus-within:w-[550px]">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." class="flex-1 outline-none border-none text-[16px] bg-transparent placeholder:text-gray-400" />
+            <button onclick="searchProducts()" class="hover:text-[#0288D1]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-[#333] hover:fill-[#0288D1]" viewBox="0 0 512 512">
+                    <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="header-icons">
+            <a href="#">
+                <button onclick="toggleCart()" class="cart-btn bg-white text-black p-2 text-lg border-none rounded-md cursor-pointer transition-all duration-300 hover:bg-blue-500">
+                    <span class="text-xl" style="font-size: 1.5rem;">🛒</span>
+                </button>
+            </a>
+        </div>
+    </div>
+    <h2>Chi tiết sản phẩm</h2>
+</header>
+
+<div id="product-container" class="container mx-auto p-4"></div>
+<footer class="bg-gray-800 text-white p-6 mt-6 text-center">
+    <p>BABY Store - Thời trang trẻ em</p>
+    <p>Điện thoại: 0123456789</p>
+    <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
+</footer>
+
+<script >
+                document.addEventListener('DOMContentLoaded', () => {
+            const productId = new URLSearchParams(window.location.search).get('product_id');
+            const productContainer = document.getElementById('product-container');
+        
+            if (productId) {
+                fetch(`PHP/product_detail_logic.php?product_id=${productId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const { product, reviews } = data;
+        
+                        if (product) {
+                            productContainer.innerHTML = `
+    <div class="flex flex-col md:flex-row">
+    <!-- Left Column: Image Gallery -->
+    <div class="w-full md:w-1/2">
+        <!-- Main Image -->
+        <div class="mb-4">
+            <img 
+                id="mainImage" 
+                class="w-full" 
+                src="${product.image_url.split(',')[0]}" 
+                alt="${product.name}" 
+                onerror="this.src='images/default-image.jpg';"
+            >
+        </div>
+        <!-- Thumbnails -->
+        <div class="flex space-x-2">
+            ${product.image_url.split(',').map((image, index) => `
+                <img 
+                    class="w-16 h-16 cursor-pointer border border-gray-300 hover:border-blue-500" 
+                    src="${image.trim()}" 
+                    alt="Thumbnail ${index + 1}" 
+                    onclick="changeMainImage('${image.trim()}')" 
+                    onerror="this.src='images/default-thumbnail.jpg';"
+                >
+            `).join('')}
+        </div>
+    </div>
+
+    <!-- Right Column: Product Details -->
+    <div class="w-full md:w-1/2 md:pl-8">
+        <h1 class="text-2xl font-bold mb-2 text-[#4169E1]">${product.name}</h1>
+        <p class="text-gray-600 mb-4">
+            Mã sản phẩm: <span class="text-teal-500">${product.product_id}</span> |
+            Tình trạng: <span class="text-red-500">${product.status === 'available' ? 'Còn hàng' : 'Hết hàng'}</span>
+        </p>
+        <div class="text-3xl text-gray-500 font-bold mb-4">
+            <del>${new Intl.NumberFormat('vi-VN').format(product.price)}đ</del>
+        </div>
+        <div class="text-3xl text-red-500 font-bold mb-4">
+            ${new Intl.NumberFormat('vi-VN').format(product.discount_price)}đ
+        </div>
+        <div class="mb-4">
+            <p class="font-bold mb-2 text-[#4169E1]">Kích thước:</p>
+            <div class="grid grid-cols-3 gap-2">
+                ${product.size.split(',').map(size => `
+                    <button class="border border-gray-300 py-2 px-4">${size.trim()}</button>
+                `).join('')}
+            </div>
+        </div>
+        <div class="mb-4">
+            <p class="font-bold mb-2 text-[#4169E1]">Màu sắc:</p>
+            <div class="grid grid-cols-3 gap-2">
+                ${product.color.split(',').map(color => `
+                    <button class="border border-gray-300 py-2 px-4">${color.trim()}</button>
+                `).join('')}
+            </div>
+        </div>
+        <div class="mb-4">
+            <p class="font-bold mb-2 text-[#4169E1]">Số lượng:</p>
+            <div class="flex items-center">
+                <button class="border border-gray-300 py-2 px-4" onclick="changeQuantity(-1)">-</button>
+                <input id="quantity" class="w-12 text-center border border-gray-300 py-2" type="text" value="1"/>
+                <button class="border border-gray-300 py-2 px-4" onclick="changeQuantity(1)">+</button>
+            </div>
+        </div>
+        <div class="flex space-x-4">
+            <a href="cart.html" class="bg-red-500 text-white py-2 px-6">THÊM VÀO GIỎ</a>
+            <button class="bg-red-500 text-white py-2 px-6">MUA NGAY</button>
+        </div>
+        <div class="mt-6">
+            <h2 class="text-lg font-bold mb-2 text-[#4169E1]">Mô tả sản phẩm</h2>
+            <p class="text-gray-600">${product.description}</p>
+        </div>
+        <div class="mt-6">
+            <h2 class="text-lg font-bold mb-2 text-[#4169E1]">Đánh giá sản phẩm</h2>
+                <div id="reviews-container">
+                    ${reviews.length > 0 ? reviews.map(review => `
+                    <div class="border-b border-gray-300 py-4">
+                        <p class="font-bold text-[#0288D1]">${review.username || 'Người dùng ẩn danh'}</p>
+                        <p class="text-yellow-500">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</p>
+                        <p class="text-gray-600">${review.comment}</p>
+                        <p class="text-gray-400 text-sm">${new Date(review.created_at).toLocaleString('vi-VN')}</p>
+                    </div>
+                    `).join('') : '<p>Chưa có đánh giá nào.</p>'}
+                </div>
+        </div>
+    </div>
+</div>
+                            `;
+                        } else {
+                            productContainer.innerHTML = '<p>Sản phẩm không tồn tại.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching product:', error);
+                        productContainer.innerHTML = '<p>Đã xảy ra lỗi khi tải sản phẩm.</p>';
+                    });
+            } else {
+                productContainer.innerHTML = '<p>Không tìm thấy sản phẩm.</p>';
+            }
+        });
+// Function to change the main image when a thumbnail is clicked
+function changeMainImage(imageUrl) {
+        const mainImage = document.getElementById('mainImage');
+        mainImage.src = imageUrl;
+    }
+
+//tìm kiếm sản phẩm
+function searchProducts() {
+        const query = document.getElementById('searchInput').value;
+        window.location.href = 'search.html?query=' + encodeURIComponent(query);
+    }
+
+    function sortby(select) {
+        const query = document.getElementById('searchInput').value;
+        window.location.href = 'search.html?query=' + encodeURIComponent(query) + '&sort_by=' + select.value;
+    }
+</script>
+</body>
+</html>
