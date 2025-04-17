@@ -109,13 +109,13 @@
         </div>
     </div>
 
-    <section id="Slider" class="pb-8 border-b-2 border-sky-300 overflow-hidden w-screen relative">
-        <div class="relative pt-[51%] transition-all duration-300 ease-in-out" id="sliderContainer">
-            <img src="images/slider_1.webp" class="absolute w-full h-full top-0 left-0 slide active" />
-            <img src="images/Ảnh9.jpg" class="absolute w-full h-full top-0 left-0 slide" />
-            <img src="images/slider_5.webp" class="absolute w-full h-full top-0 left-0 slide" />
+    <section id="Slider" class="pb-8 border-b-2 border-sky-300 w-full relative overflow-hidden">
+        <div class="relative pt-[51%] max-w-full" id="sliderContainer">
+            <img src="images/slider_1.webp" class="absolute w-full h-full top-0 left-0 object-cover slide active" />
+            <img src="images/Ảnh9.jpg" class="absolute w-full h-full top-0 left-0 object-cover slide" />
+            <img src="images/slider_5.webp" class="absolute w-full h-full top-0 left-0 object-cover slide" />
         </div>
-
+    
         <div class="absolute w-full flex items-center justify-center mt-1.5 bottom-4 left-0 z-10 dot-container">
             <span class="h-4 w-4 bg-[#A7C7E7] rounded-full mr-2 cursor-pointer dot active"></span>
             <span class="h-4 w-4 bg-[#A7C7E7] rounded-full mr-2 cursor-pointer dot"></span>
@@ -205,7 +205,7 @@ function loadBestSellers() {
         });
     </script>
 
-    <div class="flex flex-wrap justify-center gap-4 mb-8">
+    <div class="flex flex-wrap justify-center gap-4 mb-8 100%">
         <div class="bg-white shadow-lg rounded-lg overflow-hidden w-[300px] h-[400px] relative">
             <img src="images/slider_1.webp" alt="Khuyến mãi 1" class="w-full h-[200px] object-cover" />
             <div class="p-4">
@@ -230,7 +230,7 @@ function loadBestSellers() {
     </div>
 
 
-    <footer class="bg-gray-800 text-white p-6 mt-6 text-center">
+    <footer class="bg-gray-800 text-white p-6 text-center fixed bottom-0 w-full">
         <p>BABY Store - Thời trang trẻ em</p>
         <p>Điện thoại: 0123456789</p>
         <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
