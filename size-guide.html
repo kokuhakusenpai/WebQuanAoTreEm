@@ -1,89 +1,276 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chọn size | BABY Store</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-  <!-- Header -->
-  <header class="bg-white shadow-md sticky top-0 z-50 p-4 flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <img src="images/logo1.jpg" alt="Logo" class="w-[120px] h-auto">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chọn size | BABY Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Header -->
+    <header
+      class="bg-white shadow-md sticky top-0 z-50 p-4 flex justify-between items-center"
+    >
+      <div class="flex items-center gap-2">
+        <img src="images/logo1.jpg" alt="Logo" class="w-[120px] h-auto" />
+      </div>
+      <nav class="flex gap-4">
+        <a
+          href="trangchu.html"
+          class="text-blue-600 font-medium hover:text-blue-800"
+          >Trang chủ</a
+        >
+        <a href="news.html" class="text-gray-600 hover:text-blue-600"
+          >Tin tức</a
+        >
+        <a
+          href="size-guide.html"
+          class="text-blue-800 font-semibold border-b-2 border-blue-600"
+          >Chọn size</a
+        >
+        <a href="return-policy.html" class="text-gray-600 hover:text-blue-600"
+          >Đổi trả</a
+        >
+        <a href="privacy-policy.html" class="text-gray-600 hover:text-blue-600"
+          >Bảo mật</a
+        >
+        <a href="terms.html" class="text-gray-600 hover:text-blue-600"
+          >Điều khoản dịch vụ</a
+        >
+      </nav>
+    </header>
+
+    <div class="max-w-4xl mx-auto p-6">
+      <h1 class="text-3xl font-bold text-orange-600 mb-6 text-center">
+        BẢNG SIZE
+      </h1>
+
+      <!-- Bảng size Trẻ sơ sinh -->
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-center text-blue-700 mb-4">
+          TRẺ SƠ SINH
+        </h2>
+        <div class="overflow-x-auto rounded-xl shadow">
+          <table
+            class="min-w-full table-auto border border-gray-200 bg-white text-center"
+          >
+            <thead class="bg-blue-100 text-blue-800">
+              <tr>
+                <th class="p-3 border">SIZE</th>
+                <th class="p-3 border">CHIỀU CAO (CM)</th>
+                <th class="p-3 border">CÂN NẶNG (KG)</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-700">
+              <tr>
+                <td class="p-3 border">6-9M</td>
+                <td class="p-3 border">75 - 80</td>
+                <td class="p-3 border">6 - 8</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">9-12M</td>
+                <td class="p-3 border">80 - 85</td>
+                <td class="p-3 border">8 - 9</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">12-18M</td>
+                <td class="p-3 border">85 - 88</td>
+                <td class="p-3 border">10 - 11</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">18-24M</td>
+                <td class="p-3 border">85 - 90</td>
+                <td class="p-3 border">11 - 12</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">24-36M</td>
+                <td class="p-3 border">90 - 95</td>
+                <td class="p-3 border">12 - 13</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-gray-500 mt-2 italic text-center">
+          *Bảng size mang tính chất tương đối, các thông số có thể dao động ±1cm
+          tuỳ mẫu.
+        </p>
+      </section>
+
+      <!-- Bảng size Bé trai & Bé gái -->
+      <section class="mb-10">
+        <h2 class="text-2xl font-semibold text-center text-blue-700 mb-4">
+          BÉ TRAI & BÉ GÁI
+        </h2>
+        <div class="overflow-x-auto rounded-xl shadow">
+          <table
+            class="min-w-full table-auto border border-gray-200 bg-white text-center"
+          >
+            <thead class="bg-blue-100 text-blue-800">
+              <tr>
+                <th class="p-3 border">SIZE</th>
+                <th class="p-3 border">CHIỀU CAO (CM)</th>
+                <th class="p-3 border">CÂN NẶNG (KG)</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-700">
+              <tr>
+                <td class="p-3 border">1Y</td>
+                <td class="p-3 border">70 - 80</td>
+                <td class="p-3 border">9 - 11</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">2Y</td>
+                <td class="p-3 border">80 - 85</td>
+                <td class="p-3 border">11 - 12</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">3Y</td>
+                <td class="p-3 border">85 - 90</td>
+                <td class="p-3 border">12 - 13</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">4Y</td>
+                <td class="p-3 border">90 - 95</td>
+                <td class="p-3 border">14 - 16</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">5Y</td>
+                <td class="p-3 border">95 - 105</td>
+                <td class="p-3 border">17 - 19</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">6Y</td>
+                <td class="p-3 border">105 - 110</td>
+                <td class="p-3 border">19 - 21</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">7Y</td>
+                <td class="p-3 border">110 - 115</td>
+                <td class="p-3 border">21 - 23</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">8Y</td>
+                <td class="p-3 border">115 - 120</td>
+                <td class="p-3 border">23 - 25</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">9Y</td>
+                <td class="p-3 border">120 - 125</td>
+                <td class="p-3 border">25 - 27</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">10Y</td>
+                <td class="p-3 border">125 - 135</td>
+                <td class="p-3 border">27 - 31</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">11Y</td>
+                <td class="p-3 border">135 - 140</td>
+                <td class="p-3 border">31 - 33</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">12Y</td>
+                <td class="p-3 border">140 - 145</td>
+                <td class="p-3 border">33 - 35</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">13Y</td>
+                <td class="p-3 border">145 - 150</td>
+                <td class="p-3 border">35 - 37</td>
+              </tr>
+              <tr>
+                <td class="p-3 border">14Y</td>
+                <td class="p-3 border">150 - 155</td>
+                <td class="p-3 border">37 - 40</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-gray-500 mt-2 italic text-center">
+          *Bảng size khá chuẩn với các bé nhà mình. Nếu bé mảnh mai, mẹ chọn
+          theo chiều cao; nếu bé mũm mĩm, mẹ chọn theo cân nặng nhé.
+        </p>
+      </section>
     </div>
-    <nav class="flex gap-4">
-      <a href="trangchu.html" class="text-blue-600 font-medium hover:text-blue-800">Trang chủ</a>
-      <a href="news.html" class="text-gray-600 hover:text-blue-600">Tin tức</a>
-      <a href="size-guide.html" class="text-blue-800 font-semibold border-b-2 border-blue-600">Chọn size</a>
-      <a href="return-policy.html" class="text-gray-600 hover:text-blue-600">Đổi trả</a>
-      <a href="privacy-policy.html" class="text-gray-600 hover:text-blue-600">Bảo mật</a>
-      <a href="terms.html" class="text-gray-600 hover:text-blue-600">Điều khoản dịch vụ</a>
-    </nav>
-  </header>
+    <footer
+      class="bg-gray-800 text-white p-6 text-center fixed bottom-0 w-full"
+    >
+      <p>BABY Store - Thời trang trẻ em</p>
+      <p>Điện thoại: 0123456789</p>
+      <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
+    </footer>
 
-  <div class="max-w-4xl mx-auto p-6">
-    <h1 class="text-3xl font-bold text-orange-600 mb-6 text-center">BẢNG SIZE</h1>
-
-    <!-- Bảng size Trẻ sơ sinh -->
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold text-center text-blue-700 mb-4">TRẺ SƠ SINH</h2>
-      <div class="overflow-x-auto rounded-xl shadow">
-        <table class="min-w-full table-auto border border-gray-200 bg-white text-center">
-          <thead class="bg-blue-100 text-blue-800">
-            <tr>
-              <th class="p-3 border">SIZE</th>
-              <th class="p-3 border">CHIỀU CAO (CM)</th>
-              <th class="p-3 border">CÂN NẶNG (KG)</th>
-            </tr>
-          </thead>
-          <tbody class="text-gray-700">
-            <tr><td class="p-3 border">6-9M</td><td class="p-3 border">75 - 80</td><td class="p-3 border">6 - 8</td></tr>
-            <tr><td class="p-3 border">9-12M</td><td class="p-3 border">80 - 85</td><td class="p-3 border">8 - 9</td></tr>
-            <tr><td class="p-3 border">12-18M</td><td class="p-3 border">85 - 88</td><td class="p-3 border">10 - 11</td></tr>
-            <tr><td class="p-3 border">18-24M</td><td class="p-3 border">85 - 90</td><td class="p-3 border">11 - 12</td></tr>
-            <tr><td class="p-3 border">24-36M</td><td class="p-3 border">90 - 95</td><td class="p-3 border">12 - 13</td></tr>
-          </tbody>
-        </table>
+    <div class="chat-container fixed bottom-5 right-5 z-50">
+      <div
+        class="chat-icon w-12 h-12 bg-blue-500 text-white text-xl flex items-center justify-center rounded-full shadow-lg cursor-pointer transform transition-all duration-300 hover:bg-blue-600 hover:scale-110"
+        onclick="toggleChat()"
+      >
+        💬
       </div>
-      <p class="text-sm text-gray-500 mt-2 italic text-center">*Bảng size mang tính chất tương đối, các thông số có thể dao động ±1cm tuỳ mẫu.</p>
-    </section>
 
-    <!-- Bảng size Bé trai & Bé gái -->
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold text-center text-blue-700 mb-4">BÉ TRAI & BÉ GÁI</h2>
-      <div class="overflow-x-auto rounded-xl shadow">
-        <table class="min-w-full table-auto border border-gray-200 bg-white text-center">
-          <thead class="bg-blue-100 text-blue-800">
-            <tr>
-              <th class="p-3 border">SIZE</th>
-              <th class="p-3 border">CHIỀU CAO (CM)</th>
-              <th class="p-3 border">CÂN NẶNG (KG)</th>
-            </tr>
-          </thead>
-          <tbody class="text-gray-700">
-            <tr><td class="p-3 border">1Y</td><td class="p-3 border">70 - 80</td><td class="p-3 border">9 - 11</td></tr>
-            <tr><td class="p-3 border">2Y</td><td class="p-3 border">80 - 85</td><td class="p-3 border">11 - 12</td></tr>
-            <tr><td class="p-3 border">3Y</td><td class="p-3 border">85 - 90</td><td class="p-3 border">12 - 13</td></tr>
-            <tr><td class="p-3 border">4Y</td><td class="p-3 border">90 - 95</td><td class="p-3 border">14 - 16</td></tr>
-            <tr><td class="p-3 border">5Y</td><td class="p-3 border">95 - 105</td><td class="p-3 border">17 - 19</td></tr>
-            <tr><td class="p-3 border">6Y</td><td class="p-3 border">105 - 110</td><td class="p-3 border">19 - 21</td></tr>
-            <tr><td class="p-3 border">7Y</td><td class="p-3 border">110 - 115</td><td class="p-3 border">21 - 23</td></tr>
-            <tr><td class="p-3 border">8Y</td><td class="p-3 border">115 - 120</td><td class="p-3 border">23 - 25</td></tr>
-            <tr><td class="p-3 border">9Y</td><td class="p-3 border">120 - 125</td><td class="p-3 border">25 - 27</td></tr>
-            <tr><td class="p-3 border">10Y</td><td class="p-3 border">125 - 135</td><td class="p-3 border">27 - 31</td></tr>
-            <tr><td class="p-3 border">11Y</td><td class="p-3 border">135 - 140</td><td class="p-3 border">31 - 33</td></tr>
-            <tr><td class="p-3 border">12Y</td><td class="p-3 border">140 - 145</td><td class="p-3 border">33 - 35</td></tr>
-            <tr><td class="p-3 border">13Y</td><td class="p-3 border">145 - 150</td><td class="p-3 border">35 - 37</td></tr>
-            <tr><td class="p-3 border">14Y</td><td class="p-3 border">150 - 155</td><td class="p-3 border">37 - 40</td></tr>
-          </tbody>
-        </table>
+      <div
+        class="chat-box fixed bottom-20 right-5 w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hidden"
+        id="chatBox"
+      >
+        <div
+          class="chat-header bg-blue-200 text-black p-4 flex justify-between items-center font-bold"
+        >
+          <span>💬 Hỗ trợ khách hàng</span>
+          <button class="close-btn text-white text-xl" onclick="toggleChat()">
+            ❌
+          </button>
+        </div>
+
+        <div
+          class="chat-body bg-blue-100 p-4 flex flex-col gap-4 h-64 overflow-y-auto"
+          id="chatBody"
+        >
+          <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
+        </div>
+
+        <div class="chat-input flex p-4 bg-blue-100">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Nhập câu hỏi..."
+            class="flex-1 p-2 rounded-lg border-none outline-none"
+          />
+          <button
+            onclick="sendMessage()"
+            class="bg-blue-300 text-black p-2 rounded-lg ml-2 cursor-pointer hover:bg-blue-400"
+          >
+            Gửi
+          </button>
+        </div>
+
+        <div class="chat-links flex justify-between items-center p-4 gap-4">
+          <a
+            href="https://m.me/yourpage"
+            target="_blank"
+            class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
+          >
+            <img
+              src="images/messenger.webp"
+              alt="Chat Messenger"
+              class="mr-2 w-8 h-8"
+            />
+            Messenger
+          </a>
+          <a
+            href="https://chat.zalo.me/"
+            target="_blank"
+            class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
+          >
+            <img
+              src="images/addthis-zalo.svg"
+              alt="Chat Zalo"
+              class="mr-2 w-8 h-8"
+            />
+            Zalo
+          </a>
+        </div>
       </div>
-      <p class="text-sm text-gray-500 mt-2 italic text-center">
-        *Bảng size khá chuẩn với các bé nhà mình. Nếu bé mảnh mai, mẹ chọn theo chiều cao; nếu bé mũm mĩm, mẹ chọn theo cân nặng nhé.
-      </p>
-    </section>
-
-  </div>
-</body>
+    </div>
+    <script src="js/chat.js"></script>
+  </body>
 </html>

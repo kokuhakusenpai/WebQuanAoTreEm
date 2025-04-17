@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'config.php'; // Kết nối database, nếu chưa có file config thì đổi theo tên db của bạn trên máy nhé :v
+include 'config.php';
 
 // Thêm sản phẩm vào giỏ hàng
 if (isset($_POST['add_to_cart'])) {
