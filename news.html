@@ -16,7 +16,7 @@
       </div>
       <nav class="flex gap-4">
         <a
-          href="trangchu.php"
+          href="trangchu.html"
           class="text-blue-600 font-medium hover:text-blue-800"
           >Trang chủ</a
         >
@@ -50,6 +50,7 @@
       </p>
     </section>
 
+    <div class="container mx-auto p-4 pb-32">
     <!-- Nội dung tin tức -->
     <main
       class="max-w-6xl mx-auto px-4 py-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
@@ -123,79 +124,86 @@
 
       <!-- Có thể thêm nhiều bài viết tương tự ở đây -->
     </main>
+    </div>
 
     <!-- Footer -->
-    <div class="chat-container fixed bottom-5 right-5 z-50">
+    <footer class="bg-gray-800 text-white p-6 text-center fixed bottom-0 w-full">
+      <p>BABY Store - Thời trang trẻ em</p>
+      <p>Điện thoại: 0123456789</p>
+      <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
+    </footer>
+
+  <div class="chat-container fixed bottom-5 right-5 z-50">
+    <div
+      class="chat-icon w-12 h-12 bg-blue-500 text-white text-xl flex items-center justify-center rounded-full shadow-lg cursor-pointer transform transition-all duration-300 hover:bg-blue-600 hover:scale-110"
+      onclick="toggleChat()"
+    >
+      💬
+    </div>
+
+    <div
+      class="chat-box fixed bottom-20 right-5 w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hidden"
+      id="chatBox"
+    >
       <div
-        class="chat-icon w-12 h-12 bg-blue-500 text-white text-xl flex items-center justify-center rounded-full shadow-lg cursor-pointer transform transition-all duration-300 hover:bg-blue-600 hover:scale-110"
-        onclick="toggleChat()"
+        class="chat-header bg-blue-200 text-black p-4 flex justify-between items-center font-bold"
       >
-        💬
+        <span>💬 Hỗ trợ khách hàng</span>
+        <button class="close-btn text-white text-xl" onclick="toggleChat()">
+          ❌
+        </button>
       </div>
 
       <div
-        class="chat-box fixed bottom-20 right-5 w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hidden"
-        id="chatBox"
+        class="chat-body bg-blue-100 p-4 flex flex-col gap-4 h-64 overflow-y-auto"
+        id="chatBody"
       >
-        <div
-          class="chat-header bg-blue-200 text-black p-4 flex justify-between items-center font-bold"
-        >
-          <span>💬 Hỗ trợ khách hàng</span>
-          <button class="close-btn text-white text-xl" onclick="toggleChat()">
-            ❌
-          </button>
-        </div>
+        <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
+      </div>
 
-        <div
-          class="chat-body bg-blue-100 p-4 flex flex-col gap-4 h-64 overflow-y-auto"
-          id="chatBody"
+      <div class="chat-input flex p-4 bg-blue-100">
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Nhập câu hỏi..."
+          class="flex-1 p-2 rounded-lg border-none outline-none"
+        />
+        <button
+          onclick="sendMessage()"
+          class="bg-blue-300 text-black p-2 rounded-lg ml-2 cursor-pointer hover:bg-blue-400"
         >
-          <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
-        </div>
+          Gửi
+        </button>
+      </div>
 
-        <div class="chat-input flex p-4 bg-blue-100">
-          <input
-            type="text"
-            id="userInput"
-            placeholder="Nhập câu hỏi..."
-            class="flex-1 p-2 rounded-lg border-none outline-none"
+      <div class="chat-links flex justify-between items-center p-4 gap-4">
+        <a
+          href="https://m.me/yourpage"
+          target="_blank"
+          class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
+        >
+          <img
+            src="images/messenger.webp"
+            alt="Chat Messenger"
+            class="mr-2 w-8 h-8"
           />
-          <button
-            onclick="sendMessage()"
-            class="bg-blue-300 text-black p-2 rounded-lg ml-2 cursor-pointer hover:bg-blue-400"
-          >
-            Gửi
-          </button>
-        </div>
-
-        <div class="chat-links flex justify-between items-center p-4 gap-4">
-          <a
-            href="https://m.me/yourpage"
-            target="_blank"
-            class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
-          >
-            <img
-              src="images/messenger.webp"
-              alt="Chat Messenger"
-              class="mr-2 w-8 h-8"
-            />
-            Messenger
-          </a>
-          <a
-            href="https://chat.zalo.me/"
-            target="_blank"
-            class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
-          >
-            <img
-              src="images/addthis-zalo.svg"
-              alt="Chat Zalo"
-              class="mr-2 w-8 h-8"
-            />
-            Zalo
-          </a>
-        </div>
+          Messenger
+        </a>
+        <a
+          href="https://chat.zalo.me/"
+          target="_blank"
+          class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
+        >
+          <img
+            src="images/addthis-zalo.svg"
+            alt="Chat Zalo"
+            class="mr-2 w-8 h-8"
+          />
+          Zalo
+        </a>
       </div>
     </div>
-    <script src="js/chat.js"></script>
+  </div>
+  <script src="js/chat.js"></script>
   </body>
 </html>

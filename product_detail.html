@@ -11,47 +11,99 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <header class="bg-white shadow-md p-4 flex justify-between items-center">
-      <a href="trangchu.html">Trang chủ</a>
-      <div class="flex items-center gap-4">
-        <div
-          class="flex items-center w-[250px] rounded-full bg-white border border-[#81D4FA] px-4 py-2 shadow transition-all duration-300 focus-within:w-[550px]"
-        >
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Tìm kiếm sản phẩm..."
-            class="flex-1 outline-none border-none text-[16px] bg-transparent placeholder:text-gray-400"
-          />
-          <button onclick="searchProducts()" class="hover:text-[#0288D1]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-6 h-6 fill-[#333] hover:fill-[#0288D1]"
-              viewBox="0 0 512 512"
-            >
-              <path
-                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-              />
-            </svg>
-          </button>
-        </div>
-        <div class="header-icons">
-          <a href="#">
-            <button
-              onclick="toggleCart()"
-              class="cart-btn bg-white text-black p-2 text-lg border-none rounded-md cursor-pointer transition-all duration-300 hover:bg-blue-500"
-            >
-              <span class="text-xl" style="font-size: 1.5rem">🛒</span>
-            </button>
-          </a>
-        </div>
+  <body class="bg-white font-sans m-0 p-0">
+    <header class="sticky top-0 z-[1000] bg-white shadow-md px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+      <!-- Logo -->
+      <div class="logo">
+          <a href="trangchu.html">
+            <img src="images/logo1.jpg" 
+            alt="logo ABC Babyshop" 
+            class="w-[134px] h-auto block" />
+          </a> 
       </div>
-      <h2>Chi tiết sản phẩm</h2>
-    </header>
+  
+      <!-- Menu chính -->
+      <nav class="flex flex-wrap items-center gap-4 text-sm">
+          <!-- Dropdown: Bé gái -->
+          <div class="relative group">
+              <a href="search.html?category_id=1" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Bé gái</a>
+              <div href="search.html?category_id=1" class="absolute hidden group-hover:block bg-white shadow-lg rounded-md min-w-[200px] z-50">
+                  <a href="search.html?category_id=5" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Váy đầm bé gái</a>
+                  <a href="search.html?category_id=6" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo bé gái</a>
+                  <a href="search.html?category_id=7" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo khoác bé gái</a>
+                  <a href="search.html?category_id=8" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần trẻ em gái</a>
+                  <a href="search.html?category_id=9" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bộ bé gái</a>
+                  <a href="search.html?category_id=10" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bơi bé gái</a>
+              </div>
+          </div>
+      
+          <!-- Dropdown: Bé trai -->
+          <div class="relative group">
+              <a href="search.html?category_id=2" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Bé trai</a>
+              <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md min-w-[200px] z-50">
+                  <a href="search.html?category_id=11" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo thun bé trai</a>
+                  <a href="search.html?category_id=12" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo sơ mi bé trai</a>
+                  <a href="search.html?category_id=13" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Áo khoác bé trai</a>
+                  <a href="search.html?category_id=14" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần kiểu bé trai</a>
+                  <a href="search.html?category_id=15" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần jeans bé trai</a>
+                  <a href="search.html?category_id=16" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bộ bé trai</a>
+                  <a href="search.html?category_id=17" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Đồ bơi bé trai</a>
+                  <a href="search.html?category_id=18" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Quần lót bé trai</a>
+                  <a href="search.html?category_id=19" class="block px-4 py-2 text-black hover:bg-[#81D4FA]">Phụ kiện bé trai</a>
+              </div>
+          </div>
+  
+          <!-- Các link khác -->
+          <a href="search.html?category_id=3" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Đồ dùng mẹ và bé</a>
+          <a href="search.html?category_id=4" class="text-blue-600 font-bold px-4 py-2 hover:text-[#01579B]">Trẻ em</a>
+      </nav>
+      <!-- Thanh tìm kiếm -->
+      <div class="flex items-center w-[250px] rounded-full bg-white border border-[#81D4FA] px-4 py-2 shadow transition-all duration-300 focus-within:w-[550px]">
+          <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." class="flex-1 outline-none border-none text-[16px] bg-transparent placeholder:text-gray-400" />
+          <button onclick="searchProducts()" class="hover:text-[#0288D1]">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-[#333] hover:fill-[#0288D1]" viewBox="0 0 512 512">
+                  <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+              </svg>
+          </button>
+      </div>
+      <!-- Tài khoản -->
+      <div class="user-account relative inline-block" id="userAccount">
+          <!-- Nội dung sẽ được cập nhật bằng JavaScript -->
+      </div>
+      <script src="js/acc.js"></script>
+  
+      <!-- Thông báo -->
+      <div class="nav-item relative">
+          <a href="#" id="notification-icon" class="relative" onclick="toggleNotifications(event)">
+              <button class="bg-white text-black p-2 text-lg border-none rounded-md cursor-pointer transition-all duration-300 hover:bg-blue-500">
+          <!-- Biểu tượng chuông thông báo -->
+          <span class="text-xl" style="font-size: 1.5rem;">🔔</span>
+      </button>
+              <!-- Số lượng thông báo chưa đọc -->
+              <span id="unreadCount" class="bg-red-500 text-white text-xs rounded-full px-2 py-1 absolute top-0 right-0 hidden"></span>
+          </a>
+  
+          <div id="notification-dropdown" class="hidden absolute bg-white shadow-lg p-4 rounded-lg w-64 mt-2 z-50 right-0">
+              <ul id="notification-list" class="text-black">
+                  <!-- Thông báo sẽ được tải động tại đây -->
+              </ul>
+          </div>
+      </div>
+      <script src="js/thongbao.js"></script>
+  
+      <!-- Giỏ hàng -->
+      <div class="header-icons flex gap-2">
+          <a href="#">
+      <button onclick="toggleCart()" class="cart-btn bg-white text-black p-2 text-lg border-none rounded-md cursor-pointer transition-all duration-300 hover:bg-blue-500">
+      <span class="text-xl" style="font-size: 1.5rem;">🛒</span> <!-- Giỏ hàng -->
+      </button>
+          </a>
+      </div>
+  </header>
 
-    <div id="product-container" class="container mx-auto p-4"></div>
-    <footer class="bg-gray-800 text-white p-6 text-center fixed bottom-0 w-full">
+  <div id="product-container" class="container mx-auto p-4 pb-32"></div>
+
+  <footer class="bg-gray-800 text-white p-6 text-center fixed bottom-0 w-full">
       <p>BABY Store - Thời trang trẻ em</p>
       <p>Điện thoại: 0123456789</p>
       <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
