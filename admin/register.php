@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="role">Vai trò:</label>
         <select id="role" name="role" required>
-            <option value="customer">Customer</option>
+            <option value="customer">Nhân viên</option>
             <option value="admin">Admin</option>
         </select>
     

@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h2 style="display: flex; justify-content: space-between; align-items: center;">
         Danh sách Người Dùng
-        <button class="btn-add" onclick="toggleForm()">+ Thêm Người Dùng</button>
+        <button><a href="#" onclick="loadContent('modules/qladmin/add_user.php')">+ Thêm bài viết</a></button>
     </h2>
     
     <!-- Form thêm người dùng -->
