@@ -1,5 +1,5 @@
 <?php
-include '../PHP/config.php';
+include 'config.php';
 
 $page = intval($_GET['page'] ?? 1);
 $genderId = intval($_GET['genderId'] ?? 0); // Get genderId from query string

@@ -33,28 +33,28 @@ if (isset($_GET['remove'])) {
 }
 
 // Xử lý thanh toán
-// if (isset($_POST['checkout'])) {
-//     $user_id = $_SESSION['user_id'] ?? null;
-//     $name = $_POST['name'];
-//     $phone = $_POST['phone'];
-//     $email = $_POST['email'];
-//     $address = $_POST['address'];
-//     $city = $_POST['city'];
-//     $district = $_POST['district'];
-//     $ward = $_POST['ward'];
-//     $total_price = array_sum(array_column($_SESSION['cart'], 'total'));
+if (isset($_POST['checkout'])) {
+    $user_id = $_SESSION['user_id'] ?? null;
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $district = $_POST['district'];
+    $ward = $_POST['ward'];
+    $total_price = array_sum(array_column($_SESSION['cart'], 'total'));
 
-//     $order_query = $conn->prepare("INSERT INTO orders (user_id, total_price) VALUES (?, ?)");
-//     $order_query->execute([$user_id, $total_price]);
-//     $order_id = $conn->lastInsertId();
+    $order_query = $conn->prepare("INSERT INTO orders (user_id, total_price) VALUES (?, ?)");
+    $order_query->execute([$user_id, $total_price]);
+    $order_id = $conn->lastInsertId();
 
-//     foreach ($_SESSION['cart'] as $product_id => $item) {
-//         $detail_query = $conn->prepare("INSERT INTO order_details (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
-//         $detail_query->execute([$order_id, $product_id, $item['quantity'], $item['price']]);
-//     }
+    foreach ($_SESSION['cart'] as $product_id => $item) {
+        $detail_query = $conn->prepare("INSERT INTO order_details (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
+        $detail_query->execute([$order_id, $product_id, $item['quantity'], $item['price']]);
+    }
     
-//     $_SESSION['cart'] = [];
-//     header("Location: success.html");
-//     exit();
-// }
+    $_SESSION['cart'] = [];
+    header("Location: success.html");
+    exit();
+}
 ?>
