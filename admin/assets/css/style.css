@@ -234,672 +234,116 @@
 
 /* ==================== Trang Chủ (Home Page) ==================== */
 
-/* Reset & Cơ bản */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body.home-page {
-    background-color: #fff;
-    color: #4169E1;
-    line-height: 1.6;
-    height: 100vh;
-    display: flex;
-}
-
-/* Container chính */
-.admin-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-/* SIDEBAR */
-.sidebar {
-    width: 250px;
-    background: #343a40;
-    color: white;
-    height: 100vh;
+.toast {
     position: fixed;
-    left: 0;
-    top: 0;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-/* Avatar người dùng */
-.sidebar .profile-container {
-    text-align: center;
-    margin-bottom: 20px;
+.toast.show {
+    opacity: 1;
 }
 
-.sidebar .profile-container .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #007bff;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
+@media (max-width: 640px) {
+    .sidebar {
+        width: 60px;
+    }
 
-.sidebar .profile-container .avatar:hover {
-    transform: scale(1.1);
-}
+    .sidebar:hover {
+        width: 200px;
+    }
 
-/* Menu */
-.sidebar h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
+    .main-content {
+        margin-left: 60px;
+    }
 }
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-    text-align: center;
-}
-
-.sidebar ul li {
-    margin: 15px 0;
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.sidebar ul li a:hover {
-    color: #00c1fe;
-}
-
-/* MAIN CONTENT */
-.main-content {
-    margin-left: 250px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    min-height: 100vh;
-    width: 100%;
-}
-
-/* HEADER */
-.main-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4169E1;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    /* position: relative; */
-    top: 0;
-    z-index: 10;
-}
-
-/* SEARCH BAR */
-.search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-bar input {
-    padding: 10px 35px 10px 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 300px;
-    outline: none;
-    transition: width 0.3s ease;
-}
-
-.search-bar input:focus {
-    width: 350px;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.search-icon {
-    position: absolute;
-    right: 10px;
-    font-size: 18px;
-    color: #999;
-    cursor: pointer;
-}
-
-.search-icon:hover {
-    color: #007bff;
-}
-
-/* BREADCRUMB */
-.breadcrumb {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-}
-
-.breadcrumb a {
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.breadcrumb a:hover {
-    color: #00050a;
-}
-
-.breadcrumb i {
-    display: none;
-    margin: 0 8px;
-    font-size: 14px;
-    color: #666;
-}
-
-.breadcrumb.active i {
-    display: inline-block;
-}
-
-/* DASHBOARD CONTENT */
-#dashboard-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
 
 /*  ======================== TRANG QUẢN LÝ ĐƠN HÀNG ======================== */
 
-/* Định dạng chung cho body */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
-
-/* Layout container chính */
-.admin-container {
-    display: flex;
+.toast.show {
+    opacity: 1;
 }
-
-/* Sidebar bên trái */
-.sidebar {
-    width: 250px;
-    background: #333;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin: 15px 0;
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: white;
-    display: block;
-    padding: 10px;
-    background: #444;
-    border-radius: 5px;
-}
-
-.sidebar ul li a:hover {
-    background: #555;
-}
-
-/* Nội dung chính bên phải */
-.main-content {
-    flex: 1;
-    padding: 20px;
-    background: white;
-    min-height: 100vh;
-}
-
-/* Bảng hiển thị danh sách đơn hàng */
-.orders-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-}
-
-.orders-table th, .orders-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-.orders-table th {
-    background: #4169E1;
-    color: white;
-}
-
-.orders-table tr:hover {
-    background: #f2f2f2;
-}
-
-/* Nút "Xem chi tiết" */
-.btn-view {
-    text-decoration: none;
-    color: white;
-    background: #007bff;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.btn-view:hover {
-    background: #0056b3;
-}
-
-/* Nút "Thêm đơn hàng" */
-.btn-add {
-    background: #4169E1;
-    color: white;
-    padding: 8px 12px;
-    text-decoration: none;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Form thêm đơn hàng */
-#addOrderForm {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-}
-
-#addOrderForm input, #addOrderForm select, #addOrderForm button {
-    margin-bottom: 10px;
-}
-
-/* Nút "Sửa đơn hàng" */
-.btn-edit {
-    background: #ffc107;
-    color: white;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-right: 5px;
-}
-
-/* Nút "Xóa đơn hàng" */
-.btn-delete {
-    background: #dc3545;
-    color: white;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-
 
 
 /* ========== PHẦN CSS CHO TRANG QUẢN LÝ NGƯỜI DÙNG ========== */
 
-/* Cấu trúc bảng người dùng */
-.users-table th, .users-table td {
-    padding: 10px;
-    text-align: center;
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-/* Nút "Thêm người dùng" */
-.btn-add {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;  /* Bo góc nút */
+.toast.show {
+    opacity: 1;
 }
-
-.btn-add:hover {
-    background-color: #218838;  /* Hiệu ứng hover */
-}
-
-/* Nút "Sửa người dùng" và "Xóa người dùng" */
-.btn-edit, .btn-delete {
-    padding: 5px 10px;
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    margin: 5px;
-    cursor: pointer;
-    border: none;
-    background: none;
-}
-
-.btn-edit {
-    background-color: #2196F3;
-}
-
-.btn-edit:hover {
-    background-color: #1e88e5; /* Hiệu ứng hover */
-}
-
-.btn-delete {
-    background-color: #f44336;
-}
-
-.btn-delete:hover {
-    background-color: #e53935; /* Hiệu ứng hover */
-}
-
-/* Form thêm người dùng */
-#addUserForm {
-    display: none;
-    padding: 15px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    max-width: 400px;
-    margin-bottom: 20px;
-}
-
-/* Định dạng các ô nhập liệu */
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* Định dạng bảng người dùng */
-table {
-    width: 100%;
-    border-collapse: collapse; 
-    margin-top: 20px;
-    background-color: white;
-    border-radius: 5px;  /* Bo góc bảng */
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
-}
-
-th, td {
-    border: 1px solid #ddd; /* Đường viền giữa các ô */
-    padding: 15px; /* Tăng padding để tạo khoảng trống đồng đều */
-    text-align: center; /* Căn giữa nội dung ô */
-    vertical-align: middle; /* Đảm bảo căn giữa theo chiều dọc */
-}
-
-th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold; /* Làm nổi bật tiêu đề */
-}
-
-/* Dòng màu khác nhau cho các ô trong bảng */
-tr:nth-child(even) {
-    background-color: #f9f9f9; /* Dòng màu khác nhau để dễ nhìn */
-}
-
-tr:hover {
-    background-color: #eaf4ff; /* Hiệu ứng hover khi di chuột */
-}
-
 
 /* ============= PHẦN CSS CHO TRANG QUẢN LÝ SẢN PHẨM ============= */
 
-/* Bảng sản phẩm */
-.products-table th, .products-table td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.products-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: white;
-}
-
-.products-table th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-}
-
-.products-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.products-table tr:hover {
-    background-color: #eaf4ff;
-}
-
-/* Nút thêm sản phẩm */
-.btn-add {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-add:hover {
-    background-color: #218838;
-}
-
-/* Nút sửa sản phẩm */
-.btn-edit {
-    background-color: #ffc107;
-    color: black;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-right: 5px;
-}
-
-/* Nút xóa sản phẩm */
-.btn-delete {
-    background-color: #dc3545;
-    color: white;
-    padding: 5px 10px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-/* Modal thêm/sửa sản phẩm */
-.modal {
-    display: none;
+.toast {
     position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
-
-.modal-content {
-    background-color: #fefefe;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-form input, form textarea, form select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    display: block;
-}
-
-form button {
-    padding: 10px 15px;
-    background-color:rgb(59, 113, 240);
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-edit, .btn-delete {
-    padding: 5px 10px;
-    margin: 0 3px;
-    display: inline-block;
-    text-decoration: none;
-}
-
-.btn-edit {
-    color: #2196F3;
-}
-
-.btn-delete {
-    color: #f44336;
-}
-
-.btn-add {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
+.toast.show {
+    opacity: 1;
 }
 
 
 /* ================== TRANG QUẢN LÝ GIAO DIỆN ===================== */
 
-/* Bỏ dấu chấm của danh sách và loại bỏ padding, margin mặc định */
-ul {
-    list-style: none; 
-    padding: 0;
-    margin: 0;
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
-
-/* Khoảng cách giữa các mục trong danh sách */
-ul li {
-    margin-bottom: 10px;
+.toast.show {
+    opacity: 1;
 }
-
-/* Liên kết trong danh sách có giao diện nút */
-ul li a {
-    display: block;
-    padding: 10px 15px;
-    text-decoration: none;
-    background-color: #007bff;
+.tab-active {
+    background-color: #3b82f6;
     color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    border-bottom: 2px solid #1d4ed8;
 }
 
-/* Hiệu ứng khi rê chuột vào mục */
-ul li a:hover {
-    background-color: #0056b3;
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* ================== TRANG QUẢN LÝ thao tác người dùng ===================== */
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
-
-/* Tùy chỉnh tiêu đề cho trang giao diện */
-h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+.toast.show {
+    opacity: 1;
 }
-
-
-/* ============ TRANG QUẢN LÝ THAO TÁC NGƯỜI DÙNG ============== */
-
-/* Xóa dấu đầu dòng và khoảng cách mặc định của danh sách */
-ul {
-    list-style: none; 
-    padding: 0;
-    margin: 0;
-}
-
-/* Khoảng cách giữa các mục trong danh sách thao tác */
-ul li {
-    margin-bottom: 10px;
-}
-
-/* Giao diện cho từng liên kết trong danh sách thao tác */
-ul li a {
-    display: block;
-    padding: 10px 15px;
-    text-decoration: none;
-    background-color: #444; /* Màu nền */
+.tab-active {
+    background-color: #3b82f6;
     color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    border-bottom: 2px solid #1d4ed8;
 }
-
-/* Hiệu ứng hover cho liên kết thao tác */
-ul li a:hover {
-    background-color: rgb(1, 9, 17); /* Màu nền khi hover */
-    color: #00c1fe;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Tiêu đề cho phần thống kê hoặc nhật ký thao tác */
-h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+.table-container {
+    overflow-x: auto;
 }
 

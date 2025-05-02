@@ -1,86 +1,144 @@
 <?php
+session_start();
 include('../../config/database.php');
-
-// Lấy dữ liệu hiện tại
-$query = "SELECT * FROM banners WHERE banner_id = 1"; // Bảng `banners` chứa thông tin banner
-$result = mysqli_query($conn, $query);
-$banner = mysqli_fetch_assoc($result);
 
 // Xử lý form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = mysqli_real_escape_string($conn, $_POST['title']); // Tiêu đề banner
-    $image_url = mysqli_real_escape_string($conn, $_POST['image_url']); // URL hình ảnh banner
-    $status = isset($_POST['status']) ? 1 : 0; // Trạng thái banner (hiển thị hoặc ẩn)
+    $title = trim($_POST['title']);
+    $image_url = trim($_POST['image_url']);
+    $status = isset($_POST['status']) ? 1 : 0;
 
-    $update = "UPDATE banners SET title = '$title', image_url = '$image_url', status = $status WHERE id = 1";
-    mysqli_query($conn, $update);
-    header("Location: banners.php"); // Chuyển hướng về trang quản lý banner
+    // Server-side validation
+    if (empty($title)) {
+        echo json_encode(['success' => false, 'message' => 'Tiêu đề banner không được để trống!']);
+        exit;
+    }
+    if (empty($image_url) || !filter_var($image_url, FILTER_VALIDATE_URL)) {
+        echo json_encode(['success' => false, 'message' => 'URL hình ảnh không hợp lệ!']);
+        exit;
+    }
+
+    // Cập nhật banner bằng prepared statement
+    $update_query = "UPDATE banner SET title = ?, image_url = ?, status = ? WHERE id = ?";
+    $stmt = $conn->prepare($update_query);
+    if ($stmt === false) {
+        error_log("Prepare failed: " . $conn->error);
+        echo json_encode(['success' => false, 'message' => 'Lỗi hệ thống khi chuẩn bị truy vấn.']);
+        exit;
+    }
+
+    $id = 1;
+    $stmt->bind_param("ssii", $title, $image_url, $status, $id);
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true, 'message' => 'Cập nhật banner thành công!']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Lỗi khi cập nhật: ' . $stmt->error]);
+    }
+    $stmt->close();
+    $conn->close();
     exit;
 }
+
+// Lấy dữ liệu hiện tại
+$query = "SELECT * FROM banner WHERE id = ?";
+$stmt = $conn->prepare($query);
+if ($stmt === false) {
+    error_log("Prepare failed: " . $conn->error);
+    die("Prepare failed: " . $conn->error);
+}
+$id = 1;
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$banner = $result->fetch_assoc();
+$stmt->close();
+$conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Quản Lý Banner</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .field-label {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #4A5568;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #E2E8F0;
-            background-color: #F7FAFC;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        .input-field:focus {
-            outline: none;
-            border-color: #4F46E5;
-            background-color: #fff;
-        }
-    </style>
-</head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
-    <div class="bg-white p-6 rounded-lg custom-shadow w-full max-w-3xl">
-        <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Quản Lý Banner</h2>
-        <form method="POST" action="banners.php" class="space-y-6">
-            <!-- Tiêu đề banner -->
-            <div>
-                <label for="title" class="field-label">Tiêu đề Banner:</label>
-                <input type="text" id="title" name="title" value="<?= $banner['title'] ?? '' ?>" placeholder="Nhập tiêu đề banner" required class="input-field">
-            </div>
+<div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl">
+    <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Quản Lý Banner</h2>
+    <form id="bannerForm" onsubmit="submitBannerForm(event)" class="space-y-6">
+        <div>
+            <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Tiêu đề Banner</label>
+            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($banner['title'] ?? ''); ?>" placeholder="Nhập tiêu đề banner" required class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-gray-50">
+            <p id="title_error" class="text-red-500 text-sm mt-1 hidden"></p>
+        </div>
+        <div>
+            <label for="image_url" class="block text-sm font-medium text-gray-700 mb-2">URL Hình Ảnh</label>
+            <input type="url" id="image_url" name="image_url" value="<?php echo htmlspecialchars($banner['image_url'] ?? ''); ?>" placeholder="Nhập URL hình ảnh" required class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-gray-50">
+            <p id="image_url_error" class="text-red-500 text-sm mt-1 hidden"></p>
+        </div>
+        <div>
+            <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Trạng Thái Hiển Thị</label>
+            <input type="checkbox" id="status" name="status" <?php echo !empty($banner['status']) ? 'checked' : ''; ?> class="h-5 w-5 text-blue-500 focus:ring-blue-500">
+            <span class="ml-2 text-gray-700">Hiển Thị</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <a href="javascript:void(0)" onclick="loadContent('banners', '/WEBQUANAOTREEM/admin/modules/qlgd/banners.php')" class="text-blue-600 hover:underline text-lg font-medium">
+                ← Quay lại
+            </a>
+            <button type="submit" id="submitBtn" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 flex items-center">
+                <span id="submitText">Lưu Banner</span>
+                <i id="submitSpinner" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
-            <!-- URL hình ảnh banner -->
-            <div>
-                <label for="image_url" class="field-label">URL Hình Ảnh:</label>
-                <input type="text" id="image_url" name="image_url" value="<?= $banner['image_url'] ?? '' ?>" placeholder="Nhập URL hình ảnh" required class="input-field">
-            </div>
+<script>
+    function submitBannerForm(event) {
+        event.preventDefault();
 
-            <!-- Trạng thái banner -->
-            <div>
-                <label for="status" class="field-label">Trạng Thái Hiển Thị:</label>
-                <input type="checkbox" id="status" name="status" <?= !empty($banner['status']) ? 'checked' : '' ?>> Hiển Thị
-            </div>
+        // Reset error messages
+        document.getElementById('title_error').classList.add('hidden');
+        document.getElementById('image_url_error').classList.add('hidden');
 
-            <!-- Nút hành động -->
-            <div class="flex justify-between items-center">
-                <a href="banners.php" class="text-blue-600 hover:underline text-lg font-medium">
-                    &#8592; Quay lại
-                </a>
-                <button type="submit" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700">
-                    Lưu Banner
-                </button>
-            </div>
-        </form>
-    </div>
-</body>
-</html>
+        const title = document.getElementById('title').value.trim();
+        const imageUrl = document.getElementById('image_url').value.trim();
+
+        // Client-side validation
+        if (!title) {
+            document.getElementById('title_error').textContent = 'Tiêu đề banner không được để trống!';
+            document.getElementById('title_error').classList.remove('hidden');
+            return;
+        }
+        const urlPattern = /^(https?:\/\/[^\s$.?#].[^\s]*)$/i;
+        if (!imageUrl || !urlPattern.test(imageUrl)) {
+            document.getElementById('image_url_error').textContent = 'URL hình ảnh không hợp lệ!';
+            document.getElementById('image_url_error').classList.remove('hidden');
+            return;
+        }
+
+        // Show loading spinner
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const submitSpinner = document.getElementById('submitSpinner');
+        submitBtn.disabled = true;
+        submitText.textContent = 'Đang lưu...';
+        submitSpinner.classList.remove('hidden');
+
+        const formData = new FormData(document.getElementById('bannerForm'));
+        fetch('/WEBQUANAOTREEM/admin/modules/qlgd/banners.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            submitBtn.disabled = false;
+            submitText.textContent = 'Lưu Banner';
+            submitSpinner.classList.add('hidden');
+
+            if (data.success) {
+                showToast(data.message, "success");
+            } else {
+                showToast(data.message, "error");
+            }
+        })
+        .catch(error => {
+            submitBtn.disabled = false;
+            submitText.textContent = 'Lưu Banner';
+            submitSpinner.classList.add('hidden');
+            showToast("Lỗi khi lưu banner: " + error.message, "error");
+        });
+    }
+</script>

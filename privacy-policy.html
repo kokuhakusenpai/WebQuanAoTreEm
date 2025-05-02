@@ -1,45 +1,81 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bảo mật | BABY Store</title>
+    <title>Chính sách bảo mật | BABY Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-50 text-gray-800 font-sans">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/feather-icons@4.28.0/dist/feather-sprite.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* Animated background */
+        .animated-bg {
+            background: linear-gradient(135deg, #fce7f3, #e0f2fe, #f3e8ff);
+            background-size: 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism effect */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        /* Hover scale effect */
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+
+        /* Fade-in animation for footer */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer gradient */
+        .footer-gradient {
+            background-image: linear-gradient(to bottom, #fce7f3, #dbeafe);
+        }
+    </style>
+</head>
+<body class="animated-bg text-gray-800 font-['Roboto'] flex flex-col min-h-screen">
     <!-- Header -->
-    <header
-      class="bg-white shadow-md sticky top-0 z-50 p-4 flex justify-between items-center"
-    >
-      <div class="flex items-center gap-2">
-        <img src="images/logo1.jpg" alt="Logo" class="w-[120px] h-auto" />
-      </div>
-      <nav class="flex gap-4">
-        <a
-          href="trangchu.html"
-          class="text-blue-600 font-medium hover:text-blue-800"
-          >Trang chủ</a
-        >
-        <a href="news.html" class="text-gray-600 hover:text-blue-600"
-          >Tin tức</a
-        >
-        <a href="size-guide.html" class="text-gray-600 hover:text-blue-600"
-          >Chọn size</a
-        >
-        <a href="return-policy.html" class="text-gray-600 hover:text-blue-600"
-          >Đổi trả</a
-        >
-        <a
-          href="privacy-policy.html"
-          class="text-blue-800 font-semibold border-b-2 border-blue-600"
-          >Bảo mật</a
-        >
-        <a href="terms.html" class="text-gray-600 hover:text-blue-600"
-          >Điều khoản dịch vụ</a
-        >
-      </nav>
+    <header class="bg-white shadow-md sticky top-0 z-50 p-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <a href="index.php">
+                <img src="assets/images/logo1.jpg" class="w-[120px] h-auto" loading="lazy" alt="Logo BABY Store" />
+            </a>
+        </div>
+        <nav class="hidden md:flex gap-4" id="main-nav">
+            <a href="pages/news.php" class="text-gray-600 hover:text-pink-400 transition-colors">Tin tức</a>
+            <a href="size-guide.html" class="text-gray-600 hover:text-pink-400 transition-colors">Chọn size</a>
+            <a href="return-policy.html" class="text-gray-600 hover:text-pink-400 transition-colors">Đổi trả</a>
+            <a href="#" class="text-transparent bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text font-semibold">Bảo mật</a>
+        </nav>
+        <!-- Nút hamburger cho mobile -->
+        <button id="menu-toggle" class="md:hidden text-gray-600 focus:outline-none" aria-label="Mở menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
     </header>
-    <div class="container mx-auto p-4 pb-32">
+    <div class="max-w-4xl mx-auto p-6">
       <h1 class="text-3xl font-bold text-orange-600 mb-6 text-center">
         Chính Sách Bảo Mật Thông Tin Khách Hàng
       </h1>
@@ -54,30 +90,22 @@
         </p>
       </section>
 
-      <section class="bg-white shadow-md rounded-xl p-6 mb-6">
-        <h2 class="text-2xl font-semibold text-orange-500 mb-4">
-          2. Phạm vi thu thập
-        </h2>
-        <ul class="list-disc pl-6 space-y-2 text-gray-700">
-          <li>Họ tên, số điện thoại, địa chỉ giao hàng</li>
-          <li>Email, tài khoản đăng nhập</li>
-          <li>Lịch sử mua hàng và phản hồi</li>
-        </ul>
-      </section>
+        <!-- Phạm vi thu thập -->
+        <section class="glass-container rounded-xl p-6 mb-6 hover:shadow-lg transition-shadow hover-scale">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">2. Phạm vi thu thập</h2>
+            <ul class="list-disc pl-6 space-y-2 text-gray-600">
+                <li>Họ tên, số điện thoại, địa chỉ giao hàng</li>
+                <li>Email, tài khoản đăng nhập</li>
+                <li>Lịch sử mua hàng và phản hồi</li>
+            </ul>
+        </section>
 
-      <section class="bg-white shadow-md rounded-xl p-6 mb-6">
-        <h2 class="text-2xl font-semibold text-orange-500 mb-4">
-          3. Bảo mật & lưu trữ thông tin
-        </h2>
-        <p class="text-gray-700 mb-2">
-          Chúng tôi cam kết bảo mật thông tin khách hàng bằng mọi biện pháp kỹ
-          thuật và an ninh. Dữ liệu được lưu trữ trên hệ thống nội bộ an toàn.
-        </p>
-        <p class="text-gray-700">
-          Thời gian lưu trữ: tối đa 5 năm hoặc đến khi khách hàng yêu cầu xoá
-          bỏ.
-        </p>
-      </section>
+        <!-- Bảo mật & lưu trữ thông tin -->
+        <section class="glass-container rounded-xl p-6 mb-6 hover:shadow-lg transition-shadow hover-scale">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">3. Bảo mật & lưu trữ thông tin</h2>
+            <p class="text-gray-600 mb-2">Chúng tôi cam kết bảo mật thông tin khách hàng bằng mọi biện pháp kỹ thuật và an ninh. Dữ liệu được lưu trữ trên hệ thống nội bộ an toàn.</p>
+            <p class="text-gray-600">Thời gian lưu trữ: tối đa 5 năm hoặc đến khi khách hàng yêu cầu xoá bỏ.</p>
+        </section>
 
       <section class="bg-white shadow-md rounded-xl p-6 mb-6">
         <h2 class="text-2xl font-semibold text-orange-500 mb-4">
@@ -110,83 +138,77 @@
         </p>
       </section>
     </div>
-    <footer class="bg-gray-800 text-white p-6 text-center fixed bottom-0 w-full">
-      <p>BABY Store - Thời trang trẻ em</p>
-      <p>Điện thoại: 0123456789</p>
-      <p>Địa chỉ: 123 Đường ABC, Hà Nội</p>
-    </footer>
-
-  <div class="chat-container fixed bottom-5 right-5 z-50">
-    <div
-      class="chat-icon w-12 h-12 bg-blue-500 text-white text-xl flex items-center justify-center rounded-full shadow-lg cursor-pointer transform transition-all duration-300 hover:bg-blue-600 hover:scale-110"
-      onclick="toggleChat()"
-    >
-      💬
-    </div>
-
-    <div
-      class="chat-box fixed bottom-20 right-5 w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hidden"
-      id="chatBox"
-    >
+    <div class="chat-container fixed bottom-5 right-5 z-50">
       <div
-        class="chat-header bg-blue-200 text-black p-4 flex justify-between items-center font-bold"
+        class="chat-icon w-12 h-12 bg-blue-500 text-white text-xl flex items-center justify-center rounded-full shadow-lg cursor-pointer transform transition-all duration-300 hover:bg-blue-600 hover:scale-110"
+        onclick="toggleChat()"
       >
-        <span>💬 Hỗ trợ khách hàng</span>
-        <button class="close-btn text-white text-xl" onclick="toggleChat()">
-          ❌
-        </button>
+        💬
       </div>
 
       <div
-        class="chat-body bg-blue-100 p-4 flex flex-col gap-4 h-64 overflow-y-auto"
-        id="chatBody"
+        class="chat-box fixed bottom-20 right-5 w-72 bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hidden"
+        id="chatBox"
       >
-        <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
-      </div>
+        <div
+          class="chat-header bg-blue-200 text-black p-4 flex justify-between items-center font-bold"
+        >
+          <span>💬 Hỗ trợ khách hàng</span>
+          <button class="close-btn text-white text-xl" onclick="toggleChat()">
+            ❌
+          </button>
+        </div>
 
-      <div class="chat-input flex p-4 bg-blue-100">
-        <input
-          type="text"
-          id="userInput"
-          placeholder="Nhập câu hỏi..."
-          class="flex-1 p-2 rounded-lg border-none outline-none"
-        />
-        <button
-          onclick="sendMessage()"
-          class="bg-blue-300 text-black p-2 rounded-lg ml-2 cursor-pointer hover:bg-blue-400"
+        <div
+          class="chat-body bg-blue-100 p-4 flex flex-col gap-4 h-64 overflow-y-auto"
+          id="chatBody"
         >
-          Gửi
-        </button>
-      </div>
+          <p><strong>Bot:</strong> Xin chào! Bạn cần hỗ trợ gì?</p>
+        </div>
 
-      <div class="chat-links flex justify-between items-center p-4 gap-4">
-        <a
-          href="https://m.me/yourpage"
-          target="_blank"
-          class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
-        >
-          <img
-            src="images/messenger.webp"
-            alt="Chat Messenger"
-            class="mr-2 w-8 h-8"
+        <div class="chat-input flex p-4 bg-blue-100">
+          <input
+            type="text"
+            id="userInput"
+            placeholder="Nhập câu hỏi..."
+            class="flex-1 p-2 rounded-lg border-none outline-none"
           />
-          Messenger
-        </a>
-        <a
-          href="https://chat.zalo.me/"
-          target="_blank"
-          class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
-        >
-          <img
-            src="images/addthis-zalo.svg"
-            alt="Chat Zalo"
-            class="mr-2 w-8 h-8"
-          />
-          Zalo
-        </a>
+          <button
+            onclick="sendMessage()"
+            class="bg-blue-300 text-black p-2 rounded-lg ml-2 cursor-pointer hover:bg-blue-400"
+          >
+            Gửi
+          </button>
+        </div>
+
+        <div class="chat-links flex justify-between items-center p-4 gap-4">
+          <a
+            href="https://m.me/yourpage"
+            target="_blank"
+            class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
+          >
+            <img
+              src="images/messenger.webp"
+              alt="Chat Messenger"
+              class="mr-2 w-8 h-8"
+            />
+            Messenger
+          </a>
+          <a
+            href="https://chat.zalo.me/"
+            target="_blank"
+            class="flex bg-blue-200 text-black p-2 rounded-lg justify-center items-center hover:bg-blue-300"
+          >
+            <img
+              src="images/addthis-zalo.svg"
+              alt="Chat Zalo"
+              class="mr-2 w-8 h-8"
+            />
+            Zalo
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="js/chat.js"></script>
+    <script src="js/chat.js"></script>
   </body>
 </html>
