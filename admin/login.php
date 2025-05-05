@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập Admin - BABY Store</title>
+    <title>Đăng nhập Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -240,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Phần minh họa bên trái -->
         <div class="login-illustration">
             <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="BABY Store Logo">
-            <h2 class="text-2xl font-bold mb-2">Chào mừng đến với SUSU Kids</h2>
+            <h2 class="text-2xl font-bold mb-2">Chào mừng đến với SUSU Hub</h2>
             <p class="text-sm opacity-80">Đăng nhập để quản lý cửa hàng của bạn!</p>
         </div>
 

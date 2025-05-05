@@ -1,12 +1,9 @@
 <?php
 session_start();
 include('../config/database.php');
+include('../components/header.php');
 
-// Khởi tạo session nếu chưa có
-if (session_status() == PHP_SESSION_NONE) {
-}
-
-// Danh mục cha và mục con (phong phú với danh mục mới)
+// Danh mục cha và mục con
 $categories = [
     "Bé Gái" => ["Váy", "Áo thun", "Quần jeans", "Áo khoác", "Đồ bộ"],
     "Bé Trai" => ["Áo thun", "Quần short", "Quần jeans", "Áo sơ mi", "Áo hoodie"],
@@ -23,27 +20,28 @@ if (isset($_POST['add_to_cart'])) {
     $product_id = mysqli_real_escape_string($conn, $_POST['product_id']);
     
     // Lấy thông tin sản phẩm từ cơ sở dữ liệu
-    $query = "SELECT * FROM products WHERE id = '$product_id'";
-    $result = mysqli_query($conn, $query);
-    $product = mysqli_fetch_assoc($result);
+    $query = "SELECT * FROM products WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $product = $result->fetch_assoc();
+    $stmt->close();
 
     if ($product) {
-        // Khởi tạo giỏ hàng nếu chưa có
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
 
-        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
         $found = false;
         foreach ($_SESSION['cart'] as &$item) {
             if ($item['id'] == $product_id) {
-                $item['quantity'] += 1; // Tăng số lượng nếu sản phẩm đã có
+                $item['quantity'] += 1;
                 $found = true;
                 break;
             }
         }
 
-        // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới
         if (!$found) {
             $_SESSION['cart'][] = [
                 'id' => $product['id'],
@@ -54,8 +52,8 @@ if (isset($_POST['add_to_cart'])) {
             ];
         }
 
-        // Chuyển hướng lại trang để tránh resubmit form
-        header("Location: " . $_SERVER['REQUEST_URI']);
+        // Thay đổi ở đây: sử dụng JavaScript thay vì header() PHP
+        echo "<script>window.location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>";
         exit();
     }
 }
@@ -64,17 +62,38 @@ if (isset($_POST['add_to_cart'])) {
 $category_filter = isset($_GET['category']) ? mysqli_real_escape_string($conn, $_GET['category']) : '';
 $subfilter = isset($_GET['subcategory']) ? mysqli_real_escape_string($conn, $_GET['subcategory']) : '';
 
-if ($subfilter) {
-    $query = "SELECT * FROM products WHERE subcategory = '$subfilter'";
-} elseif ($category_filter) {
-    $query = "SELECT * FROM products WHERE category = '$category_filter'";
-} else {
-    $query = "SELECT * FROM products";
-}
-$result = mysqli_query($conn, $query);
+$query = "SELECT p.* FROM products p LEFT JOIN category c ON p.category_id = c.id";
+$conditions = [];
 
-// Include header sau khi xử lý logic để tránh lỗi header already sent
-include('../components/header.php');
+if ($category_filter) {
+    $parent_id = null;
+    $stmt = $conn->prepare("SELECT id FROM category WHERE name = ? AND parent_id IS NULL");
+    $stmt->bind_param("s", $category_filter);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        $parent_id = $row['id'];
+    }
+    $stmt->close();
+    if ($parent_id) {
+        $conditions[] = "p.category_id = $parent_id OR p.category_id IN (SELECT id FROM category WHERE parent_id = $parent_id)";
+    }
+}
+
+if ($subfilter) {
+    $stmt = $conn->prepare("SELECT id FROM category WHERE name = ?");
+    $stmt->bind_param("s", $subfilter);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $subcategory_id = $result->fetch_assoc()['id'] ?? null;
+    $stmt->close();
+    if ($subcategory_id) {
+        $conditions[] = "p.category_id = $subcategory_id";
+    }
+}
+
+$query .= (count($conditions) > 0) ? " WHERE " . implode(" OR ", $conditions) : "";
+$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -154,7 +173,7 @@ include('../components/header.php');
 
         /* Để đảm bảo footer không bị che khuất */
         .main-content {
-            min-height: calc(100vh - 20rem); /* Điều chỉnh theo chiều cao của header và footer */
+            min-height: calc(100vh - 20rem);
         }
         /* Hiệu ứng khi thêm vào giỏ hàng và xem chi tiết */
         .action-button {
@@ -239,18 +258,20 @@ include('../components/header.php');
                 <div class="md:ml-8 flex-1">
                     <h2 class="text-4xl font-bold text-center bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-8">Tất Cả Sản Phẩm</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        <?php if (mysqli_num_rows($result) > 0) { ?>
+                        <?php if ($result && mysqli_num_rows($result) > 0) { ?>
                             <?php while ($product = mysqli_fetch_assoc($result)) { ?>
                                 <div class="bg-white/90 glass-container rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover-scale">
-                                    <img src="../assets/images/<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="w-full h-64 object-cover rounded-t-lg">
+                                <img src="<?php echo !empty($product['image']) ? (strpos($product['image'], '/') === 0 ? htmlspecialchars($product['image']) : '../' . htmlspecialchars($product['image'])) : '../assets/images/product-placeholder.jpg'; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="w-full h-64 object-cover rounded-t-lg">
                                     <div class="p-4 flex justify-between items-center">
                                         <div>
-                                            <h3 class="text-xl font-semibold text-gray-800"><?php echo $product['name']; ?></h3>
+                                            <h3 class="text-xl font-semibold text-gray-800"><?php echo htmlspecialchars($product['name']); ?></h3>
                                             <p class="text-lg text-pink-600 font-semibold my-2"><?php echo number_format($product['price'], 0, ',', '.') . ' VNĐ'; ?></p>
                                         </div>
                                         <div class="action-buttons">
                                             <!-- Nút Xem Chi Tiết (biểu tượng con mắt) -->
-                                            <a href="product_details.php?id=<?php echo $product['id']; ?>" class="action-button p-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition duration-300" title="Xem chi tiết">
+                                            <a href="product_details.php?id=<?php echo htmlspecialchars($product['id']); ?>" 
+                                               class="action-button p-2 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition duration-300" 
+                                               title="Xem chi tiết">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -258,8 +279,10 @@ include('../components/header.php');
                                             </a>
                                             <!-- Nút Thêm vào giỏ hàng -->
                                             <form method="POST" action="">
-                                                <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                                                <button type="submit" name="add_to_cart" class="action-button p-2 bg-pink-400 text-white rounded-lg hover:bg-pink-500 transition duration-300" title="Thêm vào giỏ hàng">
+                                                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
+                                                <button type="submit" name="add_to_cart" 
+                                                        class="action-button p-2 bg-pink-400 text-white rounded-lg hover:bg-pink-500 transition duration-300" 
+                                                        title="Thêm vào giỏ hàng">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                                     </svg>

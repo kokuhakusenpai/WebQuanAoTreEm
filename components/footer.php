@@ -34,9 +34,6 @@
                 <p class="text-gray-600"><i class="fas fa-map-marker-alt mr-2 text-pink-400"></i> Địa chỉ: 123 Đường ABC, TP. Hà Nội</p>
             </div>
         </div>
-        <div class="border-t border-gray-200 mt-8 pt-6 text-center">
-            <p class="text-gray-500 text-sm">© 2025 SUSU KIDS. Tất cả quyền được bảo lưu.</p>
-        </div>
     </div>
 </footer>
 

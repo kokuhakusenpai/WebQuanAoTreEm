@@ -12,60 +12,14 @@ $base_url = '/WEBQUANAOTREEM';
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    <style>
-        /* Glassmorphism effect */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-        }
-
-        /* Bright animated background */
-        .animated-bg {
-            background: linear-gradient(135deg, #fce7f3, #e0f2fe, #f3e8ff);
-            background-size: 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Button shimmer effect */
-        .btn-shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-shimmer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.5s;
-        }
-        .btn-shimmer:hover::after {
-            left: 100%;
-        }
-
-        /* Hover scale effect */
-        .hover-scale {
-            transition: transform 0.3s ease;
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/styles.css"/>
 </head>
-<body class="animated-bg font-roboto text-gray-800">
+<body class="animated-bg font-roboto text-gray-800 about-page">
     <!-- Include Header -->
     <?php include('../components/header.php'); ?>
 
     <!-- Main Content -->
-    <main class="pt-20 pb-12">
+    <main class="pt-6 pb-6">
         <!-- Hero Section -->
         <section class="py-12">
             <div class="container mx-auto px-4 text-center">
@@ -134,28 +88,28 @@ $base_url = '/WEBQUANAOTREEM';
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/product1.jpg" alt="Bộ quần áo bé gái" class="w-full h-48 object-cover" loading="lazy" />
-                        <div class="p-4 text-center">
-                            <h4 class="text-lg font-semibold text-gray-800">Bộ Quần Áo Bé Gái</h4>
-                            <p class="text-gray-600">Thiết kế đáng yêu, thoải mái cho bé yêu.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/product2.jpg" alt="Áo thun bé trai" class="w-full h-48 object-cover" loading="lazy" />
-                        <div class="p-4 text-center">
-                            <h4 class="text-lg font-semibold text-gray-800">Áo Thun Bé Trai</h4>
-                            <p class="text-gray-600">Phong cách năng động, chất liệu thoáng mát.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/product3.jpg" alt="Váy công chúa" class="w-full h-48 object-cover" loading="lazy" />
+                        <img src="<?php echo $base_url; ?>/assets/images/vaycongchua1.jpg" alt="Váy bé gái" class="w-full h-48 object-cover" loading="lazy" />
                         <div class="p-4 text-center">
                             <h4 class="text-lg font-semibold text-gray-800">Váy Công Chúa</h4>
                             <p class="text-gray-600">Lộng lẫy cho những dịp đặc biệt.</p>
                         </div>
                     </div>
                     <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/product4.jpg" alt="Bộ pijama bé" class="w-full h-48 object-cover" loading="lazy" />
+                        <img src="<?php echo $base_url; ?>/assets/images/aothun4.jpg" alt="Áo thun bé trai" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-4 text-center">
+                            <h4 class="text-lg font-semibold text-gray-800">Áo Thun Bé Trai</h4>
+                            <p class="text-gray-600">Phong cách năng động, chất liệu thoáng mát.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
+                        <img src="<?php echo $base_url; ?>/assets/images/boquanao1.jpg" alt="Bộ quần áo bé gái" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-4 text-center">
+                            <h4 class="text-lg font-semibold text-gray-800">Bộ Quần Áo Bé Gái</h4>
+                            <p class="text-gray-600">Thiết kế đáng yêu, thoải mái cho bé yêu.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
+                        <img src="<?php echo $base_url; ?>/assets/images/pijama1.jpg" alt="Pijama cho bé" class="w-full h-48 object-cover" loading="lazy" />
                         <div class="p-4 text-center">
                             <h4 class="text-lg font-semibold text-gray-800">Bộ Pijama Bé</h4>
                             <p class="text-gray-600">Mềm mại, lý tưởng cho giấc ngủ ngon.</p>

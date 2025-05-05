@@ -18,6 +18,11 @@ const RESPONSE_SUCCESS = 'success';
 const RESPONSE_MESSAGE = 'message';
 const RESPONSE_ERRORS = 'errors';
 
+// Cấu hình Google OAuth
+const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // Thay thế bằng Client ID của bạn
+const GOOGLE_CLIENT_SECRET = 'YOUR_GOOGLE_CLIENT_SECRET'; // Thay thế bằng Client Secret của bạn
+const GOOGLE_REDIRECT_URI = 'http://localhost/WEBQUANAOTREEM/auth/google_callback.php'; // Điều chỉnh theo URL thực tế của bạn
+
 // Hàm tạo CSRF token
 function generateCsrfToken(): string {
     $token = bin2hex(random_bytes(32));
@@ -53,6 +58,23 @@ function checkLoginAttempts(string $identifier): array {
     }
 
     return ['allowed' => true];
+}
+
+// Hàm tạo URL đăng nhập Google
+function getGoogleLoginUrl() {
+    $params = [
+        'client_id' => GOOGLE_CLIENT_ID,
+        'redirect_uri' => GOOGLE_REDIRECT_URI,
+        'response_type' => 'code',
+        'scope' => 'email profile',
+        'access_type' => 'online',
+        'state' => bin2hex(random_bytes(16)) // Tạo state ngẫu nhiên để ngăn CSRF
+    ];
+    
+    // Lưu state vào session để kiểm tra sau này
+    $_SESSION['google_oauth_state'] = $params['state'];
+    
+    return 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query($params);
 }
 
 // Hàm trả về JSON response
@@ -161,46 +183,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập - BABY Store</title>
+    <title>Đăng nhập</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        /* Glassmorphism effect */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* Nền sáng với viền nhẹ */
+        body {
+            background-color: #f3f4f6;
         }
 
-        /* Gradient background animation */
-        .animated-bg {
-            background: linear-gradient(135deg, #6b7280, #3b82f6, #a855f7);
-            background-size: 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Container với viền và bóng nhẹ */
+        .login-container {
+            border: 1px solid #e5e7eb;
+            background-color: #ffffff;
         }
 
-        /* Button shimmer effect */
-        .btn-shimmer {
-            position: relative;
-            overflow: hidden;
+        /* Input với viền đơn giản */
+        .input-field {
+            transition: border-color 0.2s ease-in-out;
         }
-        .btn-shimmer::after {
+        .input-field:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+        /* Nút với hover đơn giản */
+        .btn-primary {
+            background-color: #3b82f6;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        /* Nút Google với icon */
+        .google-btn {
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .google-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* Divider "hoặc" */
+        .or-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin: 1rem 0;
+        }
+        .or-divider::before,
+        .or-divider::after {
             content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+            flex: 1;
+            border-bottom: 1px solid #d1d5db;
         }
-        .btn-shimmer:hover::after {
-            left: 100%;
+        .or-divider::before {
+            margin-right: 0.5rem;
+        }
+        .or-divider::after {
+            margin-left: 0.5rem;
         }
 
         /* Loading spinner */
@@ -221,49 +266,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </style>
 </head>
-<body class="animated-bg flex items-center justify-center min-h-screen">
-    <div class="glass-container p-8 rounded-3xl w-full max-w-md shadow-2xl transform transition-all hover:scale-[1.01] hover:shadow-3xl">
+<body class="flex items-center justify-center min-h-screen">
+    <div class="login-container p-6 rounded-lg w-full max-w-md shadow-md">
         <!-- Logo and Title -->
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Đăng nhập</h2>
-            <p class="mt-2 text-sm text-gray-300">Đăng nhập để khám phá BABY Store!</p>
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Đăng nhập</h2>
+            <p class="mt-1 text-sm text-gray-600">Chào mừng đến với SUSU Kids!</p>
         </div>
 
         <!-- Thông điệp lỗi/thành công -->
         <?php if (isset($_SESSION['message'])): ?>
-            <div class="bg-<?php echo strpos($_SESSION['message'], 'thành công') !== false ? 'green' : 'red'; ?>-500/10 border-l-4 border-<?php echo strpos($_SESSION['message'], 'thành công') !== false ? 'green' : 'red'; ?>-500 text-<?php echo strpos($_SESSION['message'], 'thành công') !== false ? 'green' : 'red'; ?>-200 p-4 mb-6 rounded-r-lg animate-slide-in">
+            <div class="bg-<?php echo strpos($_SESSION['message'], 'thành công') !== false ? 'green' : 'red'; ?>-500/10 border-l-4 border-<?php echo strpos($_SESSION['message'], 'thành công') !== false ? 'green' : 'red'; ?>-500 text-<?php echo strpos($_SESSION['message'], 'thành công') !== false ? 'green' : 'red'; ?>-700 p-3 mb-4 rounded-r">
                 <p><?php echo htmlspecialchars($_SESSION['message']); ?></p>
                 <?php unset($_SESSION['message']); ?>
             </div>
         <?php endif; ?>
 
+        <!-- Google Login Button -->
+        <a href="<?php echo getGoogleLoginUrl(); ?>" class="google-btn w-full py-2 px-4 rounded-md font-medium mb-4 flex items-center justify-center gap-2">
+            <i class="fab fa-google text-gray-600"></i>
+            <span class="text-gray-700">Đăng nhập với Google</span>
+        </a>
+
+        <div class="or-divider">hoặc</div>
+
         <!-- Form đăng nhập -->
-        <form id="loginForm" method="POST" action="login.php" class="space-y-6">
+        <form id="loginForm" method="POST" action="login.php" class="space-y-4">
             <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
             <div>
-                <label for="identifier" class="block text-sm font-medium text-gray-200">Tên đăng nhập, email hoặc số điện thoại</label>
+                <label for="identifier" class="block text-sm font-medium text-gray-700">Tên đăng nhập, email hoặc số điện thoại</label>
                 <div class="relative">
                     <input type="text" id="identifier" name="identifier" 
-                           class="mt-1 p-3 pl-10 w-full bg-white/80 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out placeholder-gray-400" 
-                           placeholder="Nhập tên đăng nhập, email hoặc số điện thoại" required>
-                    <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+                           class="input-field mt-1 p-2 pl-8 w-full border border-gray-300 rounded-md placeholder-gray-400 text-sm" 
+                           placeholder="Tên đăng nhập, email hoặc số điện thoại" required>
+                    <i class="fas fa-user absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 </div>
             </div>
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-200">Mật khẩu</label>
+                <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
                 <div class="relative">
                     <input type="password" id="password" name="password" 
-                           class="mt-1 p-3 pl-10 w-full bg-white/80 border border-gray-300/50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out placeholder-gray-400" 
-                           placeholder="Nhập mật khẩu" required>
-                    <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+                           class="input-field mt-1 p-2 pl-8 w-full border border-gray-300 rounded-md placeholder-gray-400 text-sm" 
+                           placeholder="Mật khẩu" required>
+                    <i class="fas fa-lock absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 </div>
             </div>
             <div class="flex items-center justify-between text-sm">
-                <a href="forgot_password.php" class="text-blue-400 hover:text-blue-300 transition duration-200">Quên mật khẩu?</a>
-                <a href="register.php" class="text-red-400 hover:text-blue-300 transition duration-200">Đăng ký tài khoản</a>
+                <a href="forgot_password.php" class="text-blue-600 hover:text-blue-500">Quên mật khẩu?</a>
+                <a href="register.php" class="text-red-500 hover:text-red-600">Đăng ký tài khoản</a>
             </div>
             <button type="submit" id="submitButton" 
-                    class="btn-shimmer w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-1">
+                    class="btn-primary w-full text-white py-2 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                 Đăng nhập
             </button>
         </form>
@@ -306,7 +359,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const message = urlParams.get('message');
         if (message) {
             const messageDiv = document.createElement('p');
-            messageDiv.className = 'text-center mb-4 text-red-200 bg-red-500/10 p-4 rounded-lg';
+            messageDiv.className = 'text-center mb-4 text-red-600 bg-red-100 p-3 rounded';
             messageDiv.textContent = message;
             document.querySelector('form').prepend(messageDiv);
         }

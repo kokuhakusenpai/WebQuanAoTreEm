@@ -1,14 +1,7 @@
 <?php
 // Bắt đầu session trước khi có bất kỳ output nào
 session_start();
-
-// Nhập file cơ sở dữ liệu
 include('../config/database.php');
-
-// Khởi tạo session nếu chưa có
-if (session_status() == PHP_SESSION_NONE) {
-    // Đã bị loại bỏ vì session_start() đã được gọi ở trên
-}
 
 // Biến để lưu thông báo thành công hoặc lỗi
 $error_message = "";
@@ -54,12 +47,26 @@ if (isset($_POST['remove_item'])) {
 
 // Xử lý đặt hàng
 if (isset($_POST['checkout'])) {
-    if (isset($_SESSION['user_id']) && !empty($_SESSION['cart'])) {
-        $user_id = $_SESSION['user_id'];
+    // Kiểm tra nếu giỏ hàng trống
+    if (empty($_SESSION['cart'])) {
+        $error_message = "Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm trước khi thanh toán.";
+    } 
+    // Kiểm tra người dùng đã đăng nhập chưa
+    else if (!isset($_SESSION['id'])) {
+        // Lưu URL hiện tại vào session để sau khi đăng nhập có thể quay lại
+        $_SESSION['redirect_after_login'] = "cart.php";
+        // Chuyển hướng đến trang đăng nhập
+        header("Location: login.php");
+        exit();
+    } 
+    // Nếu đã đăng nhập và giỏ hàng không trống thì xử lý đặt hàng
+    else {
+        $user_id = $_SESSION['id'];
         $customer_name = mysqli_real_escape_string($conn, $_POST['customer_name']);
         $customer_email = mysqli_real_escape_string($conn, $_POST['customer_email']);
         $customer_phone = mysqli_real_escape_string($conn, $_POST['customer_phone']);
         $customer_address = mysqli_real_escape_string($conn, $_POST['customer_address']);
+        $payment_method = mysqli_real_escape_string($conn, $_POST['payment_method']);
         $total = 0;
 
         // Tính tổng tiền
@@ -67,40 +74,44 @@ if (isset($_POST['checkout'])) {
             $total += $item['price'] * $item['quantity'];
         }
 
-        // Thêm đơn hàng vào bảng orders
+        // Thêm đơn hàng vào bảng orders - KHÔNG chỉ định ID, để cơ sở dữ liệu tự động tạo
         $status = 'pending';
-        $query = "INSERT INTO orders (user_id, customer_name, customer_email, customer_phone, customer_address, total_price, status) 
-                  VALUES ('$user_id', '$customer_name', '$customer_email', '$customer_phone', '$customer_address', '$total', '$status')";
+        $order_date = date('Y-m-d H:i:s');
+        $query = "INSERT INTO orders (user_id, customer_name, customer_email, customer_phone, customer_address, total_price, status, payment_method, created_at)
+                  VALUES ('$user_id', '$customer_name', '$customer_email', '$customer_phone', '$customer_address', '$total', '$status', '$payment_method', '$order_date')";
+        
         if (mysqli_query($conn, $query)) {
             $order_id = mysqli_insert_id($conn);
 
             // Thêm chi tiết đơn hàng vào bảng order_details
+            $insert_success = true;
             foreach ($_SESSION['cart'] as $item) {
                 $product_id = $item['id'];
                 $quantity = $item['quantity'];
                 $price = $item['price'];
                 $subtotal = $price * $quantity;
-                $query = "INSERT INTO order_details (order_id, product_id, quantity, price, subtotal) 
-                          VALUES ('$order_id', '$product_id', '$quantity', '$price', '$subtotal')";
-                mysqli_query($conn, $query);
+                $detail_query = "INSERT INTO order_details (order_id, product_id, quantity, price, subtotal) 
+                              VALUES ('$order_id', '$product_id', '$quantity', '$price', '$subtotal')";
+                
+                if (!mysqli_query($conn, $detail_query)) {
+                    $insert_success = false;
+                    $error_message = "Lỗi khi lưu chi tiết đơn hàng: " . mysqli_error($conn);
+                    break;
+                }
             }
 
-            // Xóa giỏ hàng sau khi đặt hàng
-            unset($_SESSION['cart']);
-            // Lưu thông báo thành công vào session để hiển thị ở trang đích
-            $_SESSION['order_success'] = "Đơn hàng đã được đặt thành công!";
-            // Chuyển hướng đến trang lịch sử đơn hàng
-            header("Location: order_history.php");
-            exit();
+            if ($insert_success) {
+                // Xóa giỏ hàng sau khi đặt hàng thành công
+                unset($_SESSION['cart']);
+                // Lưu thông báo thành công vào session để hiển thị ở trang đích
+                $_SESSION['order_success'] = "Đơn hàng #$order_id đã được đặt thành công!";
+                // Chuyển hướng đến trang lịch sử đơn hàng
+                header("Location: order_history.php");
+                exit();
+            }
         } else {
             $error_message = "Lỗi khi đặt hàng: " . mysqli_error($conn);
         }
-    } else if (!isset($_SESSION['user_id'])) {
-        // Lưu URL hiện tại vào session để sau khi đăng nhập có thể quay lại
-        $_SESSION['redirect_after_login'] = "cart.php";
-        // Chuyển hướng đến trang đăng nhập
-        header("Location: login.php");
-        exit();
     }
 }
 
@@ -113,7 +124,7 @@ if (isset($_GET['msg'])) {
     }
 }
 
-// Bây giờ mới include header.php sau khi đã xử lý tất cả logic và redirect
+// Chỉ sau khi xử lý tất cả logic yêu cầu header() mới include header.php
 include('../components/header.php');
 ?>
 
@@ -126,74 +137,9 @@ include('../components/header.php');
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    <style>
-        /* Animated background */
-        .animated-bg {
-            background: linear-gradient(135deg, #fce7f3, #e0f2fe, #f3e8ff);
-            background-size: 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Glassmorphism effect */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-        }
-
-        /* Cart item hover effect */
-        .cart-item {
-            transition: all 0.3s ease;
-        }
-        .cart-item:hover {
-            background-color: #f1f5f9;
-        }
-
-        /* Quantity input styling */
-        .quantity-input {
-            width: 4rem;
-            text-align: center;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            padding: 0.25rem;
-        }
-
-        /* Hover scale effect */
-        .hover-scale {
-            transition: transform 0.3s ease;
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-
-        /* Fade-in animation for footer */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Chat styles */
-        .chat-box.hidden {
-            transform: scale(0.95);
-            opacity: 0;
-        }
-        .chat-box {
-            transform: scale(1);
-            opacity: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/styles.css"/>
 </head>
-<body class="animated-bg text-gray-800 font-['Roboto']">
+<body class="animated-bg text-gray-800 font-['Roboto'] cart-page">
 <section class="py-6 mt-6">
         <div class="container mx-auto px-4">
             <h2 class="text-4xl font-bold text-center bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-8">Giỏ Hàng Của Bạn</h2>
@@ -239,13 +185,15 @@ include('../components/header.php');
                                     ?>
                                         <tr class="cart-item border-b">
                                             <td class="p-4">
-                                                <img src="../assets/images/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" class="w-16 h-16 object-cover rounded-lg">
+                                                <img src="<?php echo !empty($item['image']) ? (strpos($item['image'], '/') === 0 ? htmlspecialchars($item['image']) : '../' . htmlspecialchars($item['image'])) : '../assets/images/product-placeholder.jpg'; ?>" 
+                                                     alt="<?php echo htmlspecialchars($item['name']); ?>" 
+                                                     class="w-16 h-16 object-cover rounded-lg">
                                             </td>
-                                            <td class="p-4 text-gray-800"><?php echo $item['name']; ?></td>
+                                            <td class="p-4 text-gray-800"><?php echo htmlspecialchars($item['name']); ?></td>
                                             <td class="p-4 text-pink-600 font-semibold"><?php echo number_format($item['price'], 0, ',', '.') . ' VNĐ'; ?></td>
                                             <td class="p-4">
                                                 <form method="POST" action="">
-                                                    <input type="hidden" name="product_id" value="<?php echo $item['id']; ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['id']); ?>">
                                                     <div class="flex items-center space-x-2">
                                                         <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1" class="quantity-input">
                                                         <button type="submit" name="update_quantity" class="text-blue-400 hover:text-blue-500 transition duration-300">
@@ -259,7 +207,7 @@ include('../components/header.php');
                                             <td class="p-4 text-pink-600 font-semibold"><?php echo number_format($subtotal, 0, ',', '.') . ' VNĐ'; ?></td>
                                             <td class="p-4">
                                                 <form method="POST" action="">
-                                                    <input type="hidden" name="product_id" value="<?php echo $item['id']; ?>">
+                                                    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['id']); ?>">
                                                     <button type="submit" name="remove_item" class="text-red-400 hover:text-red-500 transition duration-300">
                                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -297,21 +245,33 @@ include('../components/header.php');
                         <h3 class="text-2xl font-semibold mb-4 text-gray-900 border-b pb-2">Thông Tin Thanh Toán</h3>
                         <form method="POST" action="">
                             <div class="space-y-4">
+                                <?php 
+                                // Nếu người dùng đã đăng nhập, tự động điền thông tin từ tài khoản
+                                if (isset($_SESSION['user_id'])) {
+                                    // Lấy thông tin người dùng từ database
+                                    $user_id = $_SESSION['user_id'];
+                                    $userQuery = "SELECT name, email, phone, address FROM users WHERE id = '$user_id'";
+                                    $userResult = mysqli_query($conn, $userQuery);
+                                    if ($userResult && mysqli_num_rows($userResult) > 0) {
+                                        $userData = mysqli_fetch_assoc($userResult);
+                                    }
+                                }
+                                ?>
                                 <div>
                                     <label class="block text-gray-800 mb-2">Họ Tên</label>
-                                    <input type="text" name="customer_name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" required>
+                                    <input type="text" name="customer_name" value="<?php echo isset($userData['name']) ? htmlspecialchars($userData['name']) : ''; ?>" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" required>
                                 </div>
                                 <div>
                                     <label class="block text-gray-800 mb-2">Email</label>
-                                    <input type="email" name="customer_email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" required>
+                                    <input type="email" name="customer_email" value="<?php echo isset($userData['email']) ? htmlspecialchars($userData['email']) : ''; ?>" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" required>
                                 </div>
                                 <div>
                                     <label class="block text-gray-800 mb-2">Số Điện Thoại</label>
-                                    <input type="text" name="customer_phone" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" required>
+                                    <input type="text" name="customer_phone" value="<?php echo isset($userData['phone']) ? htmlspecialchars($userData['phone']) : ''; ?>" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" required>
                                 </div>
                                 <div>
                                     <label class="block text-gray-800 mb-2">Địa Chỉ</label>
-                                    <textarea name="customer_address" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" rows="3" required></textarea>
+                                    <textarea name="customer_address" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" rows="3" required><?php echo isset($userData['address']) ? htmlspecialchars($userData['address']) : ''; ?></textarea>
                                 </div>
                                 
                                 <!-- Phương thức thanh toán -->

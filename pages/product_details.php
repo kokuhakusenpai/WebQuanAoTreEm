@@ -34,9 +34,13 @@ if (isset($_POST['add_to_cart'])) {
     $product_id = mysqli_real_escape_string($conn, $_POST['product_id']);
     
     // Lấy thông tin sản phẩm từ cơ sở dữ liệu
-    $query = "SELECT * FROM products WHERE id = '$product_id'";
-    $result = mysqli_query($conn, $query);
-    $product = mysqli_fetch_assoc($result);
+    $query = "SELECT * FROM products WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $product = $result->fetch_assoc();
+    $stmt->close();
 
     if ($product) {
         // Khởi tạo giỏ hàng nếu chưa có
@@ -234,7 +238,7 @@ include('../components/header.php');
         }
     </style>
 </head>
-<body class="animated-bg text-gray-800 font-['Roboto']">
+<body class="animated-bg text-gray-800 font-['Roboto'] index-page">
     <section class="py-6 mt-6">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row gap-8">
@@ -281,7 +285,7 @@ include('../components/header.php');
                         <?php if ($product = $result->fetch_assoc()) { ?>
                             <div class="flex flex-col md:flex-row gap-8">
                                 <div class="md:w-1/2">
-                                    <img src="../assets/images/<?php echo htmlspecialchars($product['image'] ?? 'default.jpg'); ?>" 
+                                    <img src="<?php echo !empty($product['image']) ? (strpos($product['image'], '/') === 0 ? htmlspecialchars($product['image']) : '../' . htmlspecialchars($product['image'])) : '../assets/images/default.jpg'; ?>" 
                                          alt="<?php echo htmlspecialchars($product['name']); ?>" 
                                          class="w-full h-auto rounded-lg object-cover max-h-[500px]">
                                 </div>
