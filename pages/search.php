@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('../config/database.php');
+include('../components/header.php');
 
 // Lấy từ khóa tìm kiếm từ URL và xử lý
 $search_query = isset($_GET['query']) ? trim($_GET['query']) : '';
@@ -31,19 +32,7 @@ if ($search_query) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
 </head>
 <body class="bg-gray-100 text-gray-800 font-['Roboto']">
-
-    <!-- Header cố định -->
-    <header class="fixed top-0 left-0 w-full bg-blue-600 text-white py-4 shadow-md z-50">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <h1 class="text-2xl font-semibold">🌟 Website Bán Hàng</h1>
-            <p class="text-sm">Uy tín - Chất lượng - Giá tốt</p>
-        </div>
-    </header>
-
-    <!-- Navbar cố định -->
-    <nav class="fixed top-16 left-0 w-full bg-white shadow-md z-40">
-        <?php include('../components/navbar.php'); ?>
-    </nav>
+    <!-- Header -->
 
     <!-- Nội dung chính -->
     <section class="py-16 mt-32">
@@ -68,40 +57,14 @@ if ($search_query) {
             <?php } else { ?>
                 <p class="text-center text-gray-500 text-lg">Không tìm thấy sản phẩm nào với từ khóa: "<?php echo htmlspecialchars($search_query); ?>"</p>
                 <div class="mt-8 text-center">
-                    <a href="shop.php" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">Quay lại cửa hàng</a>
+                    <a href="../index.php" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">Quay lại cửa hàng</a>
                 </div>
             <?php } ?>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Website Bán Hàng</h3>
-                    <p class="text-gray-300">Cung cấp quần áo, phụ kiện và đồ chơi chất lượng cao cho trẻ em.</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Liên Hệ</h3>
-                    <p class="text-gray-300">Email: support@websitebanhang.com</p>
-                    <p class="text-gray-300">Hotline: 0123 456 789</p>
-                    <p class="text-gray-300">Địa chỉ: 123 Đường ABC, TP. HCM</p>
-                </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Theo Dõi Chúng Tôi</h3>
-                    <div class="flex gap-4">
-                        <a href="#" class="text-gray-300 hover:text-blue-400">Facebook</a>
-                        <a href="#" class="text-gray-300 hover:text-blue-400">Instagram</a>
-                        <a href="#" class="text-gray-300 hover:text-blue-400">Zalo</a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 border-t border-gray-700 pt-4 text-center">
-                <p class="text-gray-300">© 2025 Website Bán Hàng. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <?php include('../components/footer.php'); ?>
 
 </body>
 </html>

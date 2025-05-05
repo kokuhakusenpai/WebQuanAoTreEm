@@ -113,7 +113,7 @@ $newsItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Tiêu đề -->
     <section class="text-center py-12">
         <h1 class="text-4xl font-bold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-3">Tin tức & Khuyến mãi</h1>
-        <p class="text-gray-600 text-base max-w-2xl mx-auto">Cập nhật thông tin mới nhất từ BABY Store về thời trang trẻ em, mẹo chăm sóc bé và các chương trình ưu đãi hấp dẫn.</p>
+        <p class="text-gray-600 text-base max-w-2xl mx-auto">Cập nhật thông tin mới nhất từ SUSU Kids về thời trang trẻ em, mẹo chăm sóc bé và các chương trình ưu đãi hấp dẫn.</p>
     </section>
 
     <!-- Nội dung tin tức -->

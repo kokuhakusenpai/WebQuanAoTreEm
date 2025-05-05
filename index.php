@@ -37,7 +37,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BABY Store - Trang chủ</title>
+    <title>SUSU Kids - Trang chủ</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
@@ -237,7 +237,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                                     <?php } ?>
                                 </div>
                                 <div class="mt-4 flex space-x-2">
-                                    <a href="product_details.php?id=<?php echo htmlspecialchars($product['id']); ?>" 
+                                    <a href="pages/product_details.php?id=<?php echo htmlspecialchars($product['id']); ?>" 
                                        class="flex-1 bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded-lg transition duration-300 text-center">
                                         Xem Chi Tiết
                                     </a>

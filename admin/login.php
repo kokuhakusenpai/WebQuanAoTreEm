@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="login-wrapper">
         <!-- Phần minh họa bên trái -->
         <div class="login-illustration">
-            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="BABY Store Logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="SUSU Kids Logo">
             <h2 class="text-2xl font-bold mb-2">Chào mừng đến với SUSU Hub</h2>
             <p class="text-sm opacity-80">Đăng nhập để quản lý cửa hàng của bạn!</p>
         </div>

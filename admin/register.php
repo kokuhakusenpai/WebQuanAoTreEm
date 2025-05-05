@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký tài khoản - BABY Store</title>
+    <title>Đăng ký tài khoản - SUSU Kids</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -262,8 +262,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="register-wrapper">
         <!-- Phần minh họa bên trái -->
         <div class="register-illustration">
-            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="BABY Store Logo">
-            <h2 class="text-2xl font-bold mb-2">Tham gia BABY Store</h2>
+            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="SUSU Kids Logo">
+            <h2 class="text-2xl font-bold mb-2">Tham gia SUSU Kids</h2>
             <p class="text-sm opacity-80">Tạo tài khoản để khám phá thế giới đồ dùng trẻ em!</p>
         </div>
 

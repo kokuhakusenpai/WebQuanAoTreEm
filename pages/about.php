@@ -8,7 +8,7 @@ $base_url = '/WEBQUANAOTREEM';
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Giới Thiệu - BABY Store</title>
+    <title>Giới Thiệu - SUSU Kids</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
@@ -24,10 +24,10 @@ $base_url = '/WEBQUANAOTREEM';
         <section class="py-12">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-4">
-                    Giới Thiệu BABY Store
+                    Giới Thiệu SUSU Kids
                 </h1>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Chào mừng bạn đến với BABY Store - nơi mang đến những bộ quần áo trẻ em đáng yêu, an toàn và chất lượng cao. Chúng tôi tự hào là người bạn đồng hành của các bậc phụ huynh trong hành trình chăm sóc bé yêu!
+                    Chào mừng bạn đến với SUSU Kids - nơi mang đến những bộ quần áo trẻ em đáng yêu, an toàn và chất lượng cao. Chúng tôi tự hào là người bạn đồng hành của các bậc phụ huynh trong hành trình chăm sóc bé yêu!
                 </p>
             </div>
         </section>
@@ -37,14 +37,14 @@ $base_url = '/WEBQUANAOTREEM';
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
-                        <img src="<?php echo $base_url; ?>/assets/images/about1.jpg" alt="Câu chuyện BABY Store" class="w-full h-64 object-cover rounded-lg shadow-lg hover-scale" loading="lazy" />
+                        <img src="<?php echo $base_url; ?>/assets/images/about1.jpg" alt="Câu chuyện SUSU Kids" class="w-full h-64 object-cover rounded-lg shadow-lg hover-scale" loading="lazy" />
                     </div>
                     <div class="md:w-1/2">
                         <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-4">
                             Câu Chuyện Của Chúng Tôi
                         </h2>
                         <p class="text-gray-600">
-                            BABY Store được thành lập từ tình yêu dành cho trẻ em và mong muốn mang đến những sản phẩm tốt nhất cho các bé. Từ những ngày đầu, chúng tôi đã không ngừng nỗ lực để tạo ra những bộ sưu tập quần áo vừa thời trang, vừa thoải mái, giúp các bé tự tin tỏa sáng mỗi ngày.
+                            SUSU Kids được thành lập từ tình yêu dành cho trẻ em và mong muốn mang đến những sản phẩm tốt nhất cho các bé. Từ những ngày đầu, chúng tôi đã không ngừng nỗ lực để tạo ra những bộ sưu tập quần áo vừa thời trang, vừa thoải mái, giúp các bé tự tin tỏa sáng mỗi ngày.
                         </p>
                     </div>
                 </div>
@@ -55,10 +55,10 @@ $base_url = '/WEBQUANAOTREEM';
         <section class="py-12">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-4">
-                    Sứ Mệnh Của BABY Store
+                    Sứ Mệnh Của SUSU Kids
                 </h2>
                 <p class="text-gray-600 max-w-3xl mx-auto mb-6">
-                    Chúng tôi cam kết mang đến những sản phẩm an toàn, chất lượng cao với thiết kế đáng yêu, đồng thời cung cấp trải nghiệm mua sắm dễ dàng và dịch vụ khách hàng tận tâm. BABY Store không chỉ bán quần áo, mà còn lan tỏa niềm vui và sự chăm sóc đến từng gia đình.
+                    Chúng tôi cam kết mang đến những sản phẩm an toàn, chất lượng cao với thiết kế đáng yêu, đồng thời cung cấp trải nghiệm mua sắm dễ dàng và dịch vụ khách hàng tận tâm. SUSU Kids không chỉ bán quần áo, mà còn lan tỏa niềm vui và sự chăm sóc đến từng gia đình.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-white/90 glass-container p-6 rounded-lg shadow-lg hover-scale">
@@ -84,7 +84,7 @@ $base_url = '/WEBQUANAOTREEM';
         <section class="py-12 bg-gray-100/90 glass-container">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-8 text-center">
-                    Sản Phẩm Đa Dạng Của BABY Store
+                    Sản Phẩm Đa Dạng Của SUSU Kids
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
@@ -132,7 +132,7 @@ $base_url = '/WEBQUANAOTREEM';
                     Cam Kết Với Khách Hàng
                 </h2>
                 <p class="text-gray-600 max-w-2xl mx-auto mb-6">
-                    Tại BABY Store, sự hài lòng của bạn là ưu tiên hàng đầu. Chúng tôi cung cấp dịch vụ hỗ trợ tận tình, chính sách đổi trả linh hoạt, và giao hàng nhanh chóng để đảm bảo trải nghiệm mua sắm tuyệt vời.
+                    Tại SUSU Kids, sự hài lòng của bạn là ưu tiên hàng đầu. Chúng tôi cung cấp dịch vụ hỗ trợ tận tình, chính sách đổi trả linh hoạt, và giao hàng nhanh chóng để đảm bảo trải nghiệm mua sắm tuyệt vời.
                 </p>
                 <img src="<?php echo $base_url; ?>/assets/images/about2.jpg" alt="Cam kết khách hàng" class="w-full max-w-2xl mx-auto h-64 object-cover rounded-lg shadow-lg hover-scale" loading="lazy" />
             </div>
@@ -142,7 +142,7 @@ $base_url = '/WEBQUANAOTREEM';
         <section class="py-12 bg-gray-100/90 glass-container">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-4">
-                    Đội Ngũ BABY Store
+                    Đội Ngũ SUSU Kids
                 </h2>
                 <p class="text-gray-600 max-w-2xl mx-auto mb-6">
                     Đội ngũ của chúng tôi là những người đam mê thời trang trẻ em, luôn nỗ lực để mang đến những sản phẩm tốt nhất và dịch vụ chu đáo nhất cho bạn.
@@ -171,7 +171,7 @@ $base_url = '/WEBQUANAOTREEM';
         <section class="py-12">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent mb-4">
-                    Tham Gia Cùng BABY Store
+                    Tham Gia Cùng SUSU Kids
                 </h2>
                 <p class="text-gray-600 max-w-2xl mx-auto mb-6">
                     Khám phá ngay bộ sưu tập quần áo trẻ em của chúng tôi và mang đến cho bé yêu những bộ trang phục đáng yêu nhất!
