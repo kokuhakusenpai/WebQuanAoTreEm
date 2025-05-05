@@ -57,57 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <script src="https://unpkg.com/alpinejs" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    <style>
-        /* Animated background */
-        .animated-bg {
-            background: linear-gradient(135deg, #fce7f3, #e0f2fe, #f3e8ff);
-            background-size: 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Glassmorphism effect */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-        }
-
-        /* Hover scale effect */
-        .hover-scale {
-            transition: transform 0.3s ease;
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-
-        /* Fade-in animation for footer */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Chat styles */
-        .chat-box.hidden {
-            transform: scale(0.95);
-            opacity: 0;
-        }
-        .chat-box {
-            transform: scale(1);
-            opacity: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/styles.css"/>
 </head>
-<body class="animated-bg text-gray-800 font-['Roboto']">
+<body class="animated-bg text-gray-800 font-['Roboto'] checkout-page">
     <section class="py-16 mt-32">
         <div class="container mx-auto px-4">
             <!-- Thanh toán -->

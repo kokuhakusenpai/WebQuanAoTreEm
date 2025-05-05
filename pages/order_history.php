@@ -8,12 +8,12 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Kiểm tra nếu người dùng chưa đăng nhập
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id'])) {
     header("Location: login.php?redirect=order_history.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['id'];
 
 // Kiểm tra kết nối cơ sở dữ liệu
 if (!$conn) {

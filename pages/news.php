@@ -126,12 +126,12 @@ $newsItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <meta itemprop="Publishedat" content="<?php echo htmlspecialchars($news['published_at']); ?>">
                         <meta itemprop="author" content="BABY Store">
                         <div class="relative">
-                            <img src="<?php echo htmlspecialchars($news['image']); ?>" alt="<?php echo htmlspecialchars($news['title']); ?>" class="w-full h-56 object-cover transition-transform duration-500" loading="lazy" itemprop="image" />
+                            <img src="../assets/images/<?php echo htmlspecialchars($news['image']); ?>" alt="<?php echo htmlspecialchars($news['title']); ?>" class="w-full h-56 object-cover transition-transform duration-500" loading="lazy" itemprop="image" />
                             <span class="absolute top-4 left-4 <?php echo htmlspecialchars($news['tag_color']); ?> text-white text-xs font-semibold px-3 py-1 rounded-full"><?php echo htmlspecialchars($news['tag']); ?></span>
                         </div>
                         <div class="p-6">
                             <h2 class="text-xl font-semibold text-gray-800 mb-3 line-clamp-2" itemprop="headline"><?php echo htmlspecialchars($news['title']); ?></h2>
-                            <p class="text-sm text-gray-600 mb-4 line-clamp-3" itemprop="description"><?php echo htmlspecialchars($news['description']); ?></p>
+                            <p class="text-sm text-gray-600 mb-4 line-clamp-3" itemprop="content"><?php echo htmlspecialchars($news['content']); ?></p>
                             <a href="#" class="inline-flex items-center text-pink-600 hover:text-pink-800 text-sm font-medium transition-colors">
                                 Đọc thêm
                                 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

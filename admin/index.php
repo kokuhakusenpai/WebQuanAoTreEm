@@ -3,31 +3,29 @@ session_start();
 include('../config/database.php');
 
 // Kiểm tra xem người dùng đã đăng nhập chưa
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit;
-}
+$isLoggedIn = isset($_SESSION['username']);
+$username = $isLoggedIn ? $_SESSION['username'] : '';
+$avatar = 'assets/img/default-avatar.png'; // Ảnh mặc định
 
-// Lấy thông tin người dùng từ cơ sở dữ liệu bằng prepared statement
-$username = $_SESSION['username'];
-$sql = "SELECT username FROM user WHERE username = ?"; 
-$stmt = $conn->prepare($sql);
-if ($stmt === false) {
-    die("Prepare failed: " . $conn->error);
-}
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
+if ($isLoggedIn) {
+    // Lấy thông tin người dùng từ cơ sở dữ liệu bằng prepared statement
+    $sql = "SELECT username FROM user WHERE username = ?"; 
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die("Prepare failed: " . $conn->error);
+    }
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($result && $result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-    $avatar = 'assets/img/default-avatar.png'; // Không có cột avatar, sử dụng ảnh mặc định
-    $username = $user['username'];
-} else {
-    $avatar = 'assets/img/default-avatar.png';
-    $username = 'Tên không xác định';
+    if ($result && $result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $username = $user['username'];
+    } else {
+        $username = 'Tên không xác định';
+    }
+    $stmt->close();
 }
-$stmt->close();
 $conn->close();
 ?>
 
@@ -36,195 +34,276 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Quản Trị - Admin</title>
+    <title>Cửa Hàng</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="flex min-h-screen bg-gray-100">
-    <!-- Sidebar -->
-    <aside class="sidebar w-64 bg-gradient-to-b from-blue-500 to-blue-200 text-white p-5 fixed h-full shadow-lg hover:w-72 transition-all duration-300">
-        <div class="text-center mb-8">
-            <label for="avatar-upload">
-                <img src="<?php echo htmlspecialchars($avatar); ?>" alt="Avatar" class="avatar w-24 h-24 rounded-full border-4 border-white shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300 mx-auto">
-            </label>
-            <input type="file" id="avatar-upload" name="avatar" accept="image/*" class="hidden">
-            <h2 class="mt-4 text-xl font-semibold"><?php echo htmlspecialchars($username); ?></h2>
+<body class="min-h-screen bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo và tên cửa hàng -->
+                <div class="flex items-center">
+                    <a href="index.php" class="flex items-center">
+                        <i class="fas fa-store text-2xl mr-2"></i>
+                        <span class="text-xl font-bold">SUSU Hub</span>
+                    </a>
+                </div>
+
+                <!-- Thanh tìm kiếm -->
+                <div class="relative w-1/3 hidden md:block">
+                    <input type="text" id="header-search" placeholder="Tìm kiếm sản phẩm..." 
+                        class="w-full p-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:border-blue-300 text-gray-800">
+                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- Menu người dùng -->
+                <div class="flex items-center">
+                    <?php if ($isLoggedIn): ?>
+                    <!-- Đã đăng nhập -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 focus:outline-none" id="userMenuButton">
+                            <img src="<?php echo htmlspecialchars($avatar); ?>" alt="Avatar" class="w-8 h-8 rounded-full border-2 border-white">
+                            <span class="hidden md:inline"><?php echo htmlspecialchars($username); ?></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
+                            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                                <a href="admin/index.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-user-shield mr-2"></i>Quản trị
+                                </a>
+                            <?php endif; ?>
+                            <a href="profile.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-user mr-2"></i>Hồ sơ
+                            </a>
+                            <div class="border-t border-gray-100"></div>
+                            <a href="logout.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                    <?php else: ?>
+                    <!-- Chưa đăng nhập -->
+                    <div class="flex items-center">
+                        <a href="login.php" class="flex items-center px-4 py-2 hover:text-blue-200">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            <span>Đăng nhập</span>
+                        </a>
+                        <span class="mx-1">|</span>
+                        <a href="register.php" class="flex items-center px-4 py-2 hover:text-blue-200">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            <span>Đăng ký</span>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-        <ul class="space-y-2">
-            <li><a href="#" onclick="loadContent('index.php')" class="flex items-center p-3 rounded-lg hover:bg-white/20 transition-all duration-300"><i class="fas fa-home mr-3"></i> <span>Trang chủ</span></a></li>
-            <li><a href="#" onclick="loadContent('modules/qladmin/users.php', 'Quản lý người dùng')" class="flex items-center p-3 rounded-lg hover:bg-white/20 transition-all duration-300"><i class="fas fa-users mr-3"></i> <span>Quản lý người dùng</span></a></li>
-            <li><a href="#" onclick="loadContent('modules/qlsp/product.php', 'Quản lý sản phẩm')" class="flex items-center p-3 rounded-lg hover:bg-white/20 transition-all duration-300"><i class="fas fa-box mr-3"></i> <span>Quản lý sản phẩm</span></a></li>
-            <li><a href="#" onclick="loadContent('modules/qldh/orders.php', 'Quản lý đơn hàng')" class="flex items-center p-3 rounded-lg hover:bg-white/20 transition-all duration-300"><i class="fas fa-shopping-cart mr-3"></i> <span>Quản lý đơn hàng</span></a></li>
-            <li><a href="#" onclick="loadContent('modules/qlgd/interface.php', 'Quản lý giao diện')" class="flex items-center p-3 rounded-lg hover:bg-white/20 transition-all duration-300"><i class="fas fa-paint-brush mr-3"></i> <span>Quản lý giao diện</span></a></li>
-            <li><a href="#" onclick="loadContent('modules/qlttnd/Statistics_Logs.php', 'Quản lý thao tác người dùng')" class="flex items-center p-3 rounded-lg hover:bg-white/20 transition-all duration-300"><i class="fas fa-chart-line mr-3"></i> <span>Quản lý thao tác người dùng</span></a></li>
-            <li><a href="logout.php" class="flex items-center p-3 rounded-lg text-red-400 font-medium hover:bg-white/20 transition-all duration-300"><i class="fas fa-sign-out-alt mr-3"></i> <span>Đăng xuất</span></a></li>
-        </ul>
-    </aside>
+    </header>
+    
+    <!-- Navbar -->
+    <nav class="bg-gray-800 text-white shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="hidden md:flex space-x-1">
+                    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                    <?php else: ?>
+                        <a href="#" id="nav-users" class="py-4 px-3 hover:bg-blue-700 transition duration-300 flex items-center nav-link">
+                            <i class="fas fa-users mr-2"></i> Quản lý người dùng
+                        </a>
+                        <a href="#" id="nav-products" class="py-4 px-3 hover:bg-blue-700 transition duration-300 flex items-center nav-link">
+                            <i class="fas fa-box mr-2"></i> Quản lý sản phẩm
+                        </a>
+                        <a href="#" id="nav-orders" class="py-4 px-3 hover:bg-blue-700 transition duration-300 flex items-center nav-link">
+                            <i class="fas fa-shopping-cart mr-2"></i> Quản lý đơn hàng
+                        </a>
+                        <a href="#" id="nav-interface" class="py-4 px-3 hover:bg-blue-700 transition duration-300 flex items-center nav-link">
+                            <i class="fas fa-paint-brush mr-2"></i> Quản lý giao diện
+                        </a>
+                        <a href="#" id="nav-statistics" class="py-4 px-3 hover:bg-blue-700 transition duration-300 flex items-center nav-link">
+                            <i class="fas fa-chart-line mr-2"></i> Quản lý thao tác
+                        </a>
+                    <?php endif; ?>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="md:hidden hidden pb-2">
+                <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                <?php else: ?>
+                    <a href="#" id="mobile-nav-home" class="block py-2 px-4 hover:bg-blue-700 nav-link">
+                        <i class="fas fa-home mr-2"></i> Trang chủ
+                    </a>
+                    <a href="#" id="mobile-nav-users" class="block py-2 px-4 hover:bg-blue-700 nav-link">
+                        <i class="fas fa-users mr-2"></i> Quản lý người dùng
+                    </a>
+                    <a href="#" id="mobile-nav-products" class="block py-2 px-4 hover:bg-blue-700 nav-link">
+                        <i class="fas fa-box mr-2"></i> Quản lý sản phẩm
+                    </a>
+                    <a href="#" id="mobile-nav-orders" class="block py-2 px-4 hover:bg-blue-700 nav-link">
+                        <i class="fas fa-shopping-cart mr-2"></i> Quản lý đơn hàng
+                    </a>
+                    <a href="#" id="mobile-nav-interface" class="block py-2 px-4 hover:bg-blue-700 nav-link">
+                        <i class="fas fa-paint-brush mr-2"></i> Quản lý giao diện
+                    </a>
+                    <a href="#" id="mobile-nav-statistics" class="block py-2 px-4 hover:bg-blue-700 nav-link">
+                        <i class="fas fa-chart-line mr-2"></i> Quản lý thao tác
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </nav>
 
     <!-- Main Content -->
-    <div class="main-content ml-64 flex-1 p-6 sm:ml-64">
-        <header class="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm mb-5">
-            <nav id="breadcrumb-nav" class="text-gray-600">
-                <span>Trang Chủ</span>
-            </nav>
-            <div class="relative w-72">
-                <input type="text" id="search" placeholder="Tìm kiếm..." oninput="performSearch()" class="w-full p-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500 transition-colors">
-                <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"><i class="fas fa-search"></i></span>
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 id="content-title" class="text-2xl font-bold text-gray-800 mb-3">Chào Mừng Bạn Đến Với Cửa Hàng</h2>
+            <p id="content-subtitle" class="text-gray-600">Vui lòng khám phá các sản phẩm của chúng tôi.</p>
+            
+            <!-- Phần nội dung chính của trang sẽ hiển thị ở đây -->
+            <div id="main-content" class="mt-8">
+                <!-- Nội dung trang chủ -->
+                <div class="text-center py-6">
+                    <i class="fas fa-store text-6xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">SUSU Hub - Hệ thống quản lý bán hàng</h3>
+                    <p class="text-gray-600 mb-4">Chọn một mục từ thanh điều hướng để bắt đầu.</p>
+                </div>
             </div>
-            <div id="search-results" class="bg-white rounded-lg shadow-md mt-2 p-4 max-h-80 overflow-y-auto"></div>
-        </header>
-        <div id="dashboard-content" class="bg-white p-6 rounded-lg shadow-sm">
-            <h2 class="text-2xl font-bold text-gray-800 mb-3">Chào Mừng Bạn Đến Với Trang Chủ</h2>
-            <p class="text-gray-600">Vui lòng chọn một mục từ menu để bắt đầu.</p>
         </div>
     </div>
 
-    <!-- Modal for Avatar Preview -->
-    <div id="avatar-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-lg text-center max-w-md w-full">
-            <img id="avatar-preview" src="" alt="Avatar Preview" class="max-w-full rounded-lg mb-4">
-            <button onclick="confirmUpload()" class="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600 transition-colors">Xác nhận</button>
-            <button onclick="cancelUpload()" class="bg-gray-300 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-400 transition-colors ml-3">Hủy</button>
-        </div>
-    </div>
-
+    <!-- Thêm script để xử lý AJAX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        let selectedFile = null;
+        // Toggle user dropdown menu
+        document.getElementById('userMenuButton')?.addEventListener('click', function() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('hidden');
+        });
 
-        // AJAX tải nội dung động
-        function loadContent(page, label = 'Trang Chủ') {
-            const contentArea = document.getElementById("dashboard-content");
-            contentArea.innerHTML = '<div class="flex justify-center items-center h-64"><i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i></div>';
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", page, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (page === 'index.php') {
-                        contentArea.innerHTML = `
-                            <h2 class="text-2xl font-bold text-gray-800 mb-3">Chào Mừng Bạn Đến Với Trang Chủ</h2>
-                            <p class="text-gray-600">Vui lòng chọn một mục từ menu để bắt đầu.</p>
-                        `;
-                        document.getElementById("breadcrumb-nav").innerHTML = `<span>Trang Chủ</span>`;
-                        const modal = document.getElementById('addProductModal');
-                        if (modal) modal.style.display = 'none';
-                    } else {
-                        if (xhr.status === 200) {
-                            contentArea.innerHTML = xhr.responseText;
-                            document.getElementById("breadcrumb-nav").innerHTML = `<span>Trang Quản Trị</span> <i class="fas fa-chevron-right mx-2 text-gray-400"></i> ${label}`;
-                        } else {
-                            contentArea.innerHTML = `<p class="text-red-500">Lỗi tải trang: ${xhr.status} - ${xhr.statusText}</p>`;
-                        }
-                    }
-                }
-            };
-            xhr.send();
-        }
-
-        // Tìm kiếm
-        function performSearch() {
-            const searchTerm = document.getElementById('search').value.trim();
-            const resultsContainer = document.getElementById('search-results');
-
-            if (searchTerm !== "") {
-                resultsContainer.innerHTML = '<div class="flex justify-center"><i class="fas fa-spinner fa-spin text-blue-500"></i></div>';
-                fetch('search_all.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: searchTerm })
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success && data.results.length > 0) {
-                        let resultsHTML = '';
-                        data.results.forEach(result => {
-                            resultsHTML += `<h3 class="text-lg font-semibold text-gray-700">Kết quả từ bảng: ${result.table}</h3>`;
-                            resultsHTML += '<ul class="list-disc pl-5">';
-                            result.data.forEach(row => {
-                                resultsHTML += `
-                                    <li class="mb-2">${Object.entries(row).map(([key, value]) => `<strong>${key}:</strong> ${value}`).join('<br>')}</li>`;
-                            });
-                            resultsHTML += '</ul>';
-                        });
-                        resultsContainer.innerHTML = resultsHTML;
-                    } else {
-                        resultsContainer.innerHTML = '<p class="text-gray-500">Không tìm thấy kết quả nào.</p>';
-                    }
-                })
-                .catch(error => {
-                    resultsContainer.innerHTML = `<p class="text-red-500">Lỗi khi tìm kiếm: ${error.message}</p>`;
-                });
-            } else {
-                resultsContainer.innerHTML = '';
-            }
-        }
-
-        // Xử lý chọn và preview ảnh đại diện
-        document.getElementById('avatar-upload').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (file) {
-                selectedFile = file;
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    document.getElementById('avatar-preview').src = event.target.result;
-                    document.getElementById('avatar-modal').classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('userDropdown');
+            const button = document.getElementById('userMenuButton');
+            
+            if (dropdown && button && !button.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
             }
         });
 
-        // Xác nhận tải ảnh
-        function confirmUpload() {
-            if (!selectedFile) {
-                showToast('Vui lòng chọn một ảnh.', 'error');
-                return;
+        // Toggle mobile menu
+        document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Tìm kiếm
+        document.getElementById('header-search')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.trim();
+                if (searchTerm) {
+                    window.location.href = `search.php?q=${encodeURIComponent(searchTerm)}`;
+                }
             }
+        });
 
-            const formData = new FormData();
-            formData.append('avatar', selectedFile);
+        // Xử lý tải nội dung qua AJAX khi click vào các mục trong navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tạo đối tượng mapping giữa ID và URL
+            const navMapping = {
+                'nav-home': 'home_content.php',
+                'nav-users': 'modules/user_management/users.php',
+                'nav-products': 'modules/product_management/product.php',
+                'nav-orders': 'modules/order_management/orders.php',
+                'nav-interface': 'modules/theme_management/theme_management.php',
+                'nav-statistics': 'modules/log_management/log_management.php',
+                
+                // Mobile versions
+                'mobile-nav-home': 'home_content.php',
+                'mobile-nav-users': 'modules/qladmin/users.php',
+                'mobile-nav-products': 'modules/qlsp/product.php',
+                'mobile-nav-orders': 'modules/qldh/orders.php',
+                'mobile-nav-interface': 'modules/qlgd/interface.php',
+                'mobile-nav-statistics': 'modules/qlttnd/Statistics_Logs.php'
+            };
+            
+            // Tạo đối tượng mapping cho tiêu đề và phụ đề
+            const titleMapping = {
+                'nav-home': {title: 'Trang Chủ', subtitle: 'Chào mừng bạn đến với SUSU Hub'},
+                'nav-users': {title: 'Quản Lý Người Dùng', subtitle: 'Quản lý thông tin và quyền của người dùng'},
+                'nav-products': {title: 'Quản Lý Sản Phẩm', subtitle: 'Quản lý danh sách sản phẩm'},
+                'nav-orders': {title: 'Quản Lý Đơn Hàng', subtitle: 'Quản lý đơn hàng và trạng thái'},
+                'nav-interface': {title: 'Quản Lý Giao Diện', subtitle: 'Tùy chỉnh giao diện hệ thống'},
+                'nav-statistics': {title: 'Quản Lý Thao Tác', subtitle: 'Theo dõi và phân tích thao tác người dùng'},
+                
+                // Mobile versions
+                'mobile-nav-home': {title: 'Trang Chủ', subtitle: 'Chào mừng bạn đến với SUSU Hub'},
+                'mobile-nav-users': {title: 'Quản Lý Người Dùng', subtitle: 'Quản lý thông tin và quyền của người dùng'},
+                'mobile-nav-products': {title: 'Quản Lý Sản Phẩm', subtitle: 'Quản lý danh sách sản phẩm'},
+                'mobile-nav-orders': {title: 'Quản Lý Đơn Hàng', subtitle: 'Quản lý đơn hàng và trạng thái'},
+                'mobile-nav-interface': {title: 'Quản Lý Giao Diện', subtitle: 'Tùy chỉnh giao diện hệ thống'},
+                'mobile-nav-statistics': {title: 'Quản Lý Thao Tác', subtitle: 'Theo dõi và phân tích thao tác người dùng'}
+            };
 
-            fetch('modules/upload_avatar.php', { method: 'POST', body: formData })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.querySelector('.avatar').src = data.avatar_url;
-                        showToast('Ảnh đại diện đã được thay đổi thành công!', 'success');
-                    } else {
-                        showToast('Lỗi khi tải ảnh: ' + data.message, 'error');
-                    }
-                    document.getElementById('avatar-modal').classList.add('hidden');
-                    selectedFile = null;
-                    document.getElementById('avatar-upload').value = '';
-                })
-                .catch(error => {
-                    showToast('Không thể tải ảnh. Vui lòng thử lại sau.', 'error');
-                    document.getElementById('avatar-modal').classList.add('hidden');
+            // Thêm sự kiện click cho tất cả các liên kết trong navbar
+            document.querySelectorAll('.nav-link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Lấy ID của liên kết được nhấn
+                    const linkId = this.id;
+                    
+                    // Lấy URL tương ứng từ đối tượng mapping
+                    const url = navMapping[linkId];
+                    
+                    // Lấy tiêu đề và phụ đề tương ứng
+                    const contentInfo = titleMapping[linkId];
+                    
+                    // Cập nhật tiêu đề và phụ đề
+                    document.getElementById('content-title').textContent = contentInfo.title;
+                    document.getElementById('content-subtitle').textContent = contentInfo.subtitle;
+                    
+                    // Hiển thị loading
+                    document.getElementById('main-content').innerHTML = '<div class="flex justify-center items-center py-12"><i class="fas fa-spinner fa-spin text-4xl text-blue-500"></i></div>';
+                    
+                    // Thực hiện request AJAX để tải nội dung
+                    fetch(url)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            // Cập nhật nội dung chính
+                            document.getElementById('main-content').innerHTML = data;
+                            
+                            // Đóng menu mobile nếu đang mở
+                            document.getElementById('mobile-menu').classList.add('hidden');
+                        })
+                        .catch(error => {
+                            console.error('Error loading content:', error);
+                            document.getElementById('main-content').innerHTML = `
+                                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                                    <strong class="font-bold">Lỗi!</strong>
+                                    <span class="block sm:inline"> Không thể tải nội dung. Vui lòng thử lại sau.</span>
+                                </div>
+                            `;
+                        });
                 });
-        }
-
-        // Hủy tải ảnh
-        function cancelUpload() {
-            document.getElementById('avatar-modal').classList.add('hidden');
-            document.getElementById('avatar-upload').value = '';
-            selectedFile = null;
-        }
-
-        // Hiển thị toast notification
-        function showToast(message, type) {
-            const toast = document.createElement('div');
-            toast.className = `toast p-4 rounded-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 100);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
+            });
+        });
     </script>
 </body>
 </html>

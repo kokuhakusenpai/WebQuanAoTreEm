@@ -61,6 +61,7 @@ $base_url = '/WEBQUANAOTREEM';
                     <a href="<?php echo $base_url; ?>/index.php" class="text-gray-700 hover:text-pink-500 transition duration-200">Trang chủ</a>
                     <a href="<?php echo $base_url; ?>/pages/category.php" class="text-gray-700 hover:text-pink-500 transition duration-200">Sản phẩm</a>
                     <a href="<?php echo $base_url; ?>/pages/about.php" class="text-gray-700 hover:text-pink-500 transition duration-200">Giới thiệu</a>
+                    <a href="<?php echo $base_url; ?>/pages/contact.php" class="text-gray-700 hover:text-pink-500 transition duration-200">Liên hệ</a>
                 </nav>
                 <a href="<?php echo $base_url; ?>/pages/cart.php" class="text-gray-700 hover:text-pink-500 transition duration-200 flex items-center space-x-1">
                     <i class="fas fa-shopping-cart"></i>
