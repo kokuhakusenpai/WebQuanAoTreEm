@@ -30,7 +30,7 @@ if (!$category_result) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
     $price = floatval($_POST['price']);
-    $discount_price = isset($_POST['discount_price']) ? floatval($_POST['discount_price']) : null;
+    $discount_price = isset($_POST['discount_price']) && $_POST['discount_price'] !== '' ? floatval($_POST['discount_price']) : null;
     $category_id = intval($_POST['category_id']);
     $stock = intval($_POST['stock']);
     $status = $_POST['status'];
@@ -140,11 +140,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Thêm Sản Phẩm</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* CSS cho toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            max-width: 300px;
+        }
+    </style>
 </head>
 <body>
 <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-auto">
     <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">Thêm Sản Phẩm</h1>
-    <form id="addProductFormAjax" action="modules/product_management/add_product.php" method="POST" onsubmit="submitAddProductForm(event)">
+    <form id="addProductFormAjax" method="POST" onsubmit="submitAddProductForm(event)">
         <div class="mb-4">
             <label for="name" class="block text-sm text-gray-600 mb-2">Tên Sản Phẩm</label>
             <input type="text" id="name" name="name" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Nhập tên sản phẩm">
@@ -189,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span class="submit-text">Thêm</span>
                 <i class="fas fa-spinner fa-spin ml-2 hidden submit-spinner"></i>
             </button>
-            <button type="button" onclick="loadContentWithFallback('modules/qlsp/product.php', 'Quản lý Sản Phẩm')" class="bg-gray-300 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-400 transition-colors">Hủy</button>
+            <button type="button" onclick="loadContentWithFallback('modules/product_management/product.php', 'Quản lý Sản Phẩm')" class="bg-gray-300 text-gray-800 px-5 py-2 rounded-lg hover:bg-gray-400 transition-colors">Hủy</button>
         </div>
     </form>
 </div>
@@ -210,6 +225,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             window.location.href = url;
         }
+    }
+
+    function showToast(message, type) {
+        // Tạo toast element
+        const toast = document.createElement('div');
+        toast.className = `toast ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`;
+        toast.textContent = message;
+        
+        // Thêm toast vào body
+        document.body.appendChild(toast);
+        
+        // Hiển thị toast
+        setTimeout(() => {
+            toast.style.opacity = '1';
+        }, 10);
+        
+        // Xóa toast sau 3 giây
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 500);
+        }, 3000);
     }
 
     function submitAddProductForm(event) {
@@ -260,12 +298,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const formData = new FormData(document.getElementById('addProductFormAjax'));
         console.log("Submitting form data:", Object.fromEntries(formData)); // Debugging log
 
-        fetch('modules/product_management/add_product.php', {
+        // Sử dụng đường dẫn tương đối đến file hiện tại
+        fetch('add_product.php', {
             method: 'POST',
             body: formData
         })
         .then(response => {
             console.log("Response status:", response.status); // Debugging log
+            if (!response.ok) {
+                throw new Error("Lỗi server: " + response.status);
+            }
             return response.json();
         })
         .then(data => {
@@ -276,16 +318,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (data.success) {
                 showToast(data.message, "success");
-
-                // Thêm sản phẩm mới vào bảng trên product.php
-                if (typeof addProductToTable === 'function') {
-                    addProductToTable(data.product);
+                
+                // Thêm sản phẩm mới vào bảng trên product.php nếu hàm tồn tại
+                if (window.parent && typeof window.parent.addProductToTable === 'function') {
+                    window.parent.addProductToTable(data.product);
                 }
 
                 // Reset form và quay lại danh sách sản phẩm
                 document.getElementById('addProductFormAjax').reset();
                 setTimeout(() => {
-                    loadContentWithFallback('modules/qlsp/product.php', 'Quản lý Sản Phẩm');
+                    loadContentWithFallback('modules/product_management/product.php', 'Quản lý Sản Phẩm');
                 }, 1500);
             } else {
                 showToast(data.message, "error");
@@ -299,111 +341,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             showToast("Lỗi khi thêm sản phẩm: " + error.message, "error");
         });
     }
-    function showToast(message, type) {
-    // Tạo toast element
-    const toast = document.createElement('div');
-    toast.className = `toast ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`;
-    toast.textContent = message;
-    
-    // Thêm toast vào body
-    document.body.appendChild(toast);
-    
-    // Hiển thị toast
-    setTimeout(() => {
-        toast.style.opacity = '1';
-    }, 10);
-    
-    // Xóa toast sau 3 giây
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => {
-            document.body.removeChild(toast);
-        }, 500);
-    }, 3000);
-    }
-    function submitAddProductForm(event) {
-    event.preventDefault();
-
-    const addButton = document.getElementById('addButton');
-    const submitText = addButton.querySelector('.submit-text');
-    const submitSpinner = addButton.querySelector('.submit-spinner');
-    addButton.disabled = true;
-    submitText.textContent = 'Đang thêm...';
-    submitSpinner.classList.remove('hidden');
-
-    const name = document.getElementById('name').value.trim();
-    const price = parseFloat(document.getElementById('price').value);
-    const discountPrice = document.getElementById('discount_price').value ? parseFloat(document.getElementById('discount_price').value) : null;
-    const stock = parseInt(document.getElementById('stock').value);
-
-    // Client-side validation
-    if (!name) {
-        showToast("Tên sản phẩm không được để trống!", "error");
-        addButton.disabled = false;
-        submitText.textContent = 'Thêm';
-        submitSpinner.classList.add('hidden');
-        return;
-    }
-    if (price <= 0) {
-        showToast("Giá sản phẩm phải lớn hơn 0!", "error");
-        addButton.disabled = false;
-        submitText.textContent = 'Thêm';
-        submitSpinner.classList.add('hidden');
-        return;
-    }
-    if (discountPrice !== null && discountPrice >= price) {
-        showToast("Giá khuyến mãi phải nhỏ hơn giá gốc!", "error");
-        addButton.disabled = false;
-        submitText.textContent = 'Thêm';
-        submitSpinner.classList.add('hidden');
-        return;
-    }
-    if (stock < 0) {
-        showToast("Tồn kho không được âm!", "error");
-        addButton.disabled = false;
-        submitText.textContent = 'Thêm';
-        submitSpinner.classList.add('hidden');
-        return;
-    }
-
-    const formData = new FormData(document.getElementById('addProductFormAjax'));
-    console.log("Submitting form data:", Object.fromEntries(formData)); // Debugging log
-
-    // Sửa lại đường dẫn cho khớp với action trong form
-    fetch(document.getElementById('addProductFormAjax').action, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        console.log("Response status:", response.status); // Debugging log
-        return response.json();
-    })
-    .then(data => {
-        console.log("Response data:", data); // Debugging log
-        addButton.disabled = false;
-        submitText.textContent = 'Thêm';
-        submitSpinner.classList.add('hidden');
-
-        if (data.success) {
-            showToast(data.message, "success");
-            document.getElementById('addProductFormAjax').reset();
-            setTimeout(() => {
-                // Kiểm tra vị trí thực tế của file product.php
-                const productPath = 'modules/product_management/product.php';
-                loadContentWithFallback(productPath, 'Quản lý Sản Phẩm');
-            }, 1500);
-        } else {
-            showToast(data.message, "error");
-        }
-    })
-    .catch(error => {
-        console.error("Error during fetch:", error);
-        addButton.disabled = false;
-        submitText.textContent = 'Thêm';
-        submitSpinner.classList.add('hidden');
-        showToast("Lỗi khi thêm sản phẩm: " + error.message, "error");
-    });
-}
 </script>
 </body>
 </html>
