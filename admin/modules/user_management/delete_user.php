@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../../../config/database.php'); // Adjust path to database.php file
+include('../../config/database.php'); // Adjust path to database.php file
 
 // Determine if we should return JSON or redirect
 $return_json = isset($_GET['json']) && $_GET['json'] == 1;

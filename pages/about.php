@@ -109,9 +109,9 @@ $base_url = '/WEBQUANAOTREEM';
                         </div>
                     </div>
                     <div class="bg-white/90 rounded-lg shadow-lg overflow-hidden hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/pijama1.jpg" alt="Pijama cho bé" class="w-full h-48 object-cover" loading="lazy" />
+                        <img src="<?php echo $base_url; ?>/assets/images/pijama1.jpg" alt="Pyjama cho bé" class="w-full h-48 object-cover" loading="lazy" />
                         <div class="p-4 text-center">
-                            <h4 class="text-lg font-semibold text-gray-800">Bộ Pijama Bé</h4>
+                            <h4 class="text-lg font-semibold text-gray-800">Bộ Pyjama Bé</h4>
                             <p class="text-gray-600">Mềm mại, lý tưởng cho giấc ngủ ngon.</p>
                         </div>
                     </div>
@@ -149,17 +149,17 @@ $base_url = '/WEBQUANAOTREEM';
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     <div class="bg-white/90 glass-container p-6 rounded-lg shadow-lg hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/team1.jpg" alt="Thành viên đội ngũ" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" loading="lazy" />
+                        <img src="<?php echo $base_url; ?>/assets/images/cuc.jpg" alt="Thành viên đội ngũ" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" loading="lazy" />
                         <h3 class="text-lg font-semibold text-gray-800">Nguyễn Thị Thu Cúc</h3>
                         <p class="text-gray-600">Nhà thiết kế</p>
                     </div>
                     <div class="bg-white/90 glass-container p-6 rounded-lg shadow-lg hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/team2.jpg" alt="Thành viên đội ngũ" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" loading="lazy" />
+                        <img src="<?php echo $base_url; ?>/assets/images/hieu.jpg" alt="Thành viên đội ngũ" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" loading="lazy" />
                         <h3 class="text-lg font-semibold text-gray-800">Nguyễn Đức Hiếu</h3>
                         <p class="text-gray-600">Quản lý sản phẩm</p>
                     </div>
                     <div class="bg-white/90 glass-container p-6 rounded-lg shadow-lg hover-scale">
-                        <img src="<?php echo $base_url; ?>/assets/images/team3.jpg" alt="Thành viên đội ngũ" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" loading="lazy" />
+                        <img src="<?php echo $base_url; ?>/assets/images/tien.jpg" alt="Thành viên đội ngũ" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" loading="lazy" />
                         <h3 class="text-lg font-semibold text-gray-800">Đỗ Thị Thủy Tiên</h3>
                         <p class="text-gray-600">Chăm sóc khách hàng</p>
                     </div>
